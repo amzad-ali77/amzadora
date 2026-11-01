@@ -398,3 +398,65 @@ document.addEventListener("DOMContentLoaded", function () {
   filterProducts();
 
 });
+// AUTOMATIC SHOPPING SLIDER
+
+document.addEventListener("DOMContentLoaded", function () {
+  const slider = document.getElementById("shoppingSlider");
+
+  if (!slider) return;
+
+  const slides = slider.querySelectorAll(".slide");
+  const dotsContainer = slider.querySelector(".slider-dots");
+  const prev = slider.querySelector(".slider-prev");
+  const next = slider.querySelector(".slider-next");
+
+  let current = 0;
+  let timer;
+
+  slides.forEach((slide, index) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.setAttribute("aria-label", "Go to slide " + (index + 1));
+
+    dot.addEventListener("click", () => {
+      showSlide(index);
+      restartTimer();
+    });
+
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = dotsContainer.querySelectorAll("button");
+
+  function showSlide(index) {
+    current = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === current);
+    });
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === current);
+    });
+  }
+
+  function restartTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => {
+      showSlide(current + 1);
+    }, 4000);
+  }
+
+  prev.addEventListener("click", () => {
+    showSlide(current - 1);
+    restartTimer();
+  });
+
+  next.addEventListener("click", () => {
+    showSlide(current + 1);
+    restartTimer();
+  });
+
+  showSlide(0);
+  restartTimer();
+});
