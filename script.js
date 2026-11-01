@@ -1,193 +1,297 @@
 
 // ======================================
-// AMZADMART - FIXED MAIN JAVASCRIPT
+// AMZADMART - COMPLETE MAIN JAVASCRIPT
 // ======================================
 
 document.addEventListener("DOMContentLoaded", function () {
 
-  // STORAGE
-  let cart = JSON.parse(localStorage.getItem("newmartCart") || "[]");
-  let wishlist = JSON.parse(localStorage.getItem("amzadWishlist") || "[]");
-
-  // SAFE ELEMENT SELECTOR
   const get = (id) => document.getElementById(id);
 
   // ======================================
-  // CART
+  // SEARCH, CATEGORY & STORE FILTERS
   // ======================================
 
-  function saveCart() {
-    localStorage.setItem("newmartCart", JSON.stringify(cart));
+  const productGrid = get("productGrid");
+  const searchInput = get("searchInput");
+  const searchButton = get("searchButton");
+  const sortSelect = get("sortProducts");
+  const resultsCount = get("resultsCount");
+
+  const categoryButtons = document.querySelectorAll(".category");
+  const storeButtons = document.querySelectorAll(".partner-filter");
+  const productCards = productGrid
+    ? Array.from(productGrid.querySelectorAll(".product-card"))
+    : [];
+
+  let selectedCategory = "all";
+  let selectedStore = "all";
+
+  function filterProducts() {
+
+    if (!productGrid) return;
+
+    const searchText = searchInput
+      ? searchInput.value.toLowerCase().trim()
+      : "";
+
+    let visibleCount = 0;
+
+    // SORT PRODUCTS
+    const sortValue = sortSelect ? sortSelect.value : "default";
+
+    const sortedCards = [...productCards];
+
+    if (sortValue === "low") {
+      sortedCards.sort((a, b) =>
+        Number(a.dataset.price.replace(/,/g, "")) -
+        Number(b.dataset.price.replace(/,/g, ""))
+      );
+    }
+
+    if (sortValue === "high") {
+      sortedCards.sort((a, b) =>
+        Number(b.dataset.price.replace(/,/g, "")) -
+        Number(a.dataset.price.replace(/,/g, ""))
+      );
+    }
+
+    if (sortValue === "name") {
+      sortedCards.sort((a, b) =>
+        a.dataset.name.localeCompare(b.dataset.name)
+      );
+    }
+
+    sortedCards.forEach(card => {
+
+      productGrid.appendChild(card);
+
+      const name = (card.dataset.name || "").toLowerCase();
+      const details = card.textContent.toLowerCase();
+      const category = card.dataset.category;
+      const store = card.dataset.store;
+
+      const matchesSearch =
+        name.includes(searchText) || details.includes(searchText);
+
+      const matchesCategory =
+        selectedCategory === "all" ||
+        category === selectedCategory;
+
+      const matchesStore =
+        selectedStore === "all" ||
+        store === selectedStore;
+
+      const show =
+        matchesSearch && matchesCategory && matchesStore;
+
+      card.style.display = show ? "" : "none";
+
+      if (show) visibleCount++;
+
+    });
+
+    if (resultsCount) {
+      resultsCount.textContent =
+        "Showing " + visibleCount + " products";
+    }
+
+    // NO PRODUCTS MESSAGE
+    let emptyMessage = get("emptyState");
+
+    if (!emptyMessage) {
+      emptyMessage = document.createElement("div");
+      emptyMessage.id = "emptyState";
+      emptyMessage.className = "empty-state";
+      emptyMessage.innerHTML = `
+        <i class="fa-solid fa-magnifying-glass fa-2x"></i>
+        <h3>No Products Found</h3>
+        <p>Try another product name or change your filters.</p>
+        <button type="button" id="resetFilters">
+          Reset Filters
+        </button>
+      `;
+
+      productGrid.after(emptyMessage);
+    }
+
+    emptyMessage.hidden = visibleCount !== 0;
+
   }
 
-  function updateCart() {
-    const cartItems = get("cartItems");
-    const cartTotal = get("cartTotal");
-    const cartCount = get("cartCount");
+  if (searchInput) {
+    searchInput.addEventListener("input", filterProducts);
 
-    let total = 0;
-    let count = 0;
-
-    if (cartItems) {
-      cartItems.innerHTML = "";
-
-      if (cart.length === 0) {
-        cartItems.innerHTML = '<p class="empty-cart">Your cart is empty.</p>';
-      }
-
-      cart.forEach((item, index) => {
-        const quantity = Number(item.quantity) || 1;
-        const price = Number(item.price) || 0;
-
-        total += price * quantity;
-        count += quantity;
-
-        const div = document.createElement("div");
-        div.className = "cart-item";
-
-        const name = document.createElement("p");
-        name.textContent = item.name + " - ₹" + price;
-
-        const controls = document.createElement("div");
-
-        const minus = document.createElement("button");
-        minus.type = "button";
-        minus.textContent = "−";
-        minus.addEventListener("click", () => changeQuantity(index, -1));
-
-        const qty = document.createElement("span");
-        qty.textContent = " " + quantity + " ";
-
-        const plus = document.createElement("button");
-        plus.type = "button";
-        plus.textContent = "+";
-        plus.addEventListener("click", () => changeQuantity(index, 1));
-
-        const remove = document.createElement("button");
-        remove.type = "button";
-        remove.textContent = "Remove";
-        remove.addEventListener("click", () => removeCartItem(index));
-
-        controls.append(minus, qty, plus, remove);
-        div.append(name, controls);
-        cartItems.appendChild(div);
-      });
-    }
-
-    if (cartTotal) {
-      cartTotal.textContent = "₹" + total.toLocaleString("en-IN");
-    }
-
-    if (cartCount) {
-      cartCount.textContent = count;
-    }
-
-    saveCart();
-  }
-
-  function changeQuantity(index, amount) {
-    if (!cart[index]) return;
-
-    cart[index].quantity = (Number(cart[index].quantity) || 1) + amount;
-
-    if (cart[index].quantity <= 0) {
-      cart.splice(index, 1);
-    }
-
-    updateCart();
-  }
-
-  function removeCartItem(index) {
-    cart.splice(index, 1);
-    updateCart();
-  }
-
-  // ADD TO CART - EVENT DELEGATION
-  document.addEventListener("click", function (event) {
-    const button = event.target.closest(".add-cart");
-    if (!button) return;
-
-    const name = button.dataset.name;
-    const price = Number(button.dataset.price);
-
-    if (!name || !Number.isFinite(price) || price <= 0) {
-      alert("Product details are invalid.");
-      return;
-    }
-
-    const existing = cart.find(item => item.name === name);
-
-    if (existing) {
-      existing.quantity = (Number(existing.quantity) || 1) + 1;
-    } else {
-      cart.push({
-        name: name,
-        price: price,
-        quantity: 1
-      });
-    }
-
-    updateCart();
-
-    const oldText = button.innerHTML;
-    button.innerHTML = '<i class="fa-solid fa-check"></i> Added';
-
-    setTimeout(() => {
-      button.innerHTML = oldText;
-    }, 1000);
-  });
-
-  // CLEAR CART
-  const clearCart = get("clearCart");
-
-  if (clearCart) {
-    clearCart.addEventListener("click", function () {
-      if (cart.length === 0) {
-        alert("Your cart is already empty!");
-        return;
-      }
-
-      if (confirm("Are you sure you want to clear your cart?")) {
-        cart = [];
-        updateCart();
+    searchInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        filterProducts();
       }
     });
   }
+
+  if (searchButton) {
+    searchButton.addEventListener("click", filterProducts);
+  }
+
+  if (sortSelect) {
+    sortSelect.addEventListener("change", filterProducts);
+  }
+
+  // CATEGORY FILTER
+  categoryButtons.forEach(button => {
+
+    button.addEventListener("click", function () {
+
+      categoryButtons.forEach(btn =>
+        btn.classList.remove("active")
+      );
+
+      this.classList.add("active");
+
+      selectedCategory = this.dataset.category || "all";
+
+      filterProducts();
+
+    });
+
+  });
+
+  // STORE FILTER BUTTONS
+  function selectStore(storeName) {
+
+    selectedStore = storeName;
+
+    storeButtons.forEach(button => {
+      button.classList.toggle(
+        "selected",
+        button.dataset.store === storeName
+      );
+    });
+
+    filterProducts();
+
+  }
+
+  storeButtons.forEach(button => {
+
+    button.addEventListener("click", function () {
+      selectStore(this.dataset.store || "all");
+    });
+
+  });
+
+  // AMAZON / FLIPKART / MYNTRA LOGOS
+  const amazonLogo = document.querySelector(".amazon-logo");
+  const flipkartLogo = document.querySelector(".flipkart-logo");
+  const myntraLogo = document.querySelector(".myntra-logo");
+
+  [
+    [amazonLogo, "amazon"],
+    [flipkartLogo, "flipkart"],
+    [myntraLogo, "myntra"]
+  ].forEach(([logo, store]) => {
+
+    if (!logo) return;
+
+    logo.style.cursor = "pointer";
+
+    logo.addEventListener("click", function () {
+
+      selectStore(store);
+
+      const productsSection = get("products");
+
+      if (productsSection) {
+        productsSection.scrollIntoView({
+          behavior: "smooth"
+        });
+      }
+
+    });
+
+  });
+
+  // RESET FILTERS
+  document.addEventListener("click", function (event) {
+
+    if (!event.target.closest("#resetFilters")) return;
+
+    if (searchInput) searchInput.value = "";
+    if (sortSelect) sortSelect.value = "default";
+
+    selectedCategory = "all";
+    selectedStore = "all";
+
+    categoryButtons.forEach(button => {
+      button.classList.toggle(
+        "active",
+        button.dataset.category === "all"
+      );
+    });
+
+    selectStore("all");
+
+  });
+
 
   // ======================================
   // WISHLIST
   // ======================================
 
+  let wishlist = [];
+
+  try {
+    wishlist = JSON.parse(
+      localStorage.getItem("amzadWishlist") || "[]"
+    );
+
+    if (!Array.isArray(wishlist)) wishlist = [];
+
+  } catch (error) {
+    wishlist = [];
+  }
+
   function saveWishlist() {
-    localStorage.setItem("amzadWishlist", JSON.stringify(wishlist));
+    localStorage.setItem(
+      "amzadWishlist",
+      JSON.stringify(wishlist)
+    );
   }
 
-  function updateWishlistCount() {
+  function updateWishlist() {
+
     const count = get("wishlistCount");
-    if (count) count.textContent = wishlist.length;
-  }
 
-  function updateHeartButtons() {
+    if (count) {
+      count.textContent = wishlist.length;
+    }
+
     document.querySelectorAll(".product-card").forEach(card => {
-      const name = card.dataset.name;
-      const button = card.querySelector(".heart-btn");
 
-      if (!button) return;
+      const name = card.dataset.name;
+      const heart = card.querySelector(".heart-btn");
+
+      if (!heart) return;
 
       const liked = wishlist.includes(name);
-      button.classList.toggle("liked", liked);
 
-      button.innerHTML = liked
+      heart.classList.toggle("liked", liked);
+
+      heart.innerHTML = liked
         ? '<i class="fa-solid fa-heart"></i>'
         : '<i class="fa-regular fa-heart"></i>';
+
     });
+
   }
 
   document.addEventListener("click", function (event) {
-    const button = event.target.closest(".heart-btn");
-    if (!button) return;
 
-    const card = button.closest(".product-card");
+    const heart = event.target.closest(".heart-btn");
+
+    if (!heart) return;
+
+    const card = heart.closest(".product-card");
+
     if (!card) return;
 
     const name = card.dataset.name;
@@ -199,149 +303,131 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     saveWishlist();
-    updateWishlistCount();
-    updateHeartButtons();
+    updateWishlist();
+
   });
 
   const wishlistHeader = get("wishlistHeader");
 
   if (wishlistHeader) {
-    wishlistHeader.addEventListener("click", function () {
-      const products = wishlist.length
-        ? wishlist.join("\n")
-        : "Your wishlist is empty.";
 
-      alert("Your Wishlist:\n\n" + products);
+    wishlistHeader.addEventListener("click", function () {
+
+      if (wishlist.length === 0) {
+        alert("Your Wishlist is empty.");
+        return;
+      }
+
+      alert(
+        "Your Wishlist:\n\n" +
+        wishlist.join("\n")
+      );
+
     });
+
   }
 
+
   // ======================================
-  // SEARCH, CATEGORY AND STORE FILTERS
+  // SAVED SHOPPING ITEMS
   // ======================================
 
-  const productGrid = get("productGrid");
-  const searchInput = get("searchInput");
-  const searchButton = get("searchButton");
-  const sortSelect = get("sortProducts");
-  const resultsCount = get("resultsCount");
-  const emptyState = get("emptyState");
+  let cart = [];
 
-  const categoryButtons = document.querySelectorAll(".category");
-  const storeButtons = document.querySelectorAll(".partner-filter");
-
-  let selectedCategory = "all";
-  let selectedStore = "all";
-
-  function filterProducts() {
-    if (!productGrid) return;
-
-    const searchText = searchInput
-      ? searchInput.value.toLowerCase().trim()
-      : "";
-
-    let cards = Array.from(
-      productGrid.querySelectorAll(".product-card")
+  try {
+    cart = JSON.parse(
+      localStorage.getItem("newmartCart") || "[]"
     );
 
-    const sortValue = sortSelect ? sortSelect.value : "default";
+    if (!Array.isArray(cart)) cart = [];
 
-    if (sortValue === "low") {
-      cards.sort((a, b) =>
-        Number(a.dataset.price) - Number(b.dataset.price)
-      );
-    } else if (sortValue === "high") {
-      cards.sort((a, b) =>
-        Number(b.dataset.price) - Number(a.dataset.price)
-      );
-    } else if (sortValue === "name") {
-      cards.sort((a, b) =>
-        a.dataset.name.localeCompare(b.dataset.name)
-      );
+  } catch (error) {
+    cart = [];
+  }
+
+  function updateCart() {
+
+    const cartItems = get("cartItems");
+    const cartTotal = get("cartTotal");
+
+    let total = 0;
+
+    if (!cartItems) return;
+
+    cartItems.innerHTML = "";
+
+    if (cart.length === 0) {
+      cartItems.innerHTML =
+        "<p>Your saved list is empty.</p>";
     }
 
-    cards.forEach(card => productGrid.appendChild(card));
+    cart.forEach((item, index) => {
 
-    let visible = 0;
+      const price = Number(item.price) || 0;
+      const quantity = Number(item.quantity) || 1;
 
-    cards.forEach(card => {
-      const name = (card.dataset.name || "").toLowerCase();
-      const category = card.dataset.category;
-      const store = card.dataset.store;
+      total += price * quantity;
 
-      const show =
-        name.includes(searchText) &&
-        (selectedCategory === "all" || category === selectedCategory) &&
-        (selectedStore === "all" || store === selectedStore);
+      const div = document.createElement("div");
+      div.className = "cart-item";
 
-      card.style.display = show ? "" : "none";
+      const name = document.createElement("p");
 
-      if (show) visible++;
-    });
+      name.textContent =
+        item.name + " - ₹" + price.toLocaleString("en-IN");
 
-    if (resultsCount) {
-      resultsCount.textContent = "Showing " + visible + " products";
-    }
+      const controls = document.createElement("div");
 
-    if (emptyState) {
-      emptyState.hidden = visible !== 0;
-    }
-  }
+      const remove = document.createElement("button");
 
-  if (searchInput) {
-    searchInput.addEventListener("input", filterProducts);
-  }
+      remove.type = "button";
+      remove.textContent = "Remove";
 
-  if (searchButton) {
-    searchButton.addEventListener("click", filterProducts);
-  }
-
-  if (sortSelect) {
-    sortSelect.addEventListener("change", filterProducts);
-  }
-
-  categoryButtons.forEach(button => {
-    button.addEventListener("click", function () {
-      categoryButtons.forEach(btn => btn.classList.remove("active"));
-
-      this.classList.add("active");
-      selectedCategory = this.dataset.category || "all";
-
-      filterProducts();
-    });
-  });
-
-  storeButtons.forEach(button => {
-    button.addEventListener("click", function () {
-      storeButtons.forEach(btn => btn.classList.remove("selected"));
-
-      this.classList.add("selected");
-      selectedStore = this.dataset.store || "all";
-
-      filterProducts();
-    });
-  });
-
-  const resetFilters = get("resetFilters");
-
-  if (resetFilters) {
-    resetFilters.addEventListener("click", function () {
-      if (searchInput) searchInput.value = "";
-      if (sortSelect) sortSelect.value = "default";
-
-      selectedCategory = "all";
-      selectedStore = "all";
-
-      categoryButtons.forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.category === "all");
+      remove.addEventListener("click", function () {
+        cart.splice(index, 1);
+        updateCart();
       });
 
-      storeButtons.forEach(btn => {
-        btn.classList.toggle("selected", btn.dataset.store === "all");
-      });
+      controls.appendChild(remove);
 
-      filterProducts();
+      div.append(name, controls);
+
+      cartItems.appendChild(div);
+
     });
+
+    if (cartTotal) {
+      cartTotal.textContent =
+        "₹" + total.toLocaleString("en-IN");
+    }
+
+    localStorage.setItem(
+      "newmartCart",
+      JSON.stringify(cart)
+    );
+
   }
+
+  const clearCart = get("clearCart");
+
+  if (clearCart) {
+
+    clearCart.addEventListener("click", function () {
+
+      if (cart.length === 0) {
+        alert("Your saved list is already empty.");
+        return;
+      }
+
+      if (confirm("Clear all saved items?")) {
+        cart = [];
+        updateCart();
+      }
+
+    });
+
+  }
+
 
   // ======================================
   // MOBILE MENU
@@ -351,7 +437,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const mainNav = get("mainNav");
 
   if (mobileMenu && mainNav) {
+
     mobileMenu.addEventListener("click", function () {
+
       mainNav.classList.toggle("active");
 
       const icon = mobileMenu.querySelector("i");
@@ -360,10 +448,13 @@ document.addEventListener("DOMContentLoaded", function () {
         icon.classList.toggle("fa-bars");
         icon.classList.toggle("fa-xmark");
       }
+
     });
 
     mainNav.querySelectorAll("a").forEach(link => {
+
       link.addEventListener("click", function () {
+
         mainNav.classList.remove("active");
 
         const icon = mobileMenu.querySelector("i");
@@ -372,125 +463,107 @@ document.addEventListener("DOMContentLoaded", function () {
           icon.classList.add("fa-bars");
           icon.classList.remove("fa-xmark");
         }
+
       });
+
     });
+
   }
+
 
   // ======================================
-  // CHECKOUT - OLD DEMO ONLY
+  // SHOPPING SLIDER
   // ======================================
 
-  const placeOrder = get("placeOrder");
+  const slider = get("shoppingSlider");
 
-  if (placeOrder) {
-    placeOrder.addEventListener("click", function () {
-      alert(
-        "AmzadMart is a product discovery and affiliate website. " +
-        "Please use the retailer's official website to complete your purchase."
-      );
-    });
-  }
+  if (slider) {
 
-  // INITIAL LOAD
-  updateCart();
-  updateWishlistCount();
-  updateHeartButtons();
-  filterProducts();
+    const slides = slider.querySelectorAll(".slide");
+    const dotsContainer = slider.querySelector(".slider-dots");
+    const prev = slider.querySelector(".slider-prev");
+    const next = slider.querySelector(".slider-next");
 
-});
-// AUTOMATIC SHOPPING SLIDER
+    let current = 0;
+    let timer;
 
-document.addEventListener("DOMContentLoaded", function () {
-  const slider = document.getElementById("shoppingSlider");
+    if (dotsContainer && slides.length > 0) {
 
-  if (!slider) return;
+      dotsContainer.innerHTML = "";
 
-  const slides = slider.querySelectorAll(".slide");
-  const dotsContainer = slider.querySelector(".slider-dots");
-  const prev = slider.querySelector(".slider-prev");
-  const next = slider.querySelector(".slider-next");
+      slides.forEach((slide, index) => {
 
-  let current = 0;
-  let timer;
+        const dot = document.createElement("button");
 
-  slides.forEach((slide, index) => {
-    const dot = document.createElement("button");
-    dot.type = "button";
-    dot.setAttribute("aria-label", "Go to slide " + (index + 1));
+        dot.type = "button";
+        dot.setAttribute(
+          "aria-label",
+          "Go to slide " + (index + 1)
+        );
 
-    dot.addEventListener("click", () => {
-      showSlide(index);
-      restartTimer();
-    });
+        dot.addEventListener("click", function () {
+          showSlide(index);
+          restartTimer();
+        });
 
-    dotsContainer.appendChild(dot);
-  });
+        dotsContainer.appendChild(dot);
 
-  const dots = dotsContainer.querySelectorAll("button");
+      });
 
-  function showSlide(index) {
-    current = (index + slides.length) % slides.length;
+      const dots = dotsContainer.querySelectorAll("button");
 
-    slides.forEach((slide, i) => {
-      slide.classList.toggle("active", i === current);
-    });
+      function showSlide(index) {
 
-    dots.forEach((dot, i) => {
-      dot.classList.toggle("active", i === current);
-    });
-  }
+        current = (index + slides.length) % slides.length;
 
-  function restartTimer() {
-    clearInterval(timer);
-    timer = setInterval(() => {
-      showSlide(current + 1);
-    }, 4000);
-  }
+        slides.forEach((slide, i) => {
+          slide.classList.toggle("active", i === current);
+        });
 
-  prev.addEventListener("click", () => {
-    showSlide(current - 1);
-    restartTimer();
-  });
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("active", i === current);
+        });
 
-  next.addEventListener("click", () => {
-    showSlide(current + 1);
-    restartTimer();
-  });
-
-  showSlide(0);
-  restartTimer();
-});
-
-// ===================================
-// AMZADMART PRODUCT SEARCH
-// ===================================
-
-document.addEventListener("DOMContentLoaded", function () {
-
-  const searchInput = document.getElementById("searchInput");
-  const productCards = document.querySelectorAll(".product-card");
-
-  if (!searchInput) {
-    console.log("Search input nahi mila!");
-    return;
-  }
-
-  function searchProducts() {
-    const searchValue = searchInput.value.toLowerCase().trim();
-
-    productCards.forEach(function (card) {
-
-      const productDetails = card.textContent.toLowerCase();
-
-      if (productDetails.includes(searchValue)) {
-        card.style.display = "";
-      } else {
-        card.style.display = "none";
       }
 
-    });
+      function restartTimer() {
+
+        clearInterval(timer);
+
+        timer = setInterval(function () {
+          showSlide(current + 1);
+        }, 4000);
+
+      }
+
+      if (prev) {
+        prev.addEventListener("click", function () {
+          showSlide(current - 1);
+          restartTimer();
+        });
+      }
+
+      if (next) {
+        next.addEventListener("click", function () {
+          showSlide(current + 1);
+          restartTimer();
+        });
+      }
+
+      showSlide(0);
+      restartTimer();
+
+    }
+
   }
 
-  searchInput.addEventListener("input", searchProducts);
+
+  // ======================================
+  // INITIAL LOAD
+  // ======================================
+
+  updateCart();
+  updateWishlist();
+  filterProducts();
 
 });
