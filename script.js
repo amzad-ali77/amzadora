@@ -308,7 +308,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const mainNav = document.getElementById("mainNav");
 
   mobileMenu.addEventListener("click", function () {
-    mainNav.classList.toggle("nav-open");
+   mainNav.classList.toggle("active");
 
     const icon = mobileMenu.querySelector("i");
 
