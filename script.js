@@ -460,3 +460,37 @@ document.addEventListener("DOMContentLoaded", function () {
   showSlide(0);
   restartTimer();
 });
+
+// ===================================
+// AMZADMART PRODUCT SEARCH
+// ===================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const searchInput = document.getElementById("searchInput");
+  const productCards = document.querySelectorAll(".product-card");
+
+  if (!searchInput) {
+    console.log("Search input nahi mila!");
+    return;
+  }
+
+  function searchProducts() {
+    const searchValue = searchInput.value.toLowerCase().trim();
+
+    productCards.forEach(function (card) {
+
+      const productDetails = card.textContent.toLowerCase();
+
+      if (productDetails.includes(searchValue)) {
+        card.style.display = "";
+      } else {
+        card.style.display = "none";
+      }
+
+    });
+  }
+
+  searchInput.addEventListener("input", searchProducts);
+
+});
