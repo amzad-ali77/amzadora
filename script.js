@@ -1,6 +1,6 @@
 
 // ======================================
-// AMZADMART - COMPLETE MAIN JAVASCRIPT
+// AMZADORA - COMPLETE MAIN JAVASCRIPT
 // ======================================
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const categoryButtons = document.querySelectorAll(".category");
   const storeButtons = document.querySelectorAll(".partner-filter");
+
   const productCards = productGrid
     ? Array.from(productGrid.querySelectorAll(".product-card"))
     : [];
@@ -36,7 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let visibleCount = 0;
 
-    // SORT PRODUCTS
     const sortValue = sortSelect ? sortSelect.value : "default";
 
     const sortedCards = [...productCards];
@@ -96,12 +96,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // NO PRODUCTS MESSAGE
+
     let emptyMessage = get("emptyState");
 
     if (!emptyMessage) {
+
       emptyMessage = document.createElement("div");
       emptyMessage.id = "emptyState";
       emptyMessage.className = "empty-state";
+
       emptyMessage.innerHTML = `
         <i class="fa-solid fa-magnifying-glass fa-2x"></i>
         <h3>No Products Found</h3>
@@ -119,6 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   if (searchInput) {
+
     searchInput.addEventListener("input", filterProducts);
 
     searchInput.addEventListener("keydown", function (event) {
@@ -126,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
         filterProducts();
       }
     });
+
   }
 
   if (searchButton) {
@@ -137,6 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // CATEGORY FILTER
+
   categoryButtons.forEach(button => {
 
     button.addEventListener("click", function () {
@@ -155,16 +161,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
   });
 
-  // STORE FILTER BUTTONS
+  // STORE FILTER
+
   function selectStore(storeName) {
 
     selectedStore = storeName;
 
     storeButtons.forEach(button => {
+
       button.classList.toggle(
         "selected",
         button.dataset.store === storeName
       );
+
+      button.classList.toggle(
+        "active",
+        button.dataset.store === storeName
+      );
+
     });
 
     filterProducts();
@@ -180,6 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // AMAZON / FLIPKART / MYNTRA LOGOS
+
   const amazonLogo = document.querySelector(".amazon-logo");
   const flipkartLogo = document.querySelector(".flipkart-logo");
   const myntraLogo = document.querySelector(".myntra-logo");
@@ -211,6 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // RESET FILTERS
+
   document.addEventListener("click", function (event) {
 
     if (!event.target.closest("#resetFilters")) return;
@@ -222,10 +238,12 @@ document.addEventListener("DOMContentLoaded", function () {
     selectedStore = "all";
 
     categoryButtons.forEach(button => {
+
       button.classList.toggle(
         "active",
         button.dataset.category === "all"
       );
+
     });
 
     selectStore("all");
@@ -240,6 +258,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let wishlist = [];
 
   try {
+
     wishlist = JSON.parse(
       localStorage.getItem("amzadWishlist") || "[]"
     );
@@ -251,10 +270,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function saveWishlist() {
+
     localStorage.setItem(
       "amzadWishlist",
       JSON.stringify(wishlist)
     );
+
   }
 
   function updateWishlist() {
@@ -335,6 +356,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let cart = [];
 
   try {
+
     cart = JSON.parse(
       localStorage.getItem("newmartCart") || "[]"
     );
@@ -496,6 +518,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const dot = document.createElement("button");
 
         dot.type = "button";
+
         dot.setAttribute(
           "aria-label",
           "Go to slide " + (index + 1)
@@ -537,17 +560,21 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       if (prev) {
+
         prev.addEventListener("click", function () {
           showSlide(current - 1);
           restartTimer();
         });
+
       }
 
       if (next) {
+
         next.addEventListener("click", function () {
           showSlide(current + 1);
           restartTimer();
         });
+
       }
 
       showSlide(0);
