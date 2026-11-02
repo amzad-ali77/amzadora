@@ -12,25 +12,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const products = [
     // ELECTRONICS
-{ id:"headphones", name:"Wireless Headphones", category:"electronics", query:"wireless bluetooth headphones", icon:"fa-headphones", image:"https://github.com/amzad-ali77/amzadora/blob/main/images/headphones.jpg", description:"Explore wireless and Bluetooth headphones." },
-
-{ id:"speaker", name:"Bluetooth Speakers", category:"electronics", query:"portable bluetooth speaker", icon:"fa-volume-high", image:"", description:"Browse portable speakers." },
-
-{ id:"smartwatch", name:"Smart Watches", category:"electronics", query:"smart watch", icon:"fa-clock", image:"", description:"Explore smart and fitness watches." },
-
-{ id:"powerbank", name:"Power Banks", category:"electronics", query:"power bank", icon:"fa-battery-full", image:"", description:"Find portable charging options." },
-
-{ id:"laptop", name:"Laptops", category:"electronics", query:"laptop", icon:"fa-laptop", image:"", description:"Browse laptops for study and work." },
-
-{ id:"monitor", name:"Computer Monitors", category:"electronics", query:"computer monitor", icon:"fa-desktop", image:"", description:"Explore computer monitors." },
-
-{ id:"keyboard", name:"Wireless Keyboards", category:"electronics", query:"wireless keyboard", icon:"fa-keyboard", image:"", description:"Browse wireless keyboards." },
-
-{ id:"mouse", name:"Computer Mouse", category:"electronics", query:"wireless computer mouse", icon:"fa-computer-mouse", image:"", description:"Find computer mouse options." },
-
-{ id:"earbuds", name:"Bluetooth Earbuds", category:"electronics", query:"bluetooth earbuds", icon:"fa-ear-listen", image:"", description:"Explore wireless earbuds." },
-
-{ id:"camera", name:"Digital Cameras", category:"electronics", query:"digital camera", icon:"fa-camera", image:"", description:"Browse cameras and photography equipment." },
+{ id:"headphones", name:"Wireless Headphones", category:"electronics", query:"wireless bluetooth headphones", icon:"fa-headphones", image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/headphones.jpg", description:"Explore wireless and Bluetooth headphones." },
+{ id:"speaker", name:"Bluetooth Speakers", category:"electronics", query:"portable bluetooth speaker", icon:"fa-volume-high", image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/speaker.jpg", description:"Browse portable speakers." },
+{ id:"smartwatch", name:"Smart Watches", category:"electronics", query:"smart watch", icon:"fa-clock", image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/smartwatch.jpg", description:"Explore smart and fitness watches." },
+{ id:"powerbank", name:"Power Banks", category:"electronics", query:"power bank", icon:"fa-battery-full", image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/powerbank.jpg", description:"Find portable charging options." },
+{ id:"laptop", name:"Laptops", category:"electronics", query:"laptop", icon:"fa-laptop", image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/laptop.jpg", description:"Browse laptops for study and work." },
+{ id:"monitor", name:"Computer Monitors", category:"electronics", query:"computer monitor", icon:"fa-desktop", image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/monitor.jpg", description:"Explore computer monitors." },
+{ id:"keyboard", name:"Wireless Keyboards", category:"electronics", query:"wireless keyboard", icon:"fa-keyboard", image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/keyboard.jpg", description:"Browse wireless keyboards." },
+{ id:"mouse", name:"Computer Mouse", category:"electronics", query:"wireless computer mouse", icon:"fa-computer-mouse", image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/mouse.jpg", description:"Find computer mouse options." },
+{ id:"earbuds", name:"Bluetooth Earbuds", category:"electronics", query:"bluetooth earbuds", icon:"fa-ear-listen", image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/earbuds.jpg", description:"Explore wireless earbuds." },
+{ id:"camera", name:"Digital Cameras", category:"electronics", query:"digital camera", icon:"fa-camera", image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/camera.jpg", description:"Browse cameras and photography equipment." },
     // MOBILES
     {id:"phones",name:"Smartphones",category:"mobiles",query:"smartphone",icon:"fa-mobile-screen-button",image:"",description:"Explore smartphones."},
     {id:"cases",name:"Mobile Covers",category:"mobiles",query:"mobile phone case cover",icon:"fa-mobile",image:"",description:"Browse protective phone covers."},
