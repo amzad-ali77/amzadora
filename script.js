@@ -1,225 +1,333 @@
 
-// ======================================
-// AMZADORA - COMPLETE MAIN JAVASCRIPT
-// ======================================
-
 document.addEventListener("DOMContentLoaded", function () {
 
-  const get = (id) => document.getElementById(id);
+  "use strict";
 
-  // ======================================
-  // SEARCH, CATEGORY & STORE FILTERS
-  // ======================================
+  // YOUR AMAZON ASSOCIATES TRACKING ID
+  const AMAZON_TAG = "amzadmart07-21";
 
-  const productGrid = get("productGrid");
-  const searchInput = get("searchInput");
-  const searchButton = get("searchButton");
-  const sortSelect = get("sortProducts");
-  const resultsCount = get("resultsCount");
+  const AMAZON_BASE = "https://www.amazon.in/s";
 
-  const categoryButtons = document.querySelectorAll(".category");
-  const storeButtons = document.querySelectorAll(".partner-filter");
+  const STORAGE_KEY = "amzadoraWishlist";
 
-  const productCards = productGrid
-    ? Array.from(productGrid.querySelectorAll(".product-card"))
-    : [];
+  const $ = (id) => document.getElementById(id);
 
-  let selectedCategory = "all";
-  let selectedStore = "all";
+  // =====================================
+  // 50 PRODUCT SEARCH SUGGESTIONS
+  // =====================================
 
-  function filterProducts() {
+  const products = [
 
-    if (!productGrid) return;
+    // ELECTRONICS
 
-    const searchText = searchInput
-      ? searchInput.value.toLowerCase().trim()
-      : "";
+    {id:"headphones",name:"Wireless Headphones",category:"electronics",query:"wireless bluetooth headphones",icon:"fa-headphones",description:"Explore wireless and Bluetooth headphones."},
+    {id:"speaker",name:"Bluetooth Speakers",category:"electronics",query:"portable bluetooth speaker",icon:"fa-volume-high",description:"Browse portable speakers."},
+    {id:"smartwatch",name:"Smart Watches",category:"electronics",query:"smart watch",icon:"fa-clock",description:"Explore smart and fitness watches."},
+    {id:"powerbank",name:"Power Banks",category:"electronics",query:"power bank",icon:"fa-battery-full",description:"Find portable charging options."},
+    {id:"laptop",name:"Laptops",category:"electronics",query:"laptop",icon:"fa-laptop",description:"Browse laptops for study and work."},
+    {id:"monitor",name:"Computer Monitors",category:"electronics",query:"computer monitor",icon:"fa-desktop",description:"Explore computer monitors."},
+    {id:"keyboard",name:"Wireless Keyboards",category:"electronics",query:"wireless keyboard",icon:"fa-keyboard",description:"Browse wireless keyboards."},
+    {id:"mouse",name:"Computer Mouse",category:"electronics",query:"wireless computer mouse",icon:"fa-computer-mouse",description:"Find computer mouse options."},
+    {id:"earbuds",name:"Bluetooth Earbuds",category:"electronics",query:"bluetooth earbuds",icon:"fa-ear-listen",description:"Explore wireless earbuds."},
+    {id:"camera",name:"Digital Cameras",category:"electronics",query:"digital camera",icon:"fa-camera",description:"Browse cameras and photography equipment."},
 
-    let visibleCount = 0;
+    // MOBILES
 
-    const sortValue = sortSelect ? sortSelect.value : "default";
+    {id:"phones",name:"Smartphones",category:"mobiles",query:"smartphone",icon:"fa-mobile-screen-button",description:"Explore smartphones."},
+    {id:"cases",name:"Mobile Covers",category:"mobiles",query:"mobile phone case cover",icon:"fa-mobile",description:"Browse protective phone covers."},
+    {id:"screen",name:"Screen Protectors",category:"mobiles",query:"mobile screen protector",icon:"fa-shield-halved",description:"Find screen protection accessories."},
+    {id:"chargers",name:"Mobile Chargers",category:"mobiles",query:"fast mobile charger",icon:"fa-plug",description:"Explore mobile chargers."},
+    {id:"tripods",name:"Mobile Tripods",category:"mobiles",query:"mobile phone tripod",icon:"fa-camera-retro",description:"Browse phone tripods and stands."},
 
-    const sortedCards = [...productCards];
+    // FASHION
 
-    if (sortValue === "low") {
-      sortedCards.sort((a, b) =>
-        Number(a.dataset.price.replace(/,/g, "")) -
-        Number(b.dataset.price.replace(/,/g, ""))
+    {id:"tshirts",name:"Men's T-Shirts",category:"fashion",query:"mens t shirts",icon:"fa-shirt",description:"Explore casual T-shirts."},
+    {id:"shirts",name:"Men's Shirts",category:"fashion",query:"mens casual shirts",icon:"fa-user-tie",description:"Browse casual and formal shirts."},
+    {id:"kurtas",name:"Women's Kurtas",category:"fashion",query:"womens kurta",icon:"fa-person-dress",description:"Explore women's kurtas."},
+    {id:"jeans",name:"Jeans",category:"fashion",query:"jeans for men and women",icon:"fa-person",description:"Browse different jeans styles."},
+    {id:"backpacks",name:"Backpacks",category:"fashion",query:"backpack bag",icon:"fa-backpack",description:"Find bags for college and travel."},
+
+    // SHOES
+
+    {id:"running",name:"Running Shoes",category:"shoes",query:"running shoes",icon:"fa-shoe-prints",description:"Explore running shoes."},
+    {id:"sneakers",name:"Sneakers",category:"shoes",query:"sneakers shoes",icon:"fa-shoe-prints",description:"Browse casual sneakers."},
+    {id:"formal",name:"Formal Shoes",category:"shoes",query:"formal shoes",icon:"fa-shoe-prints",description:"Explore formal footwear."},
+    {id:"sandals",name:"Sandals & Slippers",category:"shoes",query:"sandals slippers",icon:"fa-socks",description:"Browse everyday footwear."},
+
+    // BEAUTY
+
+    {id:"facewash",name:"Face Wash",category:"beauty",query:"face wash",icon:"fa-pump-soap",description:"Explore face cleansers."},
+    {id:"moisturizer",name:"Moisturizers",category:"beauty",query:"face moisturizer",icon:"fa-droplet",description:"Browse face moisturizers."},
+    {id:"sunscreen",name:"Sunscreen",category:"beauty",query:"sunscreen spf",icon:"fa-sun",description:"Explore sunscreen options."},
+    {id:"haircare",name:"Hair Care",category:"beauty",query:"hair care products",icon:"fa-wind",description:"Browse hair care products."},
+    {id:"perfume",name:"Perfumes",category:"beauty",query:"perfume",icon:"fa-spray-can-sparkles",description:"Explore fragrances."},
+
+    // HOME
+
+    {id:"lamps",name:"Table Lamps",category:"home",query:"table lamp",icon:"fa-lightbulb",description:"Browse home lighting."},
+    {id:"bedsheets",name:"Bedsheets",category:"home",query:"bedsheet set",icon:"fa-bed",description:"Explore bedding sets."},
+    {id:"curtains",name:"Curtains",category:"home",query:"curtains for home",icon:"fa-table-cells",description:"Browse home curtains."},
+    {id:"organizers",name:"Storage Organizers",category:"home",query:"home storage organizer",icon:"fa-boxes-stacked",description:"Find home organization products."},
+    {id:"walldecor",name:"Wall Decor",category:"home",query:"wall decor",icon:"fa-image",description:"Explore home decoration."},
+
+    // KITCHEN
+
+    {id:"mixer",name:"Mixer Grinders",category:"kitchen",query:"mixer grinder",icon:"fa-blender",description:"Browse kitchen mixer grinders."},
+    {id:"airfryer",name:"Air Fryers",category:"kitchen",query:"air fryer",icon:"fa-fire-burner",description:"Explore air fryers."},
+    {id:"cookware",name:"Cookware Sets",category:"kitchen",query:"cookware set",icon:"fa-kitchen-set",description:"Browse cookware."},
+    {id:"bottles",name:"Water Bottles",category:"kitchen",query:"water bottle",icon:"fa-bottle-water",description:"Find reusable bottles."},
+    {id:"coffee",name:"Coffee Makers",category:"kitchen",query:"coffee maker machine",icon:"fa-mug-hot",description:"Explore coffee machines."},
+
+    // FITNESS
+
+    {id:"dumbbells",name:"Dumbbells",category:"fitness",query:"dumbbells",icon:"fa-dumbbell",description:"Browse strength training equipment."},
+    {id:"yogamat",name:"Yoga Mats",category:"fitness",query:"yoga mat",icon:"fa-person-praying",description:"Explore yoga mats."},
+    {id:"bands",name:"Resistance Bands",category:"fitness",query:"resistance bands workout",icon:"fa-arrows-left-right",description:"Find resistance workout bands."},
+    {id:"gymbag",name:"Gym Bags",category:"fitness",query:"gym bag",icon:"fa-bag-shopping",description:"Browse gym bags."},
+    {id:"cycle",name:"Exercise Cycles",category:"fitness",query:"exercise cycle",icon:"fa-bicycle",description:"Explore indoor exercise cycles."},
+
+    // GAMING
+
+    {id:"gamingmouse",name:"Gaming Mouse",category:"gaming",query:"gaming mouse",icon:"fa-computer-mouse",description:"Browse gaming mouse options."},
+    {id:"gamingheadset",name:"Gaming Headsets",category:"gaming",query:"gaming headset",icon:"fa-headset",description:"Explore gaming headsets."},
+    {id:"controller",name:"Game Controllers",category:"gaming",query:"wireless game controller",icon:"fa-gamepad",description:"Browse game controllers."},
+    {id:"gamingchair",name:"Gaming Chairs",category:"gaming",query:"gaming chair",icon:"fa-chair",description:"Explore gaming chairs."},
+
+    // BOOKS
+
+    {id:"selfhelp",name:"Self-Help Books",category:"books",query:"self help books",icon:"fa-book-open",description:"Discover personal development books."},
+    {id:"programming",name:"Programming Books",category:"books",query:"programming books",icon:"fa-code",description:"Browse programming books."},
+    {id:"exambooks",name:"Competitive Exam Books",category:"books",query:"competitive exam preparation books",icon:"fa-graduation-cap",description:"Explore exam preparation books."}
+
+  ];
+
+  // =====================================
+  // WISHLIST STORAGE
+  // =====================================
+
+  function loadWishlist() {
+
+    try {
+
+      const saved = JSON.parse(
+        localStorage.getItem(STORAGE_KEY) || "[]"
       );
+
+      return Array.isArray(saved)
+        ? saved.filter(id => products.some(p => p.id === id))
+        : [];
+
+    } catch {
+      return [];
     }
 
-    if (sortValue === "high") {
-      sortedCards.sort((a, b) =>
-        Number(b.dataset.price.replace(/,/g, "")) -
-        Number(a.dataset.price.replace(/,/g, ""))
+  }
+
+  let wishlist = loadWishlist();
+
+  function saveWishlist() {
+
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(wishlist)
       );
+    } catch (error) {
+      console.warn("Could not save wishlist.", error);
     }
 
-    if (sortValue === "name") {
-      sortedCards.sort((a, b) =>
-        a.dataset.name.localeCompare(b.dataset.name)
-      );
-    }
+  }
 
-    sortedCards.forEach(card => {
+  // =====================================
+  // AMAZON AFFILIATE LINK
+  // =====================================
 
-      productGrid.appendChild(card);
+  function amazonSearchUrl(query) {
 
-      const name = (card.dataset.name || "").toLowerCase();
-      const details = card.textContent.toLowerCase();
-      const category = card.dataset.category;
-      const store = card.dataset.store;
+    const url = new URL("https://www.amazon.in/s");
 
-      const matchesSearch =
-        name.includes(searchText) || details.includes(searchText);
+    url.searchParams.set("k", query);
+    url.searchParams.set("tag", AMAZON_TAG);
+
+    return url.toString();
+
+  }
+
+  // =====================================
+  // PRODUCT CARD
+  // =====================================
+
+  function createProductCard(product) {
+
+    const card = document.createElement("article");
+
+    card.className = "product-card";
+    card.dataset.id = product.id;
+
+    const art = document.createElement("div");
+    art.className = "product-art";
+
+    const tag = document.createElement("span");
+    tag.className = "product-tag";
+    tag.textContent = product.category;
+
+    const heart = document.createElement("button");
+
+    heart.type = "button";
+    heart.className = "heart-btn";
+    heart.dataset.wishlist = product.id;
+
+    const liked = wishlist.includes(product.id);
+
+    heart.setAttribute("aria-label",
+      liked ? "Remove from saved items" : "Save item"
+    );
+
+    heart.setAttribute("aria-pressed", String(liked));
+
+    heart.innerHTML = liked
+      ? '<i class="fa-solid fa-heart"></i>'
+      : '<i class="fa-regular fa-heart"></i>';
+
+    const icon = document.createElement("i");
+
+    icon.className = "fa-solid " + product.icon;
+    icon.setAttribute("aria-hidden", "true");
+
+    art.append(tag, heart, icon);
+
+    const info = document.createElement("div");
+    info.className = "product-info";
+
+    const meta = document.createElement("div");
+    meta.className = "product-meta";
+    meta.textContent = "AMZADORA SEARCH";
+
+    const title = document.createElement("h3");
+    title.textContent = product.name;
+
+    const description = document.createElement("p");
+    description.textContent = product.description;
+
+    const footer = document.createElement("div");
+    footer.className = "product-footer";
+
+    const store = document.createElement("span");
+    store.className = "store";
+    store.innerHTML = '<i class="fa-brands fa-amazon"></i> Search Amazon';
+
+    const buy = document.createElement("a");
+
+    buy.className = "buy-now";
+    buy.href = amazonSearchUrl(product.query);
+    buy.target = "_blank";
+    buy.rel = "sponsored nofollow noopener noreferrer";
+
+    buy.innerHTML =
+      'View on Amazon <i class="fa-solid fa-arrow-up-right-from-square"></i>';
+
+    footer.append(store, buy);
+
+    info.append(meta, title, description, footer);
+
+    card.append(art, info);
+
+    return card;
+
+  }
+
+  // =====================================
+  // SEARCH AND FILTER
+  // =====================================
+
+  const grid = $("productGrid");
+  const searchInput = $("searchInput");
+  const searchForm = $("searchForm");
+  const sortSelect = $("sortProducts");
+  const resultsCount = $("resultsCount");
+  const emptyState = $("emptyState");
+
+  const categoryButtons =
+    Array.from(document.querySelectorAll(".category"));
+
+  let activeCategory = "all";
+
+  function renderProducts() {
+
+    const term = (searchInput?.value || "")
+      .trim()
+      .toLowerCase();
+
+    let visible = products.filter(product => {
 
       const matchesCategory =
-        selectedCategory === "all" ||
-        category === selectedCategory;
+        activeCategory === "all" ||
+        product.category === activeCategory;
 
-      const matchesStore =
-        selectedStore === "all" ||
-        store === selectedStore;
+      const searchable = (
+        product.name + " " +
+        product.description + " " +
+        product.category + " " +
+        product.query
+      ).toLowerCase();
 
-      const show =
-        matchesSearch && matchesCategory && matchesStore;
-
-      card.style.display = show ? "" : "none";
-
-      if (show) visibleCount++;
+      return matchesCategory && searchable.includes(term);
 
     });
+
+    if (sortSelect?.value === "name") {
+
+      visible.sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+
+    }
+
+    if (grid) {
+      grid.replaceChildren(...visible.map(createProductCard));
+    }
 
     if (resultsCount) {
       resultsCount.textContent =
-        "Showing " + visibleCount + " products";
+        "Showing " + visible.length +
+        " of " + products.length + " product searches";
     }
 
-    // NO PRODUCTS MESSAGE
-
-    let emptyMessage = get("emptyState");
-
-    if (!emptyMessage) {
-
-      emptyMessage = document.createElement("div");
-      emptyMessage.id = "emptyState";
-      emptyMessage.className = "empty-state";
-
-      emptyMessage.innerHTML = `
-        <i class="fa-solid fa-magnifying-glass fa-2x"></i>
-        <h3>No Products Found</h3>
-        <p>Try another product name or change your filters.</p>
-        <button type="button" id="resetFilters">
-          Reset Filters
-        </button>
-      `;
-
-      productGrid.after(emptyMessage);
+    if (emptyState) {
+      emptyState.hidden = visible.length !== 0;
     }
-
-    emptyMessage.hidden = visibleCount !== 0;
 
   }
 
-  if (searchInput) {
+  searchForm?.addEventListener("submit", function(event) {
 
-    searchInput.addEventListener("input", filterProducts);
+    event.preventDefault();
 
-    searchInput.addEventListener("keydown", function (event) {
-      if (event.key === "Enter") {
-        filterProducts();
-      }
+    renderProducts();
+
+    $("products")?.scrollIntoView({
+      behavior: "smooth"
     });
 
-  }
+  });
 
-  if (searchButton) {
-    searchButton.addEventListener("click", filterProducts);
-  }
+  searchInput?.addEventListener("input", renderProducts);
 
-  if (sortSelect) {
-    sortSelect.addEventListener("change", filterProducts);
-  }
+  sortSelect?.addEventListener("change", renderProducts);
 
-  // CATEGORY FILTER
+  // CATEGORY BUTTONS
 
   categoryButtons.forEach(button => {
 
-    button.addEventListener("click", function () {
+    button.addEventListener("click", function() {
 
-      categoryButtons.forEach(btn =>
-        btn.classList.remove("active")
-      );
+      activeCategory = this.dataset.category || "all";
 
-      this.classList.add("active");
+      categoryButtons.forEach(btn => {
+        btn.classList.toggle("active", btn === this);
+      });
 
-      selectedCategory = this.dataset.category || "all";
-
-      filterProducts();
-
-    });
-
-  });
-
-  // STORE FILTER
-
-  function selectStore(storeName) {
-
-    selectedStore = storeName;
-
-    storeButtons.forEach(button => {
-
-      button.classList.toggle(
-        "selected",
-        button.dataset.store === storeName
-      );
-
-      button.classList.toggle(
-        "active",
-        button.dataset.store === storeName
-      );
-
-    });
-
-    filterProducts();
-
-  }
-
-  storeButtons.forEach(button => {
-
-    button.addEventListener("click", function () {
-      selectStore(this.dataset.store || "all");
-    });
-
-  });
-
-  // AMAZON / FLIPKART / MYNTRA LOGOS
-
-  const amazonLogo = document.querySelector(".amazon-logo");
-  const flipkartLogo = document.querySelector(".flipkart-logo");
-  const myntraLogo = document.querySelector(".myntra-logo");
-
-  [
-    [amazonLogo, "amazon"],
-    [flipkartLogo, "flipkart"],
-    [myntraLogo, "myntra"]
-  ].forEach(([logo, store]) => {
-
-    if (!logo) return;
-
-    logo.style.cursor = "pointer";
-
-    logo.addEventListener("click", function () {
-
-      selectStore(store);
-
-      const productsSection = get("products");
-
-      if (productsSection) {
-        productsSection.scrollIntoView({
-          behavior: "smooth"
-        });
-      }
+      renderProducts();
 
     });
 
@@ -227,370 +335,204 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // RESET FILTERS
 
-  document.addEventListener("click", function (event) {
+  $("resetFilters")?.addEventListener("click", function() {
 
-    if (!event.target.closest("#resetFilters")) return;
+    if (searchInput) {
+      searchInput.value = "";
+    }
 
-    if (searchInput) searchInput.value = "";
-    if (sortSelect) sortSelect.value = "default";
+    activeCategory = "all";
 
-    selectedCategory = "all";
-    selectedStore = "all";
+    if (sortSelect) {
+      sortSelect.value = "default";
+    }
 
     categoryButtons.forEach(button => {
-
       button.classList.toggle(
         "active",
         button.dataset.category === "all"
       );
-
     });
 
-    selectStore("all");
+    renderProducts();
 
   });
 
-
-  // ======================================
+  // =====================================
   // WISHLIST
-  // ======================================
+  // =====================================
 
-  let wishlist = [];
+  function toggleWishlist(id) {
 
-  try {
+    if (wishlist.includes(id)) {
 
-    wishlist = JSON.parse(
-      localStorage.getItem("amzadWishlist") || "[]"
-    );
+      wishlist = wishlist.filter(item => item !== id);
 
-    if (!Array.isArray(wishlist)) wishlist = [];
+    } else {
 
-  } catch (error) {
-    wishlist = [];
-  }
+      wishlist.push(id);
 
-  function saveWishlist() {
+    }
 
-    localStorage.setItem(
-      "amzadWishlist",
-      JSON.stringify(wishlist)
-    );
+    saveWishlist();
+    renderProducts();
+    renderWishlist();
 
   }
 
-  function updateWishlist() {
+  grid?.addEventListener("click", function(event) {
 
-    const count = get("wishlistCount");
+    const heart = event.target.closest("[data-wishlist]");
+
+    if (!heart) return;
+
+    toggleWishlist(heart.dataset.wishlist);
+
+  });
+
+  function renderWishlist() {
+
+    const count = $("wishlistCount");
+    const saved = $("savedItems");
 
     if (count) {
       count.textContent = wishlist.length;
     }
 
-    document.querySelectorAll(".product-card").forEach(card => {
+    if (!saved) return;
 
-      const name = card.dataset.name;
-      const heart = card.querySelector(".heart-btn");
+    saved.replaceChildren();
 
-      if (!heart) return;
+    if (wishlist.length === 0) {
 
-      const liked = wishlist.includes(name);
+      const message = document.createElement("p");
 
-      heart.classList.toggle("liked", liked);
+      message.className = "saved-empty";
+      message.textContent =
+        "You have not saved any products yet. Tap the heart on a product to save it.";
 
-      heart.innerHTML = liked
-        ? '<i class="fa-solid fa-heart"></i>'
-        : '<i class="fa-regular fa-heart"></i>';
+      saved.appendChild(message);
 
-    });
+      return;
 
-  }
-
-  document.addEventListener("click", function (event) {
-
-    const heart = event.target.closest(".heart-btn");
-
-    if (!heart) return;
-
-    const card = heart.closest(".product-card");
-
-    if (!card) return;
-
-    const name = card.dataset.name;
-
-    if (wishlist.includes(name)) {
-      wishlist = wishlist.filter(item => item !== name);
-    } else {
-      wishlist.push(name);
     }
 
-    saveWishlist();
-    updateWishlist();
+    wishlist.forEach(id => {
 
-  });
+      const product = products.find(item => item.id === id);
 
-  const wishlistHeader = get("wishlistHeader");
+      if (!product) return;
 
-  if (wishlistHeader) {
+      const row = document.createElement("div");
+      row.className = "saved-item";
 
-    wishlistHeader.addEventListener("click", function () {
+      const name = document.createElement("strong");
+      name.textContent = product.name;
 
-      if (wishlist.length === 0) {
-        alert("Your Wishlist is empty.");
-        return;
-      }
+      const actions = document.createElement("div");
 
-      alert(
-        "Your Wishlist:\n\n" +
-        wishlist.join("\n")
-      );
+      const open = document.createElement("a");
 
-    });
-
-  }
-
-
-  // ======================================
-  // SAVED SHOPPING ITEMS
-  // ======================================
-
-  let cart = [];
-
-  try {
-
-    cart = JSON.parse(
-      localStorage.getItem("newmartCart") || "[]"
-    );
-
-    if (!Array.isArray(cart)) cart = [];
-
-  } catch (error) {
-    cart = [];
-  }
-
-  function updateCart() {
-
-    const cartItems = get("cartItems");
-    const cartTotal = get("cartTotal");
-
-    let total = 0;
-
-    if (!cartItems) return;
-
-    cartItems.innerHTML = "";
-
-    if (cart.length === 0) {
-      cartItems.innerHTML =
-        "<p>Your saved list is empty.</p>";
-    }
-
-    cart.forEach((item, index) => {
-
-      const price = Number(item.price) || 0;
-      const quantity = Number(item.quantity) || 1;
-
-      total += price * quantity;
-
-      const div = document.createElement("div");
-      div.className = "cart-item";
-
-      const name = document.createElement("p");
-
-      name.textContent =
-        item.name + " - ₹" + price.toLocaleString("en-IN");
-
-      const controls = document.createElement("div");
+      open.className = "buy-now";
+      open.href = amazonSearchUrl(product.query);
+      open.target = "_blank";
+      open.rel = "sponsored nofollow noopener noreferrer";
+      open.textContent = "View";
 
       const remove = document.createElement("button");
 
       remove.type = "button";
       remove.textContent = "Remove";
 
-      remove.addEventListener("click", function () {
-        cart.splice(index, 1);
-        updateCart();
+      remove.addEventListener("click", function() {
+        toggleWishlist(id);
       });
 
-      controls.appendChild(remove);
+      actions.append(open, remove);
+      row.append(name, actions);
 
-      div.append(name, controls);
-
-      cartItems.appendChild(div);
+      saved.appendChild(row);
 
     });
 
-    if (cartTotal) {
-      cartTotal.textContent =
-        "₹" + total.toLocaleString("en-IN");
+  }
+
+  $("clearWishlist")?.addEventListener("click", function() {
+
+    if (wishlist.length === 0) {
+      alert("Your saved items list is already empty.");
+      return;
     }
 
-    localStorage.setItem(
-      "newmartCart",
-      JSON.stringify(cart)
+    if (confirm("Remove all saved items?")) {
+
+      wishlist = [];
+
+      saveWishlist();
+      renderProducts();
+      renderWishlist();
+
+    }
+
+  });
+
+  // =====================================
+  // MOBILE MENU
+  // =====================================
+
+  const mobileMenu = $("mobileMenu");
+  const mainNav = $("mainNav");
+
+  mobileMenu?.addEventListener("click", function() {
+
+    const isOpen = mainNav.classList.toggle("active");
+
+    mobileMenu.setAttribute(
+      "aria-expanded",
+      String(isOpen)
     );
 
-  }
+    const icon = mobileMenu.querySelector("i");
 
-  const clearCart = get("clearCart");
-
-  if (clearCart) {
-
-    clearCart.addEventListener("click", function () {
-
-      if (cart.length === 0) {
-        alert("Your saved list is already empty.");
-        return;
-      }
-
-      if (confirm("Clear all saved items?")) {
-        cart = [];
-        updateCart();
-      }
-
-    });
-
-  }
-
-
-  // ======================================
-  // MOBILE MENU
-  // ======================================
-
-  const mobileMenu = get("mobileMenu");
-  const mainNav = get("mainNav");
-
-  if (mobileMenu && mainNav) {
-
-    mobileMenu.addEventListener("click", function () {
-
-      mainNav.classList.toggle("active");
-
-      const icon = mobileMenu.querySelector("i");
-
-      if (icon) {
-        icon.classList.toggle("fa-bars");
-        icon.classList.toggle("fa-xmark");
-      }
-
-    });
-
-    mainNav.querySelectorAll("a").forEach(link => {
-
-      link.addEventListener("click", function () {
-
-        mainNav.classList.remove("active");
-
-        const icon = mobileMenu.querySelector("i");
-
-        if (icon) {
-          icon.classList.add("fa-bars");
-          icon.classList.remove("fa-xmark");
-        }
-
-      });
-
-    });
-
-  }
-
-
-  // ======================================
-  // SHOPPING SLIDER
-  // ======================================
-
-  const slider = get("shoppingSlider");
-
-  if (slider) {
-
-    const slides = slider.querySelectorAll(".slide");
-    const dotsContainer = slider.querySelector(".slider-dots");
-    const prev = slider.querySelector(".slider-prev");
-    const next = slider.querySelector(".slider-next");
-
-    let current = 0;
-    let timer;
-
-    if (dotsContainer && slides.length > 0) {
-
-      dotsContainer.innerHTML = "";
-
-      slides.forEach((slide, index) => {
-
-        const dot = document.createElement("button");
-
-        dot.type = "button";
-
-        dot.setAttribute(
-          "aria-label",
-          "Go to slide " + (index + 1)
-        );
-
-        dot.addEventListener("click", function () {
-          showSlide(index);
-          restartTimer();
-        });
-
-        dotsContainer.appendChild(dot);
-
-      });
-
-      const dots = dotsContainer.querySelectorAll("button");
-
-      function showSlide(index) {
-
-        current = (index + slides.length) % slides.length;
-
-        slides.forEach((slide, i) => {
-          slide.classList.toggle("active", i === current);
-        });
-
-        dots.forEach((dot, i) => {
-          dot.classList.toggle("active", i === current);
-        });
-
-      }
-
-      function restartTimer() {
-
-        clearInterval(timer);
-
-        timer = setInterval(function () {
-          showSlide(current + 1);
-        }, 4000);
-
-      }
-
-      if (prev) {
-
-        prev.addEventListener("click", function () {
-          showSlide(current - 1);
-          restartTimer();
-        });
-
-      }
-
-      if (next) {
-
-        next.addEventListener("click", function () {
-          showSlide(current + 1);
-          restartTimer();
-        });
-
-      }
-
-      showSlide(0);
-      restartTimer();
-
+    if (icon) {
+      icon.className = isOpen
+        ? "fa-solid fa-xmark"
+        : "fa-solid fa-bars";
     }
 
+  });
+
+  mainNav?.querySelectorAll("a").forEach(link => {
+
+    link.addEventListener("click", function() {
+
+      mainNav.classList.remove("active");
+
+      mobileMenu?.setAttribute("aria-expanded", "false");
+
+      const icon = mobileMenu?.querySelector("i");
+
+      if (icon) {
+        icon.className = "fa-solid fa-bars";
+      }
+
+    });
+
+  });
+
+  // =====================================
+  // FOOTER YEAR
+  // =====================================
+
+  const year = $("year");
+
+  if (year) {
+    year.textContent = new Date().getFullYear();
   }
 
-
-  // ======================================
   // INITIAL LOAD
-  // ======================================
 
-  updateCart();
-  updateWishlist();
-  filterProducts();
+  renderProducts();
+  renderWishlist();
 
 });
