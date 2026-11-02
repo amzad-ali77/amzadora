@@ -1265,3 +1265,14 @@ select:focus-visible {
   }
 
 }
+.founder {
+  text-align: center;
+  margin: 15px 0;
+  color: #aaa;
+  font-size: 14px;
+}
+
+.founder strong {
+  color: #67e8c0;
+  font-weight: 700;
+}
