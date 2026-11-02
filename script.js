@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const products = [
     // ELECTRONICS
-    {id:"headphones",name:"Wireless Headphones",category:"electronics",query:"wireless bluetooth headphones",icon:"fa-headphones",image:"",description:"Explore wireless and Bluetooth headphones."},
+    {id:"headphones",name:"Wireless Headphones",category:"electronics",query:"wireless bluetooth headphones",icon:"fa-headphones",image:"https://github.com/amzad-ali77/amzadora/blob/main/headphone.jpg",description:"Explore wireless and Bluetooth headphones."},
     {id:"speaker",name:"Bluetooth Speakers",category:"electronics",query:"portable bluetooth speaker",icon:"fa-volume-high",image:"images/speaker.jpg",description:"Browse portable speakers."},
     {id:"smartwatch",name:"Smart Watches",category:"electronics",query:"smart watch",icon:"fa-clock",image:"images/smartwatch.jpg",description:"Explore smart and fitness watches."},
     {id:"powerbank",name:"Power Banks",category:"electronics",query:"power bank",icon:"fa-battery-full",image:"images/powerbank.jpg",description:"Find portable charging options."},
