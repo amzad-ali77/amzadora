@@ -4,17 +4,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AMZADORA - Discover electronics, fashion, beauty and everyday products from top shopping stores.">
+  <meta name="description" content="AMZADORA - Discover electronics, fashion, beauty and everyday products from popular shopping stores.">
   <meta name="theme-color" content="#131921">
   <title>AMZADORA | Shop Smarter. Live Better.</title>
+
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="stylesheet" href="style.css">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <script src="script.js" defer></script>
 </head>
+
 <body>
 
   <div class="top-strip">
@@ -23,7 +27,8 @@
 
   <header class="header">
     <div class="header-main">
-      <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">
+
+      <button class="mobile-menu" id="mobileMenu" type="button" aria-label="Open menu">
         <i class="fa-solid fa-bars"></i>
       </button>
 
@@ -31,7 +36,9 @@
 
       <form class="search-box" id="searchForm">
         <input type="search" id="searchInput" placeholder="Search products, brands and more..." autocomplete="off">
-        <button type="submit" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button type="submit" aria-label="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
       </form>
 
       <a href="#wishlist" class="header-wishlist">
@@ -39,6 +46,7 @@
         <span>Wishlist</span>
         <b id="wishlistCount">0</b>
       </a>
+
     </div>
 
     <nav class="main-nav" id="mainNav">
@@ -53,61 +61,119 @@
   </header>
 
   <main>
+
     <section class="hero">
       <div class="hero-content">
-        <span class="hero-label"><i class="fa-solid fa-star"></i> YOUR SMART SHOPPING DESTINATION</span>
+        <span class="hero-label">
+          <i class="fa-solid fa-star"></i> YOUR SMART SHOPPING DESTINATION
+        </span>
+
         <h1>Shop Smarter.<br><span>Live Better.</span></h1>
+
         <p>Explore amazing products, discover great deals and find your everyday essentials in one place.</p>
-        <a href="#products" class="primary-btn">Explore Products <i class="fa-solid fa-arrow-right"></i></a>
+
+        <a href="#products" class="primary-btn">
+          Explore Products <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
         <div class="hero-points">
           <span><i class="fa-solid fa-check-circle"></i> Multiple stores</span>
           <span><i class="fa-solid fa-check-circle"></i> Easy discovery</span>
         </div>
       </div>
+
       <div class="hero-visual">
         <div class="hero-circle"></div>
         <img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=900&q=85" alt="Online shopping deals">
-        <div class="hero-floating"><i class="fa-solid fa-bag-shopping"></i><span>Smart choices<br><b>Start here!</b></span></div>
+        <div class="hero-floating">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span>Smart choices<br><b>Start here!</b></span>
+        </div>
       </div>
     </section>
 
     <section class="benefits">
-      <div><i class="fa-solid fa-store"></i><span><b>Multiple Stores</b><small>Explore popular platforms</small></span></div>
-      <div><i class="fa-solid fa-magnifying-glass"></i><span><b>Easy Discovery</b><small>Find products quickly</small></span></div>
-      <div><i class="fa-solid fa-heart"></i><span><b>Save Favorites</b><small>Keep your wishlist</small></span></div>
-      <div><i class="fa-solid fa-mobile-screen"></i><span><b>Mobile Friendly</b><small>Shop from anywhere</small></span></div>
+      <div>
+        <i class="fa-solid fa-store"></i>
+        <span><b>Multiple Stores</b><small>Explore popular platforms</small></span>
+      </div>
+      <div>
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span><b>Easy Discovery</b><small>Find products quickly</small></span>
+      </div>
+      <div>
+        <i class="fa-solid fa-heart"></i>
+        <span><b>Save Favorites</b><small>Keep your wishlist</small></span>
+      </div>
+      <div>
+        <i class="fa-solid fa-mobile-screen"></i>
+        <span><b>Mobile Friendly</b><small>Shop from anywhere</small></span>
+      </div>
     </section>
 
     <section class="categories-section" id="categories">
       <div class="section-heading">
-        <div><span class="eyebrow">EXPLORE OUR COLLECTION</span><h2>Shop by Category</h2></div>
+        <div>
+          <span class="eyebrow">EXPLORE OUR COLLECTION</span>
+          <h2>Shop by Category</h2>
+        </div>
         <a href="#products">View all <i class="fa-solid fa-arrow-right"></i></a>
       </div>
+
       <div class="category-grid">
-        <button class="category-card active" data-category="all"><i class="fa-solid fa-border-all"></i><span>All</span></button>
-        <button class="category-card" data-category="electronics"><i class="fa-solid fa-laptop"></i><span>Electronics</span></button>
-        <button class="category-card" data-category="mobiles"><i class="fa-solid fa-mobile-screen"></i><span>Mobiles</span></button>
-        <button class="category-card" data-category="fashion"><i class="fa-solid fa-shirt"></i><span>Fashion</span></button>
-        <button class="category-card" data-category="shoes"><i class="fa-solid fa-shoe-prints"></i><span>Shoes</span></button>
-        <button class="category-card" data-category="beauty"><i class="fa-solid fa-spa"></i><span>Beauty</span></button>
-        <button class="category-card" data-category="home"><i class="fa-solid fa-couch"></i><span>Home</span></button>
-        <button class="category-card" data-category="fitness"><i class="fa-solid fa-dumbbell"></i><span>Fitness</span></button>
+        <button class="category-card active" data-category="all" type="button">
+          <i class="fa-solid fa-border-all"></i><span>All</span>
+        </button>
+        <button class="category-card" data-category="electronics" type="button">
+          <i class="fa-solid fa-laptop"></i><span>Electronics</span>
+        </button>
+        <button class="category-card" data-category="mobiles" type="button">
+          <i class="fa-solid fa-mobile-screen"></i><span>Mobiles</span>
+        </button>
+        <button class="category-card" data-category="fashion" type="button">
+          <i class="fa-solid fa-shirt"></i><span>Fashion</span>
+        </button>
+        <button class="category-card" data-category="shoes" type="button">
+          <i class="fa-solid fa-shoe-prints"></i><span>Shoes</span>
+        </button>
+        <button class="category-card" data-category="beauty" type="button">
+          <i class="fa-solid fa-spa"></i><span>Beauty</span>
+        </button>
+        <button class="category-card" data-category="home" type="button">
+          <i class="fa-solid fa-couch"></i><span>Home</span>
+        </button>
+        <button class="category-card" data-category="kitchen" type="button">
+          <i class="fa-solid fa-kitchen-set"></i><span>Kitchen</span>
+        </button>
+        <button class="category-card" data-category="fitness" type="button">
+          <i class="fa-solid fa-dumbbell"></i><span>Fitness</span>
+        </button>
+        <button class="category-card" data-category="gaming" type="button">
+          <i class="fa-solid fa-gamepad"></i><span>Gaming</span>
+        </button>
+        <button class="category-card" data-category="books" type="button">
+          <i class="fa-solid fa-book"></i><span>Books</span>
+        </button>
       </div>
     </section>
 
     <section class="products-section" id="products">
       <div class="section-heading product-heading">
-        <div><span class="eyebrow">HANDPICKED FOR YOU</span><h2>Discover Products</h2></div>
+        <div>
+          <span class="eyebrow">HANDPICKED FOR YOU</span>
+          <h2>Discover Products</h2>
+        </div>
         <span class="results-count" id="resultsCount">Loading products...</span>
       </div>
 
       <div class="shop-toolbar">
         <div class="store-filters" id="storeFilters">
-          <button class="store-filter active" data-store="all">All Stores</button>
-          <button class="store-filter" data-store="Amazon">Amazon</button>
-          <button class="store-filter" data-store="Flipkart">Flipkart</button>
-          <button class="store-filter" data-store="Myntra">Myntra</button>
+          <button class="store-filter active" data-store="all" type="button">All Stores</button>
+          <button class="store-filter" data-store="Amazon" type="button">Amazon</button>
+          <button class="store-filter" data-store="Flipkart" type="button">Flipkart</button>
+          <button class="store-filter" data-store="Myntra" type="button">Myntra</button>
         </div>
+
         <select id="sortProducts" aria-label="Sort products">
           <option value="default">Sort: Featured</option>
           <option value="low">Price: Low to High</option>
@@ -122,7 +188,7 @@
         <i class="fa-solid fa-box-open"></i>
         <h3>No products found</h3>
         <p>Try another search or select a different category.</p>
-        <button class="primary-btn" id="resetFilters">Show All Products</button>
+        <button class="primary-btn" id="resetFilters" type="button">Show All Products</button>
       </div>
     </section>
 
@@ -138,9 +204,13 @@
 
     <section class="wishlist-section" id="wishlist">
       <div class="section-heading">
-        <div><span class="eyebrow">YOUR PERSONAL COLLECTION</span><h2>My Wishlist <span id="wishlistHeadingCount">(0)</span></h2></div>
-        <button class="clear-btn" id="clearWishlist">Clear Wishlist</button>
+        <div>
+          <span class="eyebrow">YOUR PERSONAL COLLECTION</span>
+          <h2>My Wishlist <span id="wishlistHeadingCount">(0)</span></h2>
+        </div>
+        <button class="clear-btn" id="clearWishlist" type="button">Clear Wishlist</button>
       </div>
+
       <div class="wishlist-grid" id="savedItems">
         <p class="wishlist-empty">Your wishlist is empty. Save products you like!</p>
       </div>
@@ -151,6 +221,7 @@
       <h2>A smarter way to discover products.</h2>
       <p>AMZADORA helps you explore products across popular online shopping platforms. Discover products in one place and visit the retailer to check the latest price and availability.</p>
     </section>
+
   </main>
 
   <footer class="footer" id="footer">
@@ -159,11 +230,29 @@
         <a href="#" class="logo">AMZAD<span>ORA</span></a>
         <p>Discover more. Choose smarter. Shop better.</p>
       </div>
-      <div><h4>Explore</h4><a href="#products">Products</a><a href="#categories">Categories</a><a href="#wishlist">Wishlist</a></div>
-      <div><h4>Information</h4><a href="#about">About Us</a><a href="mailto:amzadraza776@gmail.com">Contact</a></div>
+
+      <div>
+        <h4>Explore</h4>
+        <a href="#products">Products</a>
+        <a href="#categories">Categories</a>
+        <a href="#wishlist">Wishlist</a>
+      </div>
+
+      <div>
+        <h4>Information</h4>
+        <a href="#about">About Us</a>
+        <a href="mailto:amzadraza776@gmail.com">Contact</a>
+      </div>
     </div>
-    <div class="affiliate-note">Affiliate Disclosure: Some links on AMZADORA may be affiliate links. We may earn a commission from qualifying purchases at no additional cost to you. Prices and availability are determined by the retailer.</div>
-    <div class="footer-bottom"><span>© <span id="year"></span> AMZADORA. All rights reserved.</span><span>Made for smarter shopping.</span></div>
+
+    <div class="affiliate-note">
+      Affiliate Disclosure: Some links on AMZADORA may be affiliate links. We may earn a commission from qualifying purchases at no additional cost to you. Prices and availability are determined by the retailer.
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> AMZADORA. All rights reserved.</span>
+      <span>Made for smarter shopping.</span>
+    </div>
   </footer>
 
 </body>
