@@ -1,330 +1,250 @@
 
-
 document.addEventListener("DOMContentLoaded", function () {
   "use strict";
 
-  // =====================================
+  // ==============================
   // AMZADORA - MAIN JAVASCRIPT
-  // =====================================
+  // ==============================
 
-  const AMAZON_TAG = "amzadmart07-21";
-  const STORAGE_KEY = "amzadoraWishlist";
   const $ = (id) => document.getElementById(id);
 
-  // =====================================
-  // PRODUCTS
-  // =====================================
+  const productGrid = $("productGrid");
+  const resultsCount = $("resultsCount");
+  const searchInput = $("searchInput");
+  const sortProducts = $("sortProducts");
+  const wishlistCount = $("wishlistCount");
+  const savedItems = $("savedItems");
 
+  if (!productGrid) {
+    console.error("productGrid element HTML me nahi mila.");
+    return;
+  }
+
+  // AMAZON AFFILIATE TAG
+  const AMAZON_TAG = "amzadmart07-21";
+
+  // PRODUCT DATA
   const products = [
-    // ELECTRONICS
-    {id:"headphones",name:"Wireless Headphones",category:"electronics",query:"wireless bluetooth headphones",icon:"fa-headphones",image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/headphones.jpg",description:"Explore wireless and Bluetooth headphones."},
-    {id:"speaker",name:"Bluetooth Speakers",category:"electronics",query:"portable bluetooth speaker",icon:"fa-volume-high",image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/speaker.jpg",description:"Browse portable speakers."},
-    {id:"smartwatch",name:"Smart Watches",category:"electronics",query:"smart watch",icon:"fa-clock",image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/smartwatch.jpg",description:"Explore smart and fitness watches."},
-    {id:"powerbank",name:"Power Banks",category:"electronics",query:"power bank",icon:"fa-battery-full",image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/powerbank.jpg",description:"Find portable charging options."},
-    {id:"laptop",name:"Laptops",category:"electronics",query:"laptop",icon:"fa-laptop",image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/laptop.jpg",description:"Browse laptops for study and work."},
-    {id:"monitor",name:"Computer Monitors",category:"electronics",query:"computer monitor",icon:"fa-desktop",image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/computermonitoring.jpg",description:"Explore computer monitors."},
-    {id:"keyboard",name:"Wireless Keyboards",category:"electronics",query:"wireless keyboard",icon:"fa-keyboard",image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/wireless%20keyboard.jpg",description:"Browse wireless keyboards."},
-    {id:"mouse",name:"Computer Mouse",category:"electronics",query:"wireless computer mouse",icon:"fa-computer-mouse",image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/mouse.jpg",description:"Find computer mouse options."},
-    {id:"earbuds",name:"Bluetooth Earbuds",category:"electronics",query:"bluetooth earbuds",icon:"fa-ear-listen",image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/earbuds.jpg",description:"Explore wireless earbuds."},
-    {id:"camera",name:"Digital Cameras",category:"electronics",query:"digital camera",icon:"fa-camera",image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/camera.jpg",description:"Browse cameras and photography equipment."},
+    {id:"headphones",name:"Wireless Headphones",category:"electronics",price:1499,store:"Amazon",icon:"fa-headphones",image:"https://placehold.co/500x400?text=Headphones",tag:"Popular"},
+    {id:"speaker",name:"Bluetooth Speakers",category:"electronics",price:999,store:"Flipkart",icon:"fa-volume-high",image:"https://placehold.co/500x400?text=Bluetooth+Speaker"},
+    {id:"watch",name:"Smart Watch",category:"electronics",price:1999,store:"Amazon",icon:"fa-clock",image:"https://placehold.co/500x400?text=Smart+Watch",tag:"Trending"},
+    {id:"powerbank",name:"Power Bank",category:"electronics",price:899,store:"Flipkart",icon:"fa-battery-full",image:"https://placehold.co/500x400?text=Power+Bank"},
+    {id:"laptop",name:"Laptop",category:"electronics",price:45999,store:"Amazon",icon:"fa-laptop",image:"https://placehold.co/500x400?text=Laptop"},
+    {id:"monitor",name:"Computer Monitor",category:"electronics",price:8999,store:"Flipkart",icon:"fa-desktop",image:"https://placehold.co/500x400?text=Monitor"},
+    {id:"keyboard",name:"Wireless Keyboard",category:"electronics",price:799,store:"Amazon",icon:"fa-keyboard",image:"https://placehold.co/500x400?text=Keyboard"},
+    {id:"mouse",name:"Computer Mouse",category:"electronics",price:399,store:"Flipkart",icon:"fa-computer-mouse",image:"https://placehold.co/500x400?text=Mouse"},
+    {id:"earbuds",name:"Bluetooth Earbuds",category:"electronics",price:1299,store:"Amazon",icon:"fa-ear-listen",image:"https://placehold.co/500x400?text=Earbuds"},
+    {id:"camera",name:"Digital Camera",category:"electronics",price:24999,store:"Amazon",icon:"fa-camera",image:"https://placehold.co/500x400?text=Camera"},
 
-    // MOBILES
-    {id:"phones",name:"Smartphones",category:"mobiles",query:"smartphone",icon:"fa-mobile-screen-button",image:"",description:"Explore smartphones."},
-    {id:"cases",name:"Mobile Covers",category:"mobiles",query:"mobile phone case cover",icon:"fa-mobile",image:"",description:"Browse protective phone covers."},
-    {id:"screen",name:"Screen Protectors",category:"mobiles",query:"mobile screen protector",icon:"fa-shield-halved",image:"",description:"Find screen protection accessories."},
-    {id:"chargers",name:"Mobile Chargers",category:"mobiles",query:"fast mobile charger",icon:"fa-plug",image:"",description:"Explore mobile chargers."},
-    {id:"tripods",name:"Mobile Tripods",category:"mobiles",query:"mobile phone tripod",icon:"fa-camera-retro",image:"",description:"Browse phone tripods and stands."},
+    {id:"mobile",name:"Smartphone",category:"mobiles",price:14999,store:"Flipkart",icon:"fa-mobile-screen",image:"https://placehold.co/500x400?text=Smartphone"},
+    {id:"cover",name:"Mobile Back Cover",category:"mobiles",price:299,store:"Amazon",icon:"fa-mobile",image:"https://placehold.co/500x400?text=Phone+Cover"},
 
-    // FASHION
-    {id:"tshirts",name:"Men's T-Shirts",category:"fashion",query:"mens t shirts",icon:"fa-shirt",image:"images/tshirts.jpg",description:"Explore casual T-shirts."},
-    {id:"shirts",name:"Men's Shirts",category:"fashion",query:"mens casual shirts",icon:"fa-user-tie",image:"images/shirts.jpg",description:"Browse casual and formal shirts."},
-    {id:"kurtas",name:"Women's Kurtas",category:"fashion",query:"womens kurta",icon:"fa-person-dress",image:"images/kurtas.jpg",description:"Explore women's kurtas."},
-    {id:"jeans",name:"Jeans",category:"fashion",query:"jeans for men and women",icon:"fa-person",image:"images/jeans.jpg",description:"Browse different jeans styles."},
-    {id:"backpacks",name:"Backpacks",category:"fashion",query:"backpack bag",icon:"fa-backpack",image:"images/backpacks.jpg",description:"Find bags for college and travel."},
+    {id:"tshirt",name:"Men Casual T-Shirt",category:"fashion",price:499,store:"Myntra",icon:"fa-shirt",image:"https://placehold.co/500x400?text=T-Shirt"},
+    {id:"jeans",name:"Men Denim Jeans",category:"fashion",price:999,store:"Myntra",icon:"fa-person",image:"https://placehold.co/500x400?text=Jeans"},
+    {id:"jacket",name:"Stylish Jacket",category:"fashion",price:1499,store:"Flipkart",icon:"fa-shirt",image:"https://placehold.co/500x400?text=Jacket"},
 
-    // SHOES
-    {id:"running",name:"Running Shoes",category:"shoes",query:"running shoes",icon:"fa-shoe-prints",image:"images/running.jpg",description:"Explore running shoes."},
-    {id:"sneakers",name:"Sneakers",category:"shoes",query:"sneakers shoes",icon:"fa-shoe-prints",image:"images/sneakers.jpg",description:"Browse casual sneakers."},
-    {id:"formal",name:"Formal Shoes",category:"shoes",query:"formal shoes",icon:"fa-shoe-prints",image:"images/formal.jpg",description:"Explore formal footwear."},
-    {id:"sandals",name:"Sandals & Slippers",category:"shoes",query:"sandals slippers",icon:"fa-socks",image:"images/sandals.jpg",description:"Browse everyday footwear."},
+    {id:"shoes",name:"Running Shoes",category:"shoes",price:1799,store:"Myntra",icon:"fa-shoe-prints",image:"https://placehold.co/500x400?text=Running+Shoes"},
+    {id:"sneakers",name:"Casual Sneakers",category:"shoes",price:1299,store:"Flipkart",icon:"fa-shoe-prints",image:"https://placehold.co/500x400?text=Sneakers"},
 
-    // BEAUTY
-    {id:"facewash",name:"Face Wash",category:"beauty",query:"face wash",icon:"fa-pump-soap",image:"images/facewash.jpg",description:"Explore face cleansers."},
-    {id:"moisturizer",name:"Moisturizers",category:"beauty",query:"face moisturizer",icon:"fa-droplet",image:"images/moisturizer.jpg",description:"Browse face moisturizers."},
-    {id:"sunscreen",name:"Sunscreen",category:"beauty",query:"sunscreen spf",icon:"fa-sun",image:"images/sunscreen.jpg",description:"Explore sunscreen options."},
-    {id:"haircare",name:"Hair Care",category:"beauty",query:"hair care products",icon:"fa-wind",image:"images/haircare.jpg",description:"Browse hair care products."},
-    {id:"perfume",name:"Perfumes",category:"beauty",query:"perfume",icon:"fa-spray-can-sparkles",image:"images/perfume.jpg",description:"Explore fragrances."},
+    {id:"skincare",name:"Skincare Kit",category:"beauty",price:899,store:"Amazon",icon:"fa-spa",image:"https://placehold.co/500x400?text=Skincare"},
+    {id:"perfume",name:"Premium Perfume",category:"beauty",price:699,store:"Myntra",icon:"fa-spray-can-sparkles",image:"https://placehold.co/500x400?text=Perfume"},
 
-    // HOME
-    {id:"lamps",name:"Table Lamps",category:"home",query:"table lamp",icon:"fa-lightbulb",image:"images/lamps.jpg",description:"Browse home lighting."},
-    {id:"bedsheets",name:"Bedsheets",category:"home",query:"bedsheet set",icon:"fa-bed",image:"images/bedsheets.jpg",description:"Explore bedding sets."},
-    {id:"curtains",name:"Curtains",category:"home",query:"curtains for home",icon:"fa-table-cells",image:"images/curtains.jpg",description:"Browse home curtains."},
-    {id:"organizers",name:"Storage Organizers",category:"home",query:"home storage organizer",icon:"fa-boxes-stacked",image:"images/organizers.jpg",description:"Find home organization products."},
-    {id:"walldecor",name:"Wall Decor",category:"home",query:"wall decor",icon:"fa-image",image:"images/walldecor.jpg",description:"Explore home decoration."},
+    {id:"lamp",name:"Home Decor Lamp",category:"home",price:699,store:"Flipkart",icon:"fa-lightbulb",image:"https://placehold.co/500x400?text=Decor+Lamp"},
+    {id:"bedsheet",name:"Bedsheet Set",category:"home",price:599,store:"Amazon",icon:"fa-bed",image:"https://placehold.co/500x400?text=Bedsheet"},
 
-    // KITCHEN
-    {id:"mixer",name:"Mixer Grinders",category:"kitchen",query:"mixer grinder",icon:"fa-blender",image:"images/mixer.jpg",description:"Browse kitchen mixer grinders."},
-    {id:"airfryer",name:"Air Fryers",category:"kitchen",query:"air fryer",icon:"fa-fire-burner",image:"images/airfryer.jpg",description:"Explore air fryers."},
-    {id:"cookware",name:"Cookware Sets",category:"kitchen",query:"cookware set",icon:"fa-kitchen-set",image:"images/cookware.jpg",description:"Browse cookware."},
-    {id:"bottles",name:"Water Bottles",category:"kitchen",query:"water bottle",icon:"fa-bottle-water",image:"images/bottles.jpg",description:"Find reusable bottles."},
-    {id:"coffee",name:"Coffee Makers",category:"kitchen",query:"coffee maker machine",icon:"fa-mug-hot",image:"images/coffee.jpg",description:"Explore coffee machines."},
+    {id:"cookware",name:"Non Stick Cookware",category:"kitchen",price:1199,store:"Amazon",icon:"fa-utensils",image:"https://placehold.co/500x400?text=Cookware"},
+    {id:"bottle",name:"Water Bottle",category:"kitchen",price:399,store:"Flipkart",icon:"fa-bottle-water",image:"https://placehold.co/500x400?text=Bottle"},
 
-    // FITNESS
-    {id:"dumbbells",name:"Dumbbells",category:"fitness",query:"dumbbells",icon:"fa-dumbbell",image:"images/dumbbells.jpg",description:"Browse strength training equipment."},
-    {id:"yogamat",name:"Yoga Mats",category:"fitness",query:"yoga mat",icon:"fa-person-praying",image:"images/yogamat.jpg",description:"Explore yoga mats."},
-    {id:"bands",name:"Resistance Bands",category:"fitness",query:"resistance bands workout",icon:"fa-arrows-left-right",image:"images/bands.jpg",description:"Find resistance workout bands."},
-    {id:"gymbag",name:"Gym Bags",category:"fitness",query:"gym bag",icon:"fa-bag-shopping",image:"images/gymbag.jpg",description:"Browse gym bags."},
-    {id:"cycle",name:"Exercise Cycles",category:"fitness",query:"exercise cycle",icon:"fa-bicycle",image:"images/cycle.jpg",description:"Explore indoor exercise cycles."},
+    {id:"gymbag",name:"Sports Gym Bag",category:"fitness",price:799,store:"Myntra",icon:"fa-dumbbell",image:"https://placehold.co/500x400?text=Gym+Bag"},
+    {id:"yogamat",name:"Yoga Mat",category:"fitness",price:499,store:"Amazon",icon:"fa-person",image:"https://placehold.co/500x400?text=Yoga+Mat"},
 
-    // GAMING
-    {id:"gamingmouse",name:"Gaming Mouse",category:"gaming",query:"gaming mouse",icon:"fa-computer-mouse",image:"images/gamingmouse.jpg",description:"Browse gaming mouse options."},
-    {id:"gamingheadset",name:"Gaming Headsets",category:"gaming",query:"gaming headset",icon:"fa-headset",image:"images/gamingheadset.jpg",description:"Explore gaming headsets."},
-    {id:"controller",name:"Game Controllers",category:"gaming",query:"wireless game controller",icon:"fa-gamepad",image:"images/controller.jpg",description:"Browse game controllers."},
-    {id:"gamingchair",name:"Gaming Chairs",category:"gaming",query:"gaming chair",icon:"fa-chair",image:"images/gamingchair.jpg",description:"Explore gaming chairs."},
+    {id:"gamingmouse",name:"Gaming Mouse",category:"gaming",price:999,store:"Amazon",icon:"fa-computer-mouse",image:"https://placehold.co/500x400?text=Gaming+Mouse"},
+    {id:"controller",name:"Gaming Controller",category:"gaming",price:1499,store:"Flipkart",icon:"fa-gamepad",image:"https://placehold.co/500x400?text=Controller"},
 
-    // BOOKS
-    {id:"selfhelp",name:"Self-Help Books",category:"books",query:"self help books",icon:"fa-book-open",image:"images/selfhelp.jpg",description:"Discover personal development books."},
-    {id:"programming",name:"Programming Books",category:"books",query:"programming books",icon:"fa-code",image:"images/programming.jpg",description:"Browse programming books."},
-    {id:"exambooks",name:"Competitive Exam Books",category:"books",query:"competitive exam preparation books",icon:"fa-graduation-cap",image:"images/exambooks.jpg",description:"Explore exam preparation books."}
+    {id:"book",name:"Self Improvement Book",category:"books",price:299,store:"Amazon",icon:"fa-book",image:"https://placehold.co/500x400?text=Book"}
   ];
 
-  // =====================================
-  // WISHLIST
-  // =====================================
-
-  function loadWishlist() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-      return Array.isArray(saved)
-        ? [...new Set(saved)].filter(id => products.some(p => p.id === id))
-        : [];
-    } catch (error) {
-      return [];
-    }
+  // LOAD WISHLIST
+  let wishlist = [];
+  try {
+    wishlist = JSON.parse(localStorage.getItem("amzadWishlist") || "[]");
+    if (!Array.isArray(wishlist)) wishlist = [];
+  } catch (error) {
+    wishlist = [];
   }
-
-  let wishlist = loadWishlist();
-
-  function saveWishlist() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(wishlist));
-    } catch (error) {
-      console.warn("Wishlist could not be saved:", error);
-    }
-  }
-
-  // =====================================
-  // AMAZON AFFILIATE LINK
-  // =====================================
-
-  function amazonSearchUrl(query) {
-    const url = new URL("https://www.amazon.in/s/");
-    url.searchParams.set("k", query);
-    url.searchParams.set("tag", AMAZON_TAG);
-    return url.toString();
-  }
-
-  // =====================================
-  // IMAGE FALLBACK
-  // =====================================
-
-  function createFallback(product) {
-    const icon = document.createElement("i");
-    icon.className = "fa-solid " + product.icon + " product-fallback-icon";
-    icon.setAttribute("aria-hidden", "true");
-    return icon;
-  }
-
-  // =====================================
-  // PRODUCT CARD
-  // =====================================
-
-  function createProductCard(product) {
-    const card = document.createElement("article");
-    card.className = "product-card";
-    card.dataset.id = product.id;
-
-    const art = document.createElement("div");
-    art.className = "product-art";
-
-    const tag = document.createElement("span");
-    tag.className = "product-tag";
-    tag.textContent = product.category;
-
-    const heart = document.createElement("button");
-    heart.type = "button";
-    heart.className = "heart-btn";
-    heart.dataset.wishlist = product.id;
-
-    const liked = wishlist.includes(product.id);
-
-    heart.setAttribute("aria-label", liked ? "Remove from wishlist" : "Add to wishlist");
-    heart.setAttribute("aria-pressed", String(liked));
-
-    heart.innerHTML = liked
-      ? '<i class="fa-solid fa-heart"></i>'
-      : '<i class="fa-regular fa-heart"></i>';
-
-    // IMAGE
-    if (product.image && product.image.trim() !== "") {
-      const image = document.createElement("img");
-
-      image.className = "product-image";
-      image.src = product.image;
-      image.alt = product.name;
-      image.loading = "lazy";
-
-      image.onerror = function () {
-        if (image.parentNode) {
-          image.replaceWith(createFallback(product));
-        }
-      };
-
-      art.append(tag, heart, image);
-    } else {
-      art.append(tag, heart, createFallback(product));
-    }
-
-    // PRODUCT INFORMATION
-    const info = document.createElement("div");
-    info.className = "product-info";
-
-    const meta = document.createElement("div");
-    meta.className = "product-meta";
-    meta.textContent = "AMZADORA SEARCH";
-
-    const title = document.createElement("h3");
-    title.textContent = product.name;
-
-    const description = document.createElement("p");
-    description.textContent = product.description;
-
-    // FOOTER
-    const footer = document.createElement("div");
-    footer.className = "product-footer";
-
-    const store = document.createElement("span");
-    store.className = "store";
-    store.innerHTML = '<i class="fa-brands fa-amazon"></i> Search Amazon';
-
-    const buy = document.createElement("a");
-    buy.className = "buy-now";
-    buy.href = amazonSearchUrl(product.query);
-    buy.target = "_blank";
-    buy.rel = "sponsored nofollow noopener noreferrer";
-    buy.innerHTML = 'View on Amazon <i class="fa-solid fa-arrow-up-right-from-square"></i>';
-
-    footer.append(store, buy);
-    info.append(meta, title, description, footer);
-    card.append(art, info);
-
-    return card;
-  }
-
-  // =====================================
-  // SEARCH AND FILTER
-  // =====================================
-
-  const grid = $("productGrid");
-  const searchInput = $("searchInput");
-  const searchForm = $("searchForm");
-  const sortSelect = $("sortProducts");
-  const resultsCount = $("resultsCount");
-  const emptyState = $("emptyState");
-
-  const categoryButtons = Array.from(document.querySelectorAll(".category"));
 
   let activeCategory = "all";
+  let searchTerm = "";
 
+  function saveWishlist() {
+    localStorage.setItem("amzadWishlist", JSON.stringify(wishlist));
+    updateWishlist();
+  }
+
+  function updateWishlist() {
+    if (wishlistCount) wishlistCount.textContent = wishlist.length;
+
+    if (savedItems) {
+      const savedProducts = products.filter(p => wishlist.includes(p.id));
+
+      savedItems.innerHTML = savedProducts.length
+        ? savedProducts.map(p => `
+          <div class="saved-item">
+            <img src="${p.image}" alt="${p.name}">
+            <span>${p.name}</span>
+            <button class="remove-saved" data-id="${p.id}" aria-label="Remove ${p.name}">×</button>
+          </div>
+        `).join("")
+        : "<p>No saved products yet.</p>";
+    }
+  }
+
+  // AFFILIATE LINK
+  function getProductLink(product) {
+    const query = encodeURIComponent(product.name);
+
+    if (product.store === "Amazon") {
+      return `https://www.amazon.in/s?k=${query}&tag=${AMAZON_TAG}`;
+    }
+
+    if (product.store === "Flipkart") {
+      return `https://www.flipkart.com/search?q=${query}`;
+    }
+
+    return `https://www.myntra.com/${query}`;
+  }
+
+  // RENDER PRODUCTS
   function renderProducts() {
-    if (!grid) {
-      console.error("Product grid not found! Check productGrid ID in HTML.");
+    let filtered = products.filter(product => {
+      const categoryMatch =
+        activeCategory === "all" || product.category === activeCategory;
+
+      const searchMatch =
+        product.name.toLowerCase().includes(searchTerm) ||
+        product.category.toLowerCase().includes(searchTerm) ||
+        product.store.toLowerCase().includes(searchTerm);
+
+      return categoryMatch && searchMatch;
+    });
+
+    if (sortProducts && sortProducts.value === "name") {
+      filtered.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortProducts && sortProducts.value === "low") {
+      filtered.sort((a, b) => a.price - b.price);
+    } else if (sortProducts && sortProducts.value === "high") {
+      filtered.sort((a, b) => b.price - a.price);
+    }
+
+    if (resultsCount) {
+      resultsCount.textContent = `${filtered.length} products found`;
+    }
+
+    productGrid.innerHTML = "";
+
+    if (filtered.length === 0) {
+      productGrid.innerHTML = `
+        <div class="empty-state">
+          <i class="fa-solid fa-box-open"></i>
+          <h3>No products found</h3>
+          <p>Try another search or category.</p>
+        </div>`;
       return;
     }
 
-    const term = (searchInput?.value || "").trim().toLowerCase();
+    filtered.forEach(product => {
+      const isSaved = wishlist.includes(product.id);
 
-    let visible = products.filter(product => {
-      const matchesCategory =
-        activeCategory === "all" || product.category === activeCategory;
+      const card = document.createElement("article");
+      card.className = "product-card";
 
-      const searchable = (
-        product.name + " " +
-        product.description + " " +
-        product.category + " " +
-        product.query
-      ).toLowerCase();
+      card.innerHTML = `
+        <div class="product-art">
+          <img class="product-image"
+               src="${product.image}"
+               alt="${product.name}"
+               loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
 
-      return matchesCategory && searchable.includes(term);
+          <div class="product-fallback-icon" style="display:none;">
+            <i class="fa-solid ${product.icon}"></i>
+          </div>
+
+          ${product.tag ? `<span class="product-tag">${product.tag}</span>` : ""}
+
+          <button class="heart-btn ${isSaved ? "active" : ""}"
+                  data-id="${product.id}"
+                  aria-label="Add ${product.name} to wishlist">
+            <i class="${isSaved ? "fa-solid" : "fa-regular"} fa-heart"></i>
+          </button>
+        </div>
+
+        <div class="product-info">
+          <div class="product-meta">
+            <span class="store">${product.store}</span>
+            <span>${product.category}</span>
+          </div>
+
+          <h3>${product.name}</h3>
+
+          <div class="product-footer">
+            <strong>₹${product.price.toLocaleString("en-IN")}</strong>
+            <a class="buy-now"
+               href="${getProductLink(product)}"
+               target="_blank"
+               rel="noopener noreferrer">
+              View Deal <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+        </div>
+      `;
+
+      productGrid.appendChild(card);
     });
-
-    // SORTING
-    if (sortSelect?.value === "name") {
-      visible.sort((a, b) => a.name.localeCompare(b.name));
-    }
-
-    if (sortSelect?.value === "default") {
-      visible.sort((a, b) => products.indexOf(a) - products.indexOf(b));
-    }
-
-    // DISPLAY PRODUCTS
-    grid.replaceChildren(...visible.map(createProductCard));
-
-    if (resultsCount) {
-      resultsCount.textContent =
-        "Showing " + visible.length + " of " + products.length + " product searches";
-    }
-
-    if (emptyState) {
-      emptyState.hidden = visible.length !== 0;
-    }
   }
 
-  // SEARCH FORM
-  searchForm?.addEventListener("submit", function (event) {
-    event.preventDefault();
-    renderProducts();
-    $("products")?.scrollIntoView({ behavior: "smooth" });
-  });
-
-  searchInput?.addEventListener("input", renderProducts);
-
-  sortSelect?.addEventListener("change", renderProducts);
-
   // CATEGORY FILTER
-  categoryButtons.forEach(button => {
+  document.querySelectorAll(".category").forEach(button => {
     button.addEventListener("click", function () {
-      activeCategory = this.dataset.category || "all";
-
-      categoryButtons.forEach(btn => {
-        btn.classList.toggle("active", btn === this);
+      document.querySelectorAll(".category").forEach(btn => {
+        btn.classList.remove("active");
       });
 
+      this.classList.add("active");
+      activeCategory = this.dataset.category || "all";
       renderProducts();
     });
   });
 
-  // RESET FILTERS
-  $("resetFilters")?.addEventListener("click", function () {
-    if (searchInput) searchInput.value = "";
+  // SEARCH
+  const searchForm = $("searchForm");
 
-    activeCategory = "all";
-
-    if (sortSelect) sortSelect.value = "default";
-
-    categoryButtons.forEach(button => {
-      button.classList.toggle("active", button.dataset.category === "all");
+  if (searchForm) {
+    searchForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      searchTerm = searchInput ? searchInput.value.trim().toLowerCase() : "";
+      renderProducts();
     });
+  }
 
-    renderProducts();
-  });
+  if (searchInput) {
+    searchInput.addEventListener("input", function () {
+      searchTerm = this.value.trim().toLowerCase();
+      renderProducts();
+    });
+  }
 
-  // =====================================
-  // WISHLIST FUNCTIONS
-  // =====================================
+  // SORT
+  if (sortProducts) {
+    sortProducts.addEventListener("change", renderProducts);
+  }
 
-  function toggleWishlist(id) {
-    if (!products.some(product => product.id === id)) return;
+  // WISHLIST BUTTONS
+  productGrid.addEventListener("click", function (event) {
+    const button = event.target.closest(".heart-btn");
+    if (!button) return;
+
+    const id = button.dataset.id;
 
     if (wishlist.includes(id)) {
       wishlist = wishlist.filter(item => item !== id);
@@ -334,143 +254,67 @@ document.addEventListener("DOMContentLoaded", function () {
 
     saveWishlist();
     renderProducts();
-    renderWishlist();
-  }
-
-  // HEART BUTTON CLICK
-  grid?.addEventListener("click", function (event) {
-    const heart = event.target.closest("[data-wishlist]");
-
-    if (!heart || !grid.contains(heart)) return;
-
-    toggleWishlist(heart.dataset.wishlist);
   });
 
-  // DISPLAY WISHLIST
-  function renderWishlist() {
-    const count = $("wishlistCount");
-    const saved = $("savedItems");
+  // REMOVE SAVED ITEM
+  if (savedItems) {
+    savedItems.addEventListener("click", function (event) {
+      const button = event.target.closest(".remove-saved");
+      if (!button) return;
 
-    if (count) {
-      count.textContent = wishlist.length;
-    }
-
-    if (!saved) return;
-
-    saved.replaceChildren();
-
-    if (wishlist.length === 0) {
-      const message = document.createElement("p");
-      message.className = "saved-empty";
-      message.textContent =
-        "You have not saved any products yet. Tap the heart on a product to save it.";
-
-      saved.appendChild(message);
-      return;
-    }
-
-    wishlist.forEach(id => {
-      const product = products.find(item => item.id === id);
-      if (!product) return;
-
-      const row = document.createElement("div");
-      row.className = "saved-item";
-
-      const name = document.createElement("strong");
-      name.textContent = product.name;
-
-      const actions = document.createElement("div");
-
-      const open = document.createElement("a");
-      open.className = "buy-now";
-      open.href = amazonSearchUrl(product.query);
-      open.target = "_blank";
-      open.rel = "sponsored nofollow noopener noreferrer";
-      open.textContent = "View on Amazon";
-
-      const remove = document.createElement("button");
-      remove.type = "button";
-      remove.textContent = "Remove";
-
-      remove.addEventListener("click", function () {
-        toggleWishlist(id);
-      });
-
-      actions.append(open, remove);
-      row.append(name, actions);
-      saved.appendChild(row);
+      wishlist = wishlist.filter(id => id !== button.dataset.id);
+      saveWishlist();
+      renderProducts();
     });
   }
 
   // CLEAR WISHLIST
-  $("clearWishlist")?.addEventListener("click", function () {
-    if (wishlist.length === 0) {
-      alert("Your saved items list is already empty.");
-      return;
-    }
+  const clearWishlist = $("clearWishlist");
 
-    if (confirm("Remove all saved items?")) {
+  if (clearWishlist) {
+    clearWishlist.addEventListener("click", function () {
       wishlist = [];
       saveWishlist();
       renderProducts();
-      renderWishlist();
-    }
-  });
+    });
+  }
 
-  // =====================================
+  // RESET FILTERS
+  const resetFilters = $("resetFilters");
+
+  if (resetFilters) {
+    resetFilters.addEventListener("click", function () {
+      activeCategory = "all";
+      searchTerm = "";
+
+      if (searchInput) searchInput.value = "";
+
+      document.querySelectorAll(".category").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.category === "all");
+      });
+
+      renderProducts();
+    });
+  }
+
   // MOBILE MENU
-  // =====================================
-
   const mobileMenu = $("mobileMenu");
   const mainNav = $("mainNav");
 
   if (mobileMenu && mainNav) {
     mobileMenu.addEventListener("click", function () {
-      const isOpen = mainNav.classList.toggle("active");
-
-      mobileMenu.setAttribute("aria-expanded", String(isOpen));
-
-      const icon = mobileMenu.querySelector("i");
-
-      if (icon) {
-        icon.className = isOpen
-          ? "fa-solid fa-xmark"
-          : "fa-solid fa-bars";
-      }
-    });
-
-    mainNav.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", function () {
-        mainNav.classList.remove("active");
-        mobileMenu.setAttribute("aria-expanded", "false");
-
-        const icon = mobileMenu.querySelector("i");
-
-        if (icon) {
-          icon.className = "fa-solid fa-bars";
-        }
-      });
+      mainNav.classList.toggle("active");
     });
   }
 
-  // =====================================
-  // FOOTER YEAR
-  // =====================================
-
-  const year = $("year");
-
-  if (year) {
-    year.textContent = new Date().getFullYear();
+  // YEAR
+  if ($("year")) {
+    $("year").textContent = new Date().getFullYear();
   }
 
-  // =====================================
   // INITIAL LOAD
-  // =====================================
-
+  updateWishlist();
   renderProducts();
-  renderWishlist();
 
-  console.log("Amzadora loaded successfully!");
-  console.log("Total products:", products.length);
-
+  console.log("AMZADORA: Products loaded successfully!");
 });
