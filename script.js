@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const products = [
     // ELECTRONICS
-{ id:"headphones", name:"Wireless Headphones", category:"electronics", query:"wireless bluetooth headphones", icon:"fa-headphones", image:"images/headphones.jpg", description:"Explore wireless and Bluetooth headphones." },
+{ id:"headphones", name:"Wireless Headphones", category:"electronics", query:"wireless bluetooth headphones", icon:"fa-headphones", image:"https://github.com/amzad-ali77/amzadora/blob/main/images/headphones.jpg", description:"Explore wireless and Bluetooth headphones." },
 
 { id:"speaker", name:"Bluetooth Speakers", category:"electronics", query:"portable bluetooth speaker", icon:"fa-volume-high", image:"images/speaker.jpg", description:"Browse portable speakers." },
 
