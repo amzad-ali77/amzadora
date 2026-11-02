@@ -1,327 +1,469 @@
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
   "use strict";
 
-  const $ = id => document.getElementById(id);
+  // =========================================
+  // AMZADORA - 45 PRODUCTS
+  // =========================================
 
-  const productGrid = $("productGrid");
-  const resultsCount = $("resultsCount");
-  const searchInput = $("searchInput");
-  const sortProducts = $("sortProducts");
-  const emptyState = $("emptyState");
-  const savedItems = $("savedItems");
+  const AMAZON_TAG = "YOUR_AMAZON_TAG"; // Apna Amazon affiliate ID yahan paste karo
 
-  if (!productGrid) {
-    console.error("Product grid not found!");
-    return;
-  }
+  let cart = JSON.parse(localStorage.getItem("newmartCart") || "[]");
+  let wishlist = JSON.parse(localStorage.getItem("amzadWishlist") || "[]");
 
-  // APNA AMAZON ASSOCIATES TAG YAHAN DALO
-  const AMAZON_TAG = "YOUR_AMAZON_TAG";
+  let activeStore = "all";
+  let activeCategory = "all";
+  let searchText = "";
 
-  // PRODUCT DATABASE
+  const get = (id) => document.getElementById(id);
+
+  const productGrid = get("productGrid");
+  const resultsCount = get("resultsCount");
+  const emptyState = get("emptyState");
+
+  // =========================================
+  // PRODUCT DATA - AMAZON (15)
+  // =========================================
+
   const products = [
-    // AMAZON PRODUCTS
-    {id:"a1",name:"Wireless Headphones",category:"electronics",price:1499,store:"Amazon",image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=85",tag:"Popular"},
-    {id:"a2",name:"Bluetooth Speaker",category:"electronics",price:999,store:"Amazon",image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=600&q=85"},
-    {id:"a3",name:"Smart Watch",category:"electronics",price:1999,store:"Amazon",image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=85",tag:"Trending"},
-    {id:"a4",name:"Power Bank",category:"electronics",price:899,store:"Amazon",image:"https://images.unsplash.com/photo-1609592424848-0a4d7f2b8a7b?auto=format&fit=crop&w=600&q=85"},
-    {id:"a5",name:"Laptop",category:"electronics",price:45999,store:"Amazon",image:"https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=85"},
-    {id:"a6",name:"Computer Monitor",category:"electronics",price:8999,store:"Amazon",image:"https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=600&q=85"},
-    {id:"a7",name:"Wireless Keyboard",category:"electronics",price:799,store:"Amazon",image:"https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=600&q=85"},
-    {id:"a8",name:"Computer Mouse",category:"electronics",price:399,store:"Amazon",image:"https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=600&q=85"},
-    {id:"a9",name:"Bluetooth Earbuds",category:"electronics",price:1299,store:"Amazon",image:"https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=600&q=85"},
-    {id:"a10",name:"Digital Camera",category:"electronics",price:24999,store:"Amazon",image:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=85"},
-    {id:"a11",name:"Smartphone",category:"mobiles",price:14999,store:"Amazon",image:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=85"},
-    {id:"a12",name:"Mobile Back Cover",category:"mobiles",price:299,store:"Amazon",image:"https://images.unsplash.com/photo-1601593346740-925612772716?auto=format&fit=crop&w=600&q=85"},
-    {id:"a13",name:"Skincare Kit",category:"beauty",price:899,store:"Amazon",image:"https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=600&q=85"},
-    {id:"a14",name:"Home Decor Lamp",category:"home",price:699,store:"Amazon",image:"https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=85"},
-    {id:"a15",name:"Yoga Mat",category:"fitness",price:499,store:"Amazon",image:"https://images.unsplash.com/photo-1592432678016-e910b452f9a2?auto=format&fit=crop&w=600&q=85"},
+    // AMAZON - ELECTRONICS
+    {id:"a1",name:"Wireless Headphones",category:"electronics",store:"Amazon",price:1499,icon:"fa-headphones",image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600"},
+    {id:"a2",name:"Bluetooth Speaker",category:"electronics",store:"Amazon",price:999,icon:"fa-volume-high",image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600"},
+    {id:"a3",name:"Smart Watch",category:"electronics",store:"Amazon",price:1999,icon:"fa-clock",image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600"},
+    {id:"a4",name:"Power Bank 20000mAh",category:"electronics",store:"Amazon",price:1299,icon:"fa-battery-full",image:"https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=600"},
+    {id:"a5",name:"Laptop",category:"electronics",store:"Amazon",price:42999,icon:"fa-laptop",image:"https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600"},
+    {id:"a6",name:"Computer Monitor",category:"electronics",store:"Amazon",price:8999,icon:"fa-desktop",image:"https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=600"},
+    {id:"a7",name:"Wireless Keyboard",category:"electronics",store:"Amazon",price:799,icon:"fa-keyboard",image:"https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600"},
+    {id:"a8",name:"Gaming Mouse",category:"electronics",store:"Amazon",price:599,icon:"fa-computer-mouse",image:"https://images.unsplash.com/photo-1527814050087-3793815479db?w=600"},
+    {id:"a9",name:"Bluetooth Earbuds",category:"electronics",store:"Amazon",price:1199,icon:"fa-ear-listen",image:"https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=600"},
 
-    // FLIPKART PRODUCTS
-    {id:"f1",name:"Bluetooth Soundbar",category:"electronics",price:2499,store:"Flipkart",image:"https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=600&q=85"},
-    {id:"f2",name:"Gaming Mouse",category:"electronics",price:999,store:"Flipkart",image:"https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=600&q=85"},
-    {id:"f3",name:"Smart LED TV",category:"electronics",price:18999,store:"Flipkart",image:"https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&fit=crop&w=600&q=85"},
-    {id:"f4",name:"Wireless Earphones",category:"electronics",price:1199,store:"Flipkart",image:"https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=85"},
-    {id:"f5",name:"Mobile Phone",category:"mobiles",price:12999,store:"Flipkart",image:"https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=85"},
-    {id:"f6",name:"Men Casual T-Shirt",category:"fashion",price:499,store:"Flipkart",image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=85"},
-    {id:"f7",name:"Home Bedsheet",category:"home",price:599,store:"Flipkart",image:"https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=600&q=85"},
-    {id:"f8",name:"Water Bottle",category:"home",price:399,store:"Flipkart",image:"https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=600&q=85"},
+    // AMAZON - MOBILES
+    {id:"a10",name:"Smartphone",category:"mobiles",store:"Amazon",price:12999,icon:"fa-mobile-screen",image:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600"},
+    {id:"a11",name:"Mobile Phone Cover",category:"mobiles",store:"Amazon",price:299,icon:"fa-mobile",image:"https://images.unsplash.com/photo-1601593346740-925612772716?w=600"},
+    {id:"a12",name:"Fast Charger",category:"mobiles",store:"Amazon",price:499,icon:"fa-plug",image:"https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600"},
 
-    // MYNTRA PRODUCTS
-    {id:"m1",name:"Running Shoes",category:"shoes",price:1799,store:"Myntra",image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=85",tag:"Bestseller"},
-    {id:"m2",name:"Casual Sneakers",category:"shoes",price:1299,store:"Myntra",image:"https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=600&q=85"},
-    {id:"m3",name:"Men Denim Jeans",category:"fashion",price:999,store:"Myntra",image:"https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=600&q=85"},
-    {id:"m4",name:"Stylish Jacket",category:"fashion",price:1499,store:"Myntra",image:"https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=600&q=85"},
-    {id:"m5",name:"Premium Perfume",category:"beauty",price:699,store:"Myntra",image:"https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=600&q=85"},
-    {id:"m6",name:"Ladies Handbag",category:"fashion",price:1199,store:"Myntra",image:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=85"},
-    {id:"m7",name:"Sports Gym Bag",category:"fitness",price:799,store:"Myntra",image:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=85"}
+    // AMAZON - HOME / BEAUTY / FITNESS
+    {id:"a13",name:"Skincare Kit",category:"beauty",store:"Amazon",price:899,icon:"fa-spa",image:"https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=600"},
+    {id:"a14",name:"Table Lamp",category:"home",store:"Amazon",price:699,icon:"fa-lightbulb",image:"https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600"},
+    {id:"a15",name:"Gym Dumbbells",category:"fitness",store:"Amazon",price:999,icon:"fa-dumbbell",image:"https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600"},
+
+    // =========================================
+    // FLIPKART - 15 PRODUCTS
+    // =========================================
+
+    {id:"f1",name:"DSLR Digital Camera",category:"electronics",store:"Flipkart",price:24999,icon:"fa-camera",image:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600"},
+    {id:"f2",name:"Gaming Headset",category:"electronics",store:"Flipkart",price:1799,icon:"fa-headphones",image:"https://images.unsplash.com/photo-1599669454699-248893623440?w=600"},
+    {id:"f3",name:"Portable Bluetooth Speaker",category:"electronics",store:"Flipkart",price:1499,icon:"fa-volume-high",image:"https://images.unsplash.com/photo-1589003077984-894e133dabab?w=600"},
+    {id:"f4",name:"Wireless Mouse",category:"electronics",store:"Flipkart",price:449,icon:"fa-computer-mouse",image:"https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=600"},
+    {id:"f5",name:"Tablet",category:"electronics",store:"Flipkart",price:11999,icon:"fa-tablet-screen-button",image:"https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600"},
+    {id:"f6",name:"Android Smartphone",category:"mobiles",store:"Flipkart",price:10999,icon:"fa-mobile-screen",image:"https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=600"},
+    {id:"f7",name:"Smartphone Stand",category:"mobiles",store:"Flipkart",price:249,icon:"fa-mobile",image:"https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600"},
+    {id:"f8",name:"Mobile Tripod",category:"mobiles",store:"Flipkart",price:599,icon:"fa-camera",image:"https://images.unsplash.com/photo-1616410011236-7a42121dd981?w=600"},
+    {id:"f9",name:"Casual T-Shirt",category:"fashion",store:"Flipkart",price:499,icon:"fa-shirt",image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600"},
+    {id:"f10",name:"Men's Casual Shirt",category:"fashion",store:"Flipkart",price:799,icon:"fa-shirt",image:"https://images.unsplash.com/photo-1603252109303-2751441dd157?w=600"},
+    {id:"f11",name:"Running Shoes",category:"shoes",store:"Flipkart",price:1299,icon:"fa-shoe-prints",image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600"},
+    {id:"f12",name:"Sports Shoes",category:"shoes",store:"Flipkart",price:1599,icon:"fa-shoe-prints",image:"https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=600"},
+    {id:"f13",name:"Home Decor Vase",category:"home",store:"Flipkart",price:499,icon:"fa-house",image:"https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=600"},
+    {id:"f14",name:"Wall Clock",category:"home",store:"Flipkart",price:399,icon:"fa-clock",image:"https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=600"},
+    {id:"f15",name:"Yoga Mat",category:"fitness",store:"Flipkart",price:599,icon:"fa-dumbbell",image:"https://images.unsplash.com/photo-1592432678016-e910b452f9a2?w=600"},
+
+    // =========================================
+    // MYNTRA - 15 PRODUCTS
+    // =========================================
+
+    {id:"m1",name:"Men's Casual T-Shirt",category:"fashion",store:"Myntra",price:599,icon:"fa-shirt",image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600"},
+    {id:"m2",name:"Men's Denim Jacket",category:"fashion",store:"Myntra",price:1499,icon:"fa-shirt",image:"https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600"},
+    {id:"m3",name:"Women's Fashion Dress",category:"fashion",store:"Myntra",price:1299,icon:"fa-person-dress",image:"https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=600"},
+    {id:"m4",name:"Women's Handbag",category:"fashion",store:"Myntra",price:999,icon:"fa-bag-shopping",image:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600"},
+    {id:"m5",name:"Men's Formal Shirt",category:"fashion",store:"Myntra",price:899,icon:"fa-shirt",image:"https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=600"},
+    {id:"m6",name:"Women's Kurti",category:"fashion",store:"Myntra",price:799,icon:"fa-person-dress",image:"https://images.unsplash.com/photo-1583391733956-6c78276477e1?w=600"},
+    {id:"m7",name:"Men's Running Shoes",category:"shoes",store:"Myntra",price:1799,icon:"fa-shoe-prints",image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600"},
+    {id:"m8",name:"Women's Sneakers",category:"shoes",store:"Myntra",price:1499,icon:"fa-shoe-prints",image:"https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600"},
+    {id:"m9",name:"Sports Shoes",category:"shoes",store:"Myntra",price:1999,icon:"fa-shoe-prints",image:"https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=600"},
+    {id:"m10",name:"Sunglasses",category:"fashion",store:"Myntra",price:499,icon:"fa-glasses",image:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600"},
+    {id:"m11",name:"Women's Skincare Set",category:"beauty",store:"Myntra",price:999,icon:"fa-spa",image:"https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?w=600"},
+    {id:"m12",name:"Makeup Kit",category:"beauty",store:"Myntra",price:799,icon:"fa-palette",image:"https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600"},
+    {id:"m13",name:"Beauty Face Cream",category:"beauty",store:"Myntra",price:399,icon:"fa-spa",image:"https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600"},
+    {id:"m14",name:"Women's Sports Leggings",category:"fitness",store:"Myntra",price:699,icon:"fa-person-running",image:"https://images.unsplash.com/photo-1506629905607-d9a8d6e9f4f2?w=600"},
+    {id:"m15",name:"Gym Sports T-Shirt",category:"fitness",store:"Myntra",price:599,icon:"fa-dumbbell",image:"https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600"}
   ];
 
-  let activeCategory = "all";
-  let activeStore = "all";
-  let searchTerm = "";
+  // =========================================
+  // PRODUCT LINKS
+  // =========================================
 
-  // LOAD WISHLIST
-  let wishlist = [];
-
-  try {
-    const data = JSON.parse(localStorage.getItem("amzadWishlist") || "[]");
-    if (Array.isArray(data)) wishlist = data;
-  } catch (error) {
-    wishlist = [];
-  }
-
-  // PRODUCT LINK
   function getProductLink(product) {
     const query = encodeURIComponent(product.name);
 
     if (product.store === "Amazon") {
-      const tag = AMAZON_TAG !== "YOUR_AMAZON_TAG"
-        ? `&tag=${encodeURIComponent(AMAZON_TAG)}`
-        : "";
+      let url = "https://www.amazon.in/s?k=" + query;
 
-      return `https://www.amazon.in/s?k=${query}${tag}`;
+      if (AMAZON_TAG && AMAZON_TAG !== "YOUR_AMAZON_TAG") {
+        url += "&tag=" + encodeURIComponent(AMAZON_TAG);
+      }
+
+      return url;
     }
 
     if (product.store === "Flipkart") {
-      return `https://www.flipkart.com/search?q=${query}`;
+      return "https://www.flipkart.com/search?q=" + query;
     }
 
-    return `https://www.myntra.com/search?q=${query}`;
-  }
-
-  // WISHLIST UPDATE
-  function updateWishlist() {
-    const saved = products.filter(p => wishlist.includes(p.id));
-
-    if ($("wishlistCount")) $("wishlistCount").textContent = saved.length;
-    if ($("wishlistHeadingCount")) $("wishlistHeadingCount").textContent = `(${saved.length})`;
-
-    if (!savedItems) return;
-
-    if (!saved.length) {
-      savedItems.innerHTML = '<p class="wishlist-empty">Your wishlist is empty. Save products you like!</p>';
-      return;
+    if (product.store === "Myntra") {
+      return "https://www.myntra.com/search?q=" + query;
     }
 
-    savedItems.innerHTML = saved.map(p => `
-      <div class="saved-item">
-        <img src="${p.image}" alt="${p.name}">
-        <span>${p.name}</span>
-        <button class="remove-saved" data-id="${p.id}" aria-label="Remove">×</button>
-      </div>
-    `).join("");
+    return "#";
   }
+
+  // =========================================
+  // SAFE HTML
+  // =========================================
+
+  function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, function (char) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[char];
+    });
+  }
+
+  // =========================================
+  // FILTER PRODUCTS
+  // =========================================
+
+  function getFilteredProducts() {
+    let filtered = [...products];
+
+    if (activeStore !== "all") {
+      filtered = filtered.filter(function (product) {
+        return product.store.toLowerCase() === activeStore.toLowerCase();
+      });
+    }
+
+    if (activeCategory !== "all") {
+      filtered = filtered.filter(function (product) {
+        return product.category === activeCategory;
+      });
+    }
+
+    if (searchText) {
+      filtered = filtered.filter(function (product) {
+        return (
+          product.name.toLowerCase().includes(searchText) ||
+          product.category.toLowerCase().includes(searchText) ||
+          product.store.toLowerCase().includes(searchText)
+        );
+      });
+    }
+
+    return filtered;
+  }
+
+  // =========================================
+  // RENDER PRODUCTS
+  // =========================================
+
+  function renderProducts() {
+    if (!productGrid) return;
+
+    let filtered = getFilteredProducts();
+
+    const sortSelect = get("sortProducts");
+    const sortValue = sortSelect ? sortSelect.value : "default";
+
+    if (sortValue === "low") {
+      filtered.sort((a, b) => a.price - b.price);
+    } else if (sortValue === "high") {
+      filtered.sort((a, b) => b.price - a.price);
+    } else if (sortValue === "name") {
+      filtered.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    if (resultsCount) {
+      resultsCount.textContent = filtered.length + " products found";
+    }
+
+    if (emptyState) {
+      emptyState.style.display = filtered.length ? "none" : "block";
+    }
+
+    productGrid.innerHTML = filtered.map(function (product) {
+      const saved = wishlist.includes(product.id);
+
+      return `
+        <article class="product-card">
+          <div class="product-art">
+            <img
+              class="product-image"
+              src="${escapeHTML(product.image)}"
+              alt="${escapeHTML(product.name)}"
+              loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"
+            >
+            <div class="product-fallback-icon" style="display:none">
+              <i class="fa-solid ${escapeHTML(product.icon)}"></i>
+            </div>
+            <button
+              class="heart-btn ${saved ? "active" : ""}"
+              data-wishlist="${escapeHTML(product.id)}"
+              aria-label="Add to wishlist"
+            >
+              <i class="${saved ? "fa-solid" : "fa-regular"} fa-heart"></i>
+            </button>
+          </div>
+
+          <div class="product-info">
+            <div class="product-meta">
+              <span class="store ${product.store.toLowerCase()}">${escapeHTML(product.store)}</span>
+              <span>${escapeHTML(product.category)}</span>
+            </div>
+
+            <h3>${escapeHTML(product.name)}</h3>
+
+            <div class="product-footer">
+              <strong>₹${product.price.toLocaleString("en-IN")}</strong>
+              <a
+                class="buy-now"
+                href="${escapeHTML(getProductLink(product))}"
+                target="_blank"
+                rel="nofollow sponsored noopener"
+              >
+                Buy Now <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join("");
+  }
+
+  // =========================================
+  // STORE FILTER BUTTONS
+  // =========================================
+
+  document.querySelectorAll(".store-filter").forEach(function (button) {
+    button.addEventListener("click", function () {
+      activeStore = button.dataset.store || "all";
+
+      document.querySelectorAll(".store-filter").forEach(function (btn) {
+        btn.classList.remove("active");
+      });
+
+      button.classList.add("active");
+      renderProducts();
+    });
+  });
+
+  // =========================================
+  // CATEGORY FILTER BUTTONS
+  // =========================================
+
+  document.querySelectorAll(".category-card").forEach(function (button) {
+    button.addEventListener("click", function () {
+      activeCategory = button.dataset.category || "all";
+
+      document.querySelectorAll(".category-card").forEach(function (btn) {
+        btn.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+      const productsSection = get("products");
+      if (productsSection) {
+        productsSection.scrollIntoView({ behavior: "smooth" });
+      }
+
+      renderProducts();
+    });
+  });
+
+  // =========================================
+  // SEARCH
+  // =========================================
+
+  const searchForm = get("searchForm");
+  const searchInput = get("searchInput");
+
+  if (searchForm) {
+    searchForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      searchText = searchInput ? searchInput.value.trim().toLowerCase() : "";
+      renderProducts();
+
+      const productsSection = get("products");
+      if (productsSection) {
+        productsSection.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener("input", function () {
+      searchText = searchInput.value.trim().toLowerCase();
+      renderProducts();
+    });
+  }
+
+  // =========================================
+  // SORT PRODUCTS
+  // =========================================
+
+  const sortProducts = get("sortProducts");
+
+  if (sortProducts) {
+    sortProducts.addEventListener("change", renderProducts);
+  }
+
+  // =========================================
+  // WISHLIST
+  // =========================================
 
   function saveWishlist() {
     localStorage.setItem("amzadWishlist", JSON.stringify(wishlist));
     updateWishlist();
   }
 
-  // RENDER PRODUCTS
-  function renderProducts() {
-    let filtered = products.filter(product => {
-      const categoryMatch =
-        activeCategory === "all" || product.category === activeCategory;
+  function updateWishlist() {
+    const count = wishlist.length;
 
-      const storeMatch =
-        activeStore === "all" || product.store === activeStore;
-
-      const searchMatch =
-        `${product.name} ${product.category} ${product.store}`
-          .toLowerCase().includes(searchTerm);
-
-      return categoryMatch && storeMatch && searchMatch;
-    });
-
-    const sort = sortProducts ? sortProducts.value : "default";
-
-    if (sort === "low") filtered.sort((a,b) => a.price - b.price);
-    if (sort === "high") filtered.sort((a,b) => b.price - a.price);
-    if (sort === "name") filtered.sort((a,b) => a.name.localeCompare(b.name));
-
-    if (resultsCount) {
-      resultsCount.textContent = `${filtered.length} products found`;
+    if (get("wishlistCount")) {
+      get("wishlistCount").textContent = count;
     }
 
-    productGrid.innerHTML = "";
+    if (get("wishlistHeadingCount")) {
+      get("wishlistHeadingCount").textContent = count;
+    }
 
-    if (!filtered.length) {
-      if (emptyState) emptyState.hidden = false;
+    const savedItems = get("savedItems");
+    if (!savedItems) return;
+
+    const savedProducts = products.filter(function (product) {
+      return wishlist.includes(product.id);
+    });
+
+    if (!savedProducts.length) {
+      savedItems.innerHTML = '<p class="wishlist-empty">Your wishlist is empty.</p>';
       return;
     }
 
-    if (emptyState) emptyState.hidden = true;
-
-    filtered.forEach(product => {
-      const card = document.createElement("article");
-      card.className = "product-card";
-
-      const saved = wishlist.includes(product.id);
-
-      card.innerHTML = `
-        <div class="product-art">
-          <img class="product-image" src="${product.image}" alt="${product.name}" loading="lazy">
-          <div class="product-fallback-icon" style="display:none">
-            <i class="fa-solid fa-image"></i>
+    savedItems.innerHTML = savedProducts.map(function (product) {
+      return `
+        <div class="saved-item">
+          <img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}">
+          <div>
+            <strong>${escapeHTML(product.name)}</strong>
+            <p>₹${product.price.toLocaleString("en-IN")} · ${escapeHTML(product.store)}</p>
           </div>
-          ${product.tag ? `<span class="product-tag">${product.tag}</span>` : ""}
-          <button class="heart-btn ${saved ? "active" : ""}" data-id="${product.id}" aria-label="Wishlist">
-            <i class="${saved ? "fa-solid" : "fa-regular"} fa-heart"></i>
+          <button class="remove-saved" data-remove="${escapeHTML(product.id)}">
+            <i class="fa-solid fa-trash"></i>
           </button>
         </div>
-        <div class="product-info">
-          <div class="product-meta">
-            <span class="store">${product.store}</span>
-            <span>${product.category}</span>
-          </div>
-          <h3>${product.name}</h3>
-          <div class="product-footer">
-            <strong>₹${product.price.toLocaleString("en-IN")}</strong>
-            <a class="buy-now" href="${getProductLink(product)}" target="_blank" rel="noopener noreferrer">
-              View Deal <i class="fa-solid fa-arrow-up-right-from-square"></i>
-            </a>
-          </div>
-        </div>
       `;
-
-      const img = card.querySelector(".product-image");
-
-      img.addEventListener("error", () => {
-        img.style.display = "none";
-        card.querySelector(".product-fallback-icon").style.display = "flex";
-      });
-
-      productGrid.appendChild(card);
-    });
+    }).join("");
   }
 
-  // CATEGORY FILTER
-  document.querySelectorAll(".category-card").forEach(button => {
-    button.addEventListener("click", () => {
-      activeCategory = button.dataset.category || "all";
-
-      document.querySelectorAll(".category-card").forEach(btn => {
-        btn.classList.toggle("active", btn === button);
-      });
-
-      renderProducts();
-      $("products").scrollIntoView({behavior:"smooth"});
-    });
-  });
-
-  // STORE FILTER
-  document.querySelectorAll(".store-filter").forEach(button => {
-    button.addEventListener("click", () => {
-      activeStore = button.dataset.store || "all";
-
-      document.querySelectorAll(".store-filter").forEach(btn => {
-        btn.classList.toggle("active", btn === button);
-      });
-
-      renderProducts();
-    });
-  });
-
-  // SEARCH
-  if ($("searchForm")) {
-    $("searchForm").addEventListener("submit", event => {
-      event.preventDefault();
-      searchTerm = searchInput.value.trim().toLowerCase();
-      renderProducts();
-    });
-  }
-
-  if (searchInput) {
-    searchInput.addEventListener("input", () => {
-      searchTerm = searchInput.value.trim().toLowerCase();
-      renderProducts();
-    });
-  }
-
-  // SORT
-  if (sortProducts) {
-    sortProducts.addEventListener("change", renderProducts);
-  }
-
-  // ADD / REMOVE WISHLIST
-  productGrid.addEventListener("click", event => {
-    const button = event.target.closest(".heart-btn");
-    if (!button) return;
-
-    const id = button.dataset.id;
-
-    wishlist = wishlist.includes(id)
-      ? wishlist.filter(item => item !== id)
-      : [...wishlist, id];
-
-    saveWishlist();
-    renderProducts();
-  });
-
-  // REMOVE WISHLIST ITEM
-  if (savedItems) {
-    savedItems.addEventListener("click", event => {
-      const button = event.target.closest(".remove-saved");
+  if (productGrid) {
+    productGrid.addEventListener("click", function (event) {
+      const button = event.target.closest("[data-wishlist]");
       if (!button) return;
 
-      wishlist = wishlist.filter(id => id !== button.dataset.id);
+      const id = button.dataset.wishlist;
+
+      if (wishlist.includes(id)) {
+        wishlist = wishlist.filter(item => item !== id);
+      } else {
+        wishlist.push(id);
+      }
+
       saveWishlist();
       renderProducts();
     });
   }
 
-  // CLEAR WISHLIST
-  if ($("clearWishlist")) {
-    $("clearWishlist").addEventListener("click", () => {
+  const savedItems = get("savedItems");
+
+  if (savedItems) {
+    savedItems.addEventListener("click", function (event) {
+      const button = event.target.closest("[data-remove]");
+      if (!button) return;
+
+      wishlist = wishlist.filter(function (id) {
+        return id !== button.dataset.remove;
+      });
+
+      saveWishlist();
+      renderProducts();
+    });
+  }
+
+  const clearWishlist = get("clearWishlist");
+
+  if (clearWishlist) {
+    clearWishlist.addEventListener("click", function () {
       wishlist = [];
       saveWishlist();
       renderProducts();
     });
   }
 
+  // =========================================
   // RESET FILTERS
-  if ($("resetFilters")) {
-    $("resetFilters").addEventListener("click", () => {
-      activeCategory = "all";
+  // =========================================
+
+  const resetFilters = get("resetFilters");
+
+  if (resetFilters) {
+    resetFilters.addEventListener("click", function () {
       activeStore = "all";
-      searchTerm = "";
+      activeCategory = "all";
+      searchText = "";
 
       if (searchInput) searchInput.value = "";
       if (sortProducts) sortProducts.value = "default";
 
-      document.querySelectorAll(".category-card").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.category === "all");
+      document.querySelectorAll(".store-filter").forEach(function (button) {
+        button.classList.toggle("active", button.dataset.store === "all");
       });
 
-      document.querySelectorAll(".store-filter").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.store === "all");
+      document.querySelectorAll(".category-card").forEach(function (button) {
+        button.classList.toggle("active", button.dataset.category === "all");
       });
 
       renderProducts();
     });
   }
 
+  // =========================================
   // MOBILE MENU
-  if ($("mobileMenu") && $("mainNav")) {
-    $("mobileMenu").addEventListener("click", () => {
-      $("mainNav").classList.toggle("open");
+  // =========================================
+
+  const mobileMenu = get("mobileMenu");
+  const mainNav = get("mainNav");
+
+  if (mobileMenu && mainNav) {
+    mobileMenu.addEventListener("click", function () {
+      mainNav.classList.toggle("open");
     });
   }
 
-  document.querySelectorAll(".nav-link").forEach(link => {
-    link.addEventListener("click", () => {
-      $("mainNav")?.classList.remove("open");
-    });
-  });
-
+  // =========================================
   // FOOTER YEAR
-  if ($("year")) $("year").textContent = new Date().getFullYear();
+  // =========================================
 
+  if (get("year")) {
+    get("year").textContent = new Date().getFullYear();
+  }
+
+  // =========================================
   // INITIAL LOAD
-  updateWishlist();
-  renderProducts();
+  // =========================================
 
-  console.log("AMZADORA loaded successfully:", products.length, "products");
+  renderProducts();
+  updateWishlist();
+
 });
