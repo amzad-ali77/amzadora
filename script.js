@@ -5,11 +5,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const AMAZON_TAG = "amzadmart07-21";
   const STORAGE_KEY = "amzadoraWishlist";
   const $ = (id) => document.getElementById(id);
-
+const products = [
   // =====================================
   // 51 PRODUCTS WITH IMAGE PATHS
   // =====================================
-    const products = [
+    
 // ELECTRONICS
 { id:"headphones", name:"Wireless Headphones", category:"electronics", query:"wireless bluetooth headphones", icon:"fa-headphones", image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/headphones.jpg", description:"Explore wireless and Bluetooth headphones." },
 { id:"speaker", name:"Bluetooth Speakers", category:"electronics", query:"portable bluetooth speaker", icon:"fa-volume-high", image:"https://raw.githubusercontent.com/amzad-ali77/amzadora/main/images/speaker.jpg", description:"Browse portable speakers." },
