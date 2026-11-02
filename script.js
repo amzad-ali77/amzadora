@@ -12,17 +12,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const products = [
     // ELECTRONICS
-    {id:"headphones",name:"Wireless Headphones",category:"electronics",query:"wireless bluetooth headphones",image:"headphone.jpg",description:"Explore wireless and Bluetooth headphones."},
-    {id:"speaker",name:"Bluetooth Speakers",category:"electronics",query:"portable bluetooth speaker",icon:"fa-volume-high",image:"images/speaker.jpg",description:"Browse portable speakers."},
-    {id:"smartwatch",name:"Smart Watches",category:"electronics",query:"smart watch",icon:"fa-clock",image:"images/smartwatch.jpg",description:"Explore smart and fitness watches."},
-    {id:"powerbank",name:"Power Banks",category:"electronics",query:"power bank",icon:"fa-battery-full",image:"images/powerbank.jpg",description:"Find portable charging options."},
-    {id:"laptop",name:"Laptops",category:"electronics",query:"laptop",icon:"fa-laptop",image:"images/laptop.jpg",description:"Browse laptops for study and work."},
-    {id:"monitor",name:"Computer Monitors",category:"electronics",query:"computer monitor",icon:"fa-desktop",image:"images/monitor.jpg",description:"Explore computer monitors."},
-    {id:"keyboard",name:"Wireless Keyboards",category:"electronics",query:"wireless keyboard",icon:"fa-keyboard",image:"images/keyboard.jpg",description:"Browse wireless keyboards."},
-    {id:"mouse",name:"Computer Mouse",category:"electronics",query:"wireless computer mouse",icon:"fa-computer-mouse",image:"images/mouse.jpg",description:"Find computer mouse options."},
-    {id:"earbuds",name:"Bluetooth Earbuds",category:"electronics",query:"bluetooth earbuds",icon:"fa-ear-listen",image:"images/earbuds.jpg",description:"Explore wireless earbuds."},
-    {id:"camera",name:"Digital Cameras",category:"electronics",query:"digital camera",icon:"fa-camera",image:"images/camera.jpg",description:"Browse cameras and photography equipment."},
+{ id:"headphones", name:"Wireless Headphones", category:"electronics", query:"wireless bluetooth headphones", icon:"fa-headphones", image:"images/headphones.jpg", description:"Explore wireless and Bluetooth headphones." },
 
+{ id:"speaker", name:"Bluetooth Speakers", category:"electronics", query:"portable bluetooth speaker", icon:"fa-volume-high", image:"images/speaker.jpg", description:"Browse portable speakers." },
+
+{ id:"smartwatch", name:"Smart Watches", category:"electronics", query:"smart watch", icon:"fa-clock", image:"images/smartwatch.jpg", description:"Explore smart and fitness watches." },
+
+{ id:"powerbank", name:"Power Banks", category:"electronics", query:"power bank", icon:"fa-battery-full", image:"images/powerbank.jpg", description:"Find portable charging options." },
+
+{ id:"laptop", name:"Laptops", category:"electronics", query:"laptop", icon:"fa-laptop", image:"images/laptop.jpg", description:"Browse laptops for study and work." },
+
+{ id:"monitor", name:"Computer Monitors", category:"electronics", query:"computer monitor", icon:"fa-desktop", image:"images/monitor.jpg", description:"Explore computer monitors." },
+
+{ id:"keyboard", name:"Wireless Keyboards", category:"electronics", query:"wireless keyboard", icon:"fa-keyboard", image:"images/keyboard.jpg", description:"Browse wireless keyboards." },
+
+{ id:"mouse", name:"Computer Mouse", category:"electronics", query:"wireless computer mouse", icon:"fa-computer-mouse", image:"images/mouse.jpg", description:"Find computer mouse options." },
+
+{ id:"earbuds", name:"Bluetooth Earbuds", category:"electronics", query:"bluetooth earbuds", icon:"fa-ear-listen", image:"images/earbuds.jpg", description:"Explore wireless earbuds." },
+
+{ id:"camera", name:"Digital Cameras", category:"electronics", query:"digital camera", icon:"fa-camera", image:"images/camera.jpg", description:"Browse cameras and photography equipment." },
     // MOBILES
     {id:"phones",name:"Smartphones",category:"mobiles",query:"smartphone",icon:"fa-mobile-screen-button",image:"images/phones.jpg",description:"Explore smartphones."},
     {id:"cases",name:"Mobile Covers",category:"mobiles",query:"mobile phone case cover",icon:"fa-mobile",image:"images/cases.jpg",description:"Browse protective phone covers."},
