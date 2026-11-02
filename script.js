@@ -2,25 +2,26 @@
 document.addEventListener("DOMContentLoaded", function () {
 "use strict";
 
-// ======================================
-// AMZADORA - 130 PRODUCTS
-// ======================================
+// =====================================
+// AMZADORA - EXACT 130 PRODUCTS
+// AMAZON 50 | FLIPKART 50 | MYNTRA 30
+// =====================================
 
-const AMAZON_TAG = "YOUR_AMAZON_TAG"; // Apna actual Amazon affiliate ID
+const AMAZON_TAG = "YOUR_AMAZON_TAG"; // Apna Amazon affiliate ID
 
 let wishlist = JSON.parse(localStorage.getItem("amzadWishlist") || "[]");
 let activeStore = "all";
 let activeCategory = "all";
 let searchText = "";
 
-const get = id => document.getElementById(id);
-const productGrid = get("productGrid");
+const $ = id => document.getElementById(id);
+const grid = $("productGrid");
 
-// ======================================
+// =====================================
 // CATEGORY IMAGES
-// ======================================
+// =====================================
 
-const images = {
+const categoryImages = {
 electronics: [
 "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600",
 "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600",
@@ -61,7 +62,7 @@ fitness: [
 ]
 };
 
-const icons = {
+const categoryIcons = {
 electronics:"fa-headphones",
 mobiles:"fa-mobile-screen",
 fashion:"fa-shirt",
@@ -71,12 +72,9 @@ home:"fa-house",
 fitness:"fa-dumbbell"
 };
 
-// ======================================
-// PRODUCT LISTS
-// Format: Product Name|Category|Price
-// ======================================
-
-// AMAZON - 50 PRODUCTS
+// =====================================
+// AMAZON - EXACT 50 PRODUCTS
+// =====================================
 
 const amazonData = `
 Wireless Headphones|electronics|1499
@@ -87,22 +85,12 @@ Laptop|electronics|42999
 Computer Monitor|electronics|8999
 Wireless Keyboard|electronics|799
 Gaming Mouse|electronics|599
-Bluetooth Earbuds|electronics|1199
-Digital Camera|electronics|24999
-Gaming Headphones|electronics|1799
-Portable Speaker|electronics|1499
-USB Flash Drive|electronics|499
-External Hard Drive|electronics|3999
-Laptop Cooling Pad|electronics|899
 Smartphone|mobiles|12999
-Android Phone|mobiles|15999
+Android 5G Phone|mobiles|15999
 Mobile Phone Cover|mobiles|299
 Fast Charger|mobiles|499
-USB Type C Cable|mobiles|199
+Bluetooth Earbuds|mobiles|1199
 Mobile Tripod|mobiles|599
-Phone Stand|mobiles|249
-Screen Protector|mobiles|149
-Wireless Mobile Charger|mobiles|999
 Selfie Stick|mobiles|399
 Men Casual T-Shirt|fashion|499
 Men Denim Jacket|fashion|1499
@@ -112,26 +100,38 @@ Women Handbag|fashion|999
 Men Jeans|fashion|1199
 Women Kurti|fashion|799
 Sunglasses|fashion|499
-Men Hoodie|fashion|999
-Women Top|fashion|599
 Running Shoes|shoes|1799
 Sports Shoes|shoes|1499
 Casual Sneakers|shoes|1299
 Men Formal Shoes|shoes|1999
 Women Sandals|shoes|999
+Walking Shoes|shoes|1399
+Men Loafers|shoes|1599
 Skincare Kit|beauty|899
 Face Wash|beauty|299
 Moisturizer Cream|beauty|399
 Makeup Kit|beauty|799
 Sunscreen Lotion|beauty|349
+Lipstick Set|beauty|499
 Table Lamp|home|699
 Wall Clock|home|499
 Bedsheet Set|home|999
 Water Bottle|home|299
+Home Decor Vase|home|599
+Storage Organizer|home|449
 Gym Dumbbells|fitness|999
+Yoga Mat|fitness|599
+Resistance Bands|fitness|399
+Gym Bag|fitness|799
+Skipping Rope|fitness|249
+Protein Shaker Bottle|fitness|299
+Push Up Bars|fitness|499
+Fitness Gloves|fitness|349
 `.trim();
 
-// FLIPKART - 50 PRODUCTS
+// =====================================
+// FLIPKART - EXACT 50 PRODUCTS
+// =====================================
 
 const flipkartData = `
 DSLR Digital Camera|electronics|24999
@@ -142,23 +142,13 @@ Tablet|electronics|11999
 Smart TV|electronics|18999
 Laptop Stand|electronics|699
 Mechanical Keyboard|electronics|1599
-Computer Webcam|electronics|999
-WiFi Router|electronics|1299
-Smart Watch|electronics|1599
-Wireless Earphones|electronics|899
-Portable SSD|electronics|2999
-Printer|electronics|4999
-LED Monitor|electronics|7999
+Smart Watch|mobiles|1599
 Android Smartphone|mobiles|10999
 5G Smartphone|mobiles|14999
 Mobile Tripod|mobiles|599
 Phone Cover|mobiles|249
-Fast Mobile Charger|mobiles|499
-Mobile Holder|mobiles|199
-Type C Cable|mobiles|199
 Power Bank|mobiles|999
-Selfie Stick|mobiles|349
-Tempered Glass|mobiles|149
+Fast Mobile Charger|mobiles|499
 Casual T-Shirt|fashion|499
 Men Casual Shirt|fashion|799
 Women Dress|fashion|1199
@@ -166,113 +156,134 @@ Men Jeans|fashion|999
 Women Handbag|fashion|899
 Men Hoodie|fashion|999
 Women Kurti|fashion|699
-Cotton Top|fashion|499
-Men Jacket|fashion|1499
 Sunglasses|fashion|399
 Running Shoes|shoes|1299
 Sports Shoes|shoes|1599
 Casual Sneakers|shoes|1199
 Women Sneakers|shoes|1499
 Men Sandals|shoes|699
+Women Heels|shoes|1299
+Men Formal Shoes|shoes|1799
 Face Cream|beauty|299
 Beauty Makeup Kit|beauty|699
 Face Wash|beauty|249
 Hair Shampoo|beauty|299
 Sunscreen|beauty|349
+Lip Balm|beauty|199
 Home Decor Vase|home|499
 Wall Clock|home|399
 Table Lamp|home|699
 Bedsheet Set|home|899
+Kitchen Organizer|home|349
+Decorative Light|home|599
 Yoga Mat|fitness|599
+Gym Gloves|fitness|399
+Dumbbells Set|fitness|999
+Skipping Rope|fitness|249
+Gym Bag|fitness|699
+Resistance Bands|fitness|349
+Fitness Bottle|fitness|299
+Exercise Mat|fitness|799
 `.trim();
 
-// MYNTRA - 30 PRODUCTS
+// =====================================
+// MYNTRA - EXACT 30 PRODUCTS
+// =====================================
 
 const myntraData = `
+Wireless Headphones|electronics|1499
+Smart Watch|electronics|1999
+Bluetooth Speaker|electronics|1299
+Wireless Earbuds|electronics|999
+Smartphone|mobiles|12999
+Mobile Cover|mobiles|299
+Fast Charger|mobiles|499
+Power Bank|mobiles|899
 Men Casual T-Shirt|fashion|599
 Men Denim Jacket|fashion|1499
 Women Fashion Dress|fashion|1299
 Women Handbag|fashion|999
 Men Formal Shirt|fashion|899
 Women Kurti|fashion|799
-Men Jeans|fashion|1199
-Women Top|fashion|599
-Men Hoodie|fashion|999
-Sunglasses|fashion|499
-Women Ethnic Wear|fashion|1499
-Men Casual Shirt|fashion|799
-Women Saree|fashion|1299
-Men Polo T-Shirt|fashion|699
-Women Western Dress|fashion|1199
-Men Running Shoes|shoes|1799
+Running Shoes|shoes|1799
 Women Sneakers|shoes|1499
 Sports Shoes|shoes|1999
 Casual Shoes|shoes|1299
 Women Sandals|shoes|999
-Men Formal Shoes|shoes|1899
-Women Heels|shoes|1299
-Men Flip Flops|shoes|499
-Women's Skincare Set|beauty|999
+Skincare Set|beauty|999
 Makeup Kit|beauty|799
 Face Cream|beauty|399
 Lipstick Set|beauty|499
 Sunscreen|beauty|349
+Table Lamp|home|699
+Bedsheet Set|home|999
+Home Decor Vase|home|499
+Wall Clock|home|399
 Women's Sports Leggings|fitness|699
 Gym Sports T-Shirt|fitness|599
 `.trim();
 
-// ======================================
-// CREATE ALL PRODUCTS
-// ======================================
+// =====================================
+// CREATE PRODUCT OBJECTS
+// =====================================
 
 function createProducts(data, store, prefix) {
 return data.split("\n").map((line, index) => {
 const [name, category, price] = line.split("|");
-const categoryImages = images[category] || images.electronics;
+const imgs = categoryImages[category];
 
 return {
-id: prefix + (index + 1),
-name,
-category,
-store,
-price: Number(price),
-image: categoryImages[index % categoryImages.length],
-icon: icons[category] || "fa-bag-shopping"
+id:prefix + (index + 1),
+name:name,
+category:category,
+store:store,
+price:Number(price),
+image:imgs[index % imgs.length],
+icon:categoryIcons[category]
 };
 });
 }
 
 const products = [
-...createProducts(amazonData, "Amazon", "a"),
-...createProducts(flipkartData, "Flipkart", "f"),
-...createProducts(myntraData, "Myntra", "m")
+...createProducts(amazonData,"Amazon","a"),
+...createProducts(flipkartData,"Flipkart","f"),
+...createProducts(myntraData,"Myntra","m")
 ];
 
-// ======================================
+// =====================================
+// VERIFY PRODUCT COUNTS
+// =====================================
+
+console.log("AMAZON:",products.filter(p=>p.store==="Amazon").length);
+console.log("FLIPKART:",products.filter(p=>p.store==="Flipkart").length);
+console.log("MYNTRA:",products.filter(p=>p.store==="Myntra").length);
+console.log("TOTAL:",products.length);
+
+// =====================================
 // PRODUCT LINKS
-// ======================================
+// =====================================
 
-function getProductLink(product) {
-const query = encodeURIComponent(product.name);
+function getProductLink(p) {
+const q = encodeURIComponent(p.name);
 
-if (product.store === "Amazon") {
-let url = "https://www.amazon.in/s?k=" + query;
+if (p.store === "Amazon") {
+let link = "https://www.amazon.in/s?k=" + q;
 if (AMAZON_TAG !== "YOUR_AMAZON_TAG" && AMAZON_TAG.trim()) {
-url += "&tag=" + encodeURIComponent(AMAZON_TAG);
+link += "&tag=" + encodeURIComponent(AMAZON_TAG);
 }
-return url;
-}
-
-if (product.store === "Flipkart") {
-return "https://www.flipkart.com/search?q=" + query;
+return link;
 }
 
-return "https://www.myntra.com/search?q=" + query;
+if (p.store === "Flipkart") {
+return "https://www.flipkart.com/search?q=" + q;
 }
 
-// ======================================
+return "https://www.myntra.com/search?q=" + q;
+}
+
+// =====================================
 // FILTER PRODUCTS
-// ======================================
+// =====================================
 
 function getFilteredProducts() {
 let list = [...products];
@@ -296,29 +307,32 @@ p.store.toLowerCase().includes(searchText)
 return list;
 }
 
-// ======================================
-// RENDER PRODUCTS
-// ======================================
+// =====================================
+// SHOW PRODUCTS
+// =====================================
 
 function renderProducts() {
-if (!productGrid) return;
+if (!grid) {
+console.error("productGrid ID nahi mila. HTML check karo.");
+return;
+}
 
 let list = getFilteredProducts();
-const sort = get("sortProducts")?.value || "default";
+const sort = $("sortProducts")?.value || "default";
 
-if (sort === "low") list.sort((a,b) => a.price-b.price);
-if (sort === "high") list.sort((a,b) => b.price-a.price);
-if (sort === "name") list.sort((a,b) => a.name.localeCompare(b.name));
+if (sort === "low") list.sort((a,b)=>a.price-b.price);
+if (sort === "high") list.sort((a,b)=>b.price-a.price);
+if (sort === "name") list.sort((a,b)=>a.name.localeCompare(b.name));
 
-if (get("resultsCount")) {
-get("resultsCount").textContent = list.length + " products found";
+if ($("resultsCount")) {
+$("resultsCount").textContent = list.length + " products found";
 }
 
-if (get("emptyState")) {
-get("emptyState").style.display = list.length ? "none" : "block";
+if ($("emptyState")) {
+$("emptyState").style.display = list.length ? "none" : "block";
 }
 
-productGrid.innerHTML = list.map(p => {
+grid.innerHTML = list.map(p => {
 const saved = wishlist.includes(p.id);
 
 return `
@@ -334,9 +348,9 @@ onerror="this.style.display='none';this.nextElementSibling.style.display='grid';
 <i class="fa-solid ${p.icon}"></i>
 </div>
 
-<button class="heart-btn ${saved ? "active" : ""}"
+<button class="heart-btn ${saved?"active":""}"
 data-wishlist="${p.id}" aria-label="Wishlist">
-<i class="${saved ? "fa-solid" : "fa-regular"} fa-heart"></i>
+<i class="${saved?"fa-solid":"fa-regular"} fa-heart"></i>
 </button>
 </div>
 
@@ -345,9 +359,7 @@ data-wishlist="${p.id}" aria-label="Wishlist">
 <span class="store ${p.store.toLowerCase()}">${p.store}</span>
 <span>${p.category}</span>
 </div>
-
 <h3>${p.name}</h3>
-
 <div class="product-footer">
 <strong>₹${p.price.toLocaleString("en-IN")}</strong>
 <a class="buy-now"
@@ -362,54 +374,64 @@ Buy Now <i class="fa-solid fa-arrow-up-right-from-square"></i>
 }).join("");
 }
 
-// ======================================
-// STORE FILTERS
-// ======================================
+// =====================================
+// STORE BUTTONS
+// =====================================
 
-document.querySelectorAll(".store-filter").forEach(button => {
-button.addEventListener("click", () => {
-activeStore = button.dataset.store || "all";
+document.querySelectorAll(".store-filter").forEach(btn => {
+btn.addEventListener("click", () => {
+activeStore = btn.dataset.store || "all";
 
-document.querySelectorAll(".store-filter").forEach(btn =>
-btn.classList.remove("active")
-);
+document.querySelectorAll(".store-filter").forEach(b => b.classList.remove("active"));
+btn.classList.add("active");
 
-button.classList.add("active");
 renderProducts();
 });
 });
 
-// ======================================
-// CATEGORY FILTERS
-// ======================================
+// =====================================
+// CATEGORY BUTTONS
+// =====================================
 
-document.querySelectorAll(".category-card").forEach(button => {
-button.addEventListener("click", () => {
-activeCategory = button.dataset.category || "all";
+document.querySelectorAll(".category-card").forEach(btn => {
+btn.addEventListener("click", () => {
+activeCategory = btn.dataset.category || "all";
 
-document.querySelectorAll(".category-card").forEach(btn =>
-btn.classList.remove("active")
-);
+document.querySelectorAll(".category-card").forEach(b => b.classList.remove("active"));
+btn.classList.add("active");
 
-button.classList.add("active");
-get("products")?.scrollIntoView({behavior:"smooth"});
+$("products")?.scrollIntoView({behavior:"smooth"});
 renderProducts();
 });
 });
 
-// ======================================
+// =====================================
+// CATEGORY DROPDOWN SUPPORT
+// If HTML has <select id="categoryFilter">
+// =====================================
+
+const categoryFilter = $("categoryFilter");
+
+if (categoryFilter) {
+categoryFilter.addEventListener("change", () => {
+activeCategory = categoryFilter.value || "all";
+renderProducts();
+});
+}
+
+// =====================================
 // SEARCH
-// ======================================
+// =====================================
 
-const searchInput = get("searchInput");
-const searchForm = get("searchForm");
+const searchInput = $("searchInput");
+const searchForm = $("searchForm");
 
 if (searchForm) {
-searchForm.addEventListener("submit", event => {
-event.preventDefault();
+searchForm.addEventListener("submit", e => {
+e.preventDefault();
 searchText = searchInput?.value.trim().toLowerCase() || "";
 renderProducts();
-get("products")?.scrollIntoView({behavior:"smooth"});
+$("products")?.scrollIntoView({behavior:"smooth"});
 });
 }
 
@@ -420,41 +442,33 @@ renderProducts();
 });
 }
 
-// ======================================
+// =====================================
 // SORT
-// ======================================
+// =====================================
 
-get("sortProducts")?.addEventListener("change", renderProducts);
+$("sortProducts")?.addEventListener("change",renderProducts);
 
-// ======================================
+// =====================================
 // WISHLIST
-// ======================================
-
-function saveWishlist() {
-localStorage.setItem("amzadWishlist", JSON.stringify(wishlist));
-updateWishlist();
-}
+// =====================================
 
 function updateWishlist() {
-if (get("wishlistCount")) {
-get("wishlistCount").textContent = wishlist.length;
-}
+localStorage.setItem("amzadWishlist",JSON.stringify(wishlist));
 
-if (get("wishlistHeadingCount")) {
-get("wishlistHeadingCount").textContent = wishlist.length;
-}
+if ($("wishlistCount")) $("wishlistCount").textContent = wishlist.length;
+if ($("wishlistHeadingCount")) $("wishlistHeadingCount").textContent = wishlist.length;
 
-const savedItems = get("savedItems");
+const savedItems = $("savedItems");
 if (!savedItems) return;
 
-const savedProducts = products.filter(p => wishlist.includes(p.id));
+const saved = products.filter(p=>wishlist.includes(p.id));
 
-if (!savedProducts.length) {
+if (!saved.length) {
 savedItems.innerHTML = '<p class="wishlist-empty">Your wishlist is empty.</p>';
 return;
 }
 
-savedItems.innerHTML = savedProducts.map(p => `
+savedItems.innerHTML = saved.map(p=>`
 <div class="saved-item">
 <img src="${p.image}" alt="${p.name}">
 <div>
@@ -468,81 +482,82 @@ savedItems.innerHTML = savedProducts.map(p => `
 `).join("");
 }
 
-productGrid?.addEventListener("click", event => {
-const button = event.target.closest("[data-wishlist]");
-if (!button) return;
+grid?.addEventListener("click",e=>{
+const btn = e.target.closest("[data-wishlist]");
+if (!btn) return;
 
-const id = button.dataset.wishlist;
-
+const id = btn.dataset.wishlist;
 wishlist = wishlist.includes(id)
-? wishlist.filter(item => item !== id)
-: [...wishlist, id];
+? wishlist.filter(x=>x!==id)
+: [...wishlist,id];
 
-saveWishlist();
+updateWishlist();
 renderProducts();
 });
 
-get("savedItems")?.addEventListener("click", event => {
-const button = event.target.closest("[data-remove]");
-if (!button) return;
+$("savedItems")?.addEventListener("click",e=>{
+const btn = e.target.closest("[data-remove]");
+if (!btn) return;
 
-wishlist = wishlist.filter(id => id !== button.dataset.remove);
-saveWishlist();
+wishlist = wishlist.filter(id=>id!==btn.dataset.remove);
+updateWishlist();
 renderProducts();
 });
 
-get("clearWishlist")?.addEventListener("click", () => {
+$("clearWishlist")?.addEventListener("click",()=>{
 wishlist = [];
-saveWishlist();
+updateWishlist();
 renderProducts();
 });
 
-// ======================================
+// =====================================
 // RESET FILTERS
-// ======================================
+// =====================================
 
-get("resetFilters")?.addEventListener("click", () => {
+$("resetFilters")?.addEventListener("click",()=>{
 activeStore = "all";
 activeCategory = "all";
 searchText = "";
 
 if (searchInput) searchInput.value = "";
-if (get("sortProducts")) get("sortProducts").value = "default";
+if ($("sortProducts")) $("sortProducts").value = "default";
+if (categoryFilter) categoryFilter.value = "all";
 
-document.querySelectorAll(".store-filter").forEach(btn => {
-btn.classList.toggle("active", btn.dataset.store === "all");
+document.querySelectorAll(".store-filter").forEach(btn=>{
+btn.classList.toggle("active",btn.dataset.store==="all");
 });
 
-document.querySelectorAll(".category-card").forEach(btn => {
-btn.classList.toggle("active", btn.dataset.category === "all");
+document.querySelectorAll(".category-card").forEach(btn=>{
+btn.classList.toggle("active",btn.dataset.category==="all");
 });
 
 renderProducts();
 });
 
-// ======================================
+// =====================================
 // MOBILE MENU
-// ======================================
+// =====================================
 
-const mobileMenu = get("mobileMenu");
-const mainNav = get("mainNav");
+const mobileMenu = $("mobileMenu");
+const mainNav = $("mainNav");
 
 if (mobileMenu && mainNav) {
-mobileMenu.addEventListener("click", () => {
+mobileMenu.addEventListener("click",()=>{
 mainNav.classList.toggle("open");
 });
 }
 
-// ======================================
-// FOOTER YEAR + START
-// ======================================
+// =====================================
+// FOOTER YEAR
+// =====================================
 
-if (get("year")) {
-get("year").textContent = new Date().getFullYear();
-}
+if ($("year")) $("year").textContent = new Date().getFullYear();
+
+// =====================================
+// START WEBSITE
+// =====================================
 
 renderProducts();
 updateWishlist();
 
-console.log("AMZADORA loaded:", products.length, "products");
 });
