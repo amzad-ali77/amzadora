@@ -2,227 +2,196 @@
 document.addEventListener("DOMContentLoaded", () => {
   "use strict";
 
-  // =====================================
-  // AMZADORA - 90 PRODUCTS WITH PHOTOS
-  // Amazon 35 | Flipkart 35 | Myntra 20
-  // =====================================
-
   const AMAZON_TAG = "YOUR_AMAZON_TAG";
   const API_URL = "https://dummyjson.com/products?limit=0";
 
-  const get = id => document.getElementById(id);
+  const $ = id => document.getElementById(id);
 
-  const productGrid = get("productGrid") || get("products");
-  const searchInput = get("searchInput");
-  const sortProducts = get("sortProducts");
-  const resultsCount = get("resultsCount");
-  const emptyState = get("emptyState");
+  const grid = $("productGrid");
+  const searchInput = $("searchInput");
+  const sortSelect = $("sortProducts");
+  const resultCount = $("resultsCount");
+  const emptyState = $("emptyState");
 
   let products = [];
-  let wishlist = [];
-
   let activeStore = "all";
   let activeCategory = "all";
   let searchText = "";
 
+  let wishlist = [];
   try {
     wishlist = JSON.parse(localStorage.getItem("amzadWishlist") || "[]");
+    if (!Array.isArray(wishlist)) wishlist = [];
   } catch {
     wishlist = [];
   }
 
-  const fashionCategories = [
-    "mens-shirts",
-    "mens-shoes",
-    "mens-watches",
-    "tops",
-    "womens-bags",
-    "womens-dresses",
-    "womens-jewellery",
-    "womens-shoes",
-    "womens-watches",
-    "sunglasses"
-  ];
+  // CATEGORY MAPPING
+  function mapCategory(category) {
+    const map = {
+      "smartphones": "mobiles",
+      "mobile-accessories": "mobiles",
+      "tablets": "electronics",
+      "laptops": "electronics",
+      "mens-shirts": "fashion",
+      "tops": "fashion",
+      "womens-dresses": "fashion",
+      "womens-bags": "fashion",
+      "womens-jewellery": "fashion",
+      "mens-watches": "fashion",
+      "womens-watches": "fashion",
+      "mens-shoes": "shoes",
+      "womens-shoes": "shoes",
+      "beauty": "beauty",
+      "skin-care": "beauty",
+      "fragrances": "beauty",
+      "furniture": "home",
+      "home-decoration": "home",
+      "kitchen-accessories": "home",
+      "sports-accessories": "fitness",
+      "sunglasses": "fashion"
+    };
 
-  const allowedCategories = [
-    "beauty",
-    "fragrances",
-    "furniture",
-    "home-decoration",
-    "kitchen-accessories",
-    "laptops",
-    "mens-shirts",
-    "mens-shoes",
-    "mens-watches",
-    "mobile-accessories",
-    "smartphones",
-    "sports-accessories",
-    "tablets",
-    "tops",
-    "womens-bags",
-    "womens-dresses",
-    "womens-jewellery",
-    "womens-shoes",
-    "womens-watches",
-    "sunglasses"
-  ];
-
-  function getCategory(category) {
-    if (["smartphones", "mobile-accessories", "tablets"].includes(category)) return "mobiles";
-    if (["mens-shirts", "mens-shoes", "mens-watches", "tops", "womens-bags", "womens-dresses", "womens-jewellery", "womens-shoes", "womens-watches", "sunglasses"].includes(category)) return "fashion";
-    if (["beauty", "fragrances"].includes(category)) return "beauty";
-    if (["furniture", "home-decoration", "kitchen-accessories"].includes(category)) return "home";
-    if (["sports-accessories"].includes(category)) return "fitness";
-    return "electronics";
+    return map[category] || "electronics";
   }
 
-  function getStoreLink(product) {
-    const query = encodeURIComponent(product.name);
+  // STORE LINKS
+  function storeLink(product) {
+    const q = encodeURIComponent(product.name);
 
     if (product.store === "Amazon") {
-      return `https://www.amazon.in/s?k=${query}&tag=${AMAZON_TAG}`;
+      return `https://www.amazon.in/s?k=${q}&tag=${AMAZON_TAG}`;
     }
 
     if (product.store === "Flipkart") {
-      return `https://www.flipkart.com/search?q=${query}`;
+      return `https://www.flipkart.com/search?q=${q}`;
     }
 
-    return `https://www.myntra.com/${query}`;
+    return `https://www.myntra.com/${q}`;
   }
 
-  // =====================================
-  // LOAD 90 UNIQUE PRODUCT PHOTOS
-  // =====================================
-
+  // LOAD PRODUCTS AND REAL CATALOGUE IMAGES
   async function loadProducts() {
-    if (productGrid) {
-      productGrid.innerHTML = "<p>Loading products and photos...</p>";
-    }
+    grid.innerHTML = "<p>Loading products and photos...</p>";
 
     try {
       const response = await fetch(API_URL);
 
       if (!response.ok) {
-        throw new Error("Product API is not responding");
+        throw new Error("API response error: " + response.status);
       }
 
       const data = await response.json();
 
+      if (!Array.isArray(data.products)) {
+        throw new Error("Product data not found");
+      }
+
       const usedImages = new Set();
 
-      const allProducts = data.products.filter(product => {
-        const image = product.images?.[0] || product.thumbnail;
+      const available = data.products.filter(item => {
+        const image = item.thumbnail || item.images?.[0];
 
-        if (!image || !allowedCategories.includes(product.category)) return false;
-        if (usedImages.has(image)) return false;
+        if (!image || usedImages.has(image)) return false;
 
         usedImages.add(image);
         return true;
       });
 
-      const generalProducts = allProducts.filter(
-        product => !fashionCategories.includes(product.category)
-      );
+      if (available.length < 90) {
+        throw new Error("API returned fewer than 90 unique product images");
+      }
 
-      const fashionProducts = allProducts.filter(
-        product => fashionCategories.includes(product.category)
-      );
+      // Select 90 different products and images.
+      const selected = available.slice(0, 90);
 
-      const selected = [
-        ...generalProducts.slice(0, 35).map(p => ({ ...p, store: "Amazon" })),
-        ...generalProducts.slice(35, 70).map(p => ({ ...p, store: "Flipkart" })),
-        ...fashionProducts.slice(0, 20).map(p => ({ ...p, store: "Myntra" }))
-      ];
+      products = selected.map((item, index) => {
+        let store;
 
-      // Remove any duplicate image URL across the complete selection.
-      const finalImages = new Set();
+        if (index < 35) {
+          store = "Amazon";
+        } else if (index < 70) {
+          store = "Flipkart";
+        } else {
+          store = "Myntra";
+        }
 
-      products = selected.filter(p => {
-        const image = p.images?.[0] || p.thumbnail;
-        if (!image || finalImages.has(image)) return false;
-        finalImages.add(image);
-        return true;
-      }).map(p => ({
-        id: "product-" + p.id,
-        name: p.title,
-        category: getCategory(p.category),
-        originalCategory: p.category,
-        image: p.images?.[0] || p.thumbnail,
-        price: p.price,
-        store: p.store
-      }));
+        return {
+          id: String(item.id),
+          name: item.title,
+          category: mapCategory(item.category),
+          price: item.price,
+          image: item.thumbnail || item.images[0],
+          store
+        };
+      });
 
       console.log("Total products:", products.length);
       console.log("Amazon:", products.filter(p => p.store === "Amazon").length);
       console.log("Flipkart:", products.filter(p => p.store === "Flipkart").length);
       console.log("Myntra:", products.filter(p => p.store === "Myntra").length);
-      console.log("Unique photos:", new Set(products.map(p => p.image)).size);
-
-      if (products.length === 0) {
-        throw new Error("No matching products were returned");
-      }
+      console.log("Unique image URLs:", new Set(products.map(p => p.image)).size);
 
       renderProducts();
       renderWishlist();
       updateWishlistCount();
 
     } catch (error) {
-      console.error("Product loading error:", error);
+      console.error("AMZADORA loading error:", error);
 
-      if (productGrid) {
-        productGrid.innerHTML =
-          "<p>Products load nahi ho paaye. Internet connection check karke refresh karo.</p>";
-      }
+      grid.innerHTML = `
+        <div style="padding:25px;text-align:center;grid-column:1/-1">
+          <h3>Products could not load</h3>
+          <p>${error.message}</p>
+          <button onclick="location.reload()">Try Again</button>
+        </div>
+      `;
+
+      if (resultCount) resultCount.textContent = "Loading failed";
     }
   }
 
-  // =====================================
   // PRODUCT CARD
-  // =====================================
-
-  function createProductCard(product) {
-    const saved = wishlist.includes(product.id);
+  function productCard(p) {
+    const saved = wishlist.includes(p.id);
 
     return `
       <article class="product-card">
         <div class="product-art">
           <img
             class="product-image"
-            src="${product.image}"
-            alt="${product.name}"
+            src="${p.image}"
+            alt="${p.name.replace(/"/g, "&quot;")}"
             loading="lazy"
+            style="width:100%;height:220px;object-fit:contain;background:#fff;"
             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
           >
 
-          <div class="product-fallback-icon" style="display:none;">
+          <div class="product-fallback-icon"
+               style="display:none;align-items:center;justify-content:center;height:220px;">
             <i class="fa-solid fa-image"></i>
           </div>
 
-          <button
-            class="heart-btn ${saved ? "active" : ""}"
-            data-wishlist="${product.id}"
-            aria-label="Wishlist"
-          >
+          <button class="heart-btn ${saved ? "active" : ""}"
+                  data-wishlist="${p.id}">
             <i class="${saved ? "fa-solid" : "fa-regular"} fa-heart"></i>
           </button>
         </div>
 
         <div class="product-info">
-          <span class="store">${product.store}</span>
-          <h3>${product.name}</h3>
+          <span class="store">${p.store}</span>
+          <h3>${p.name}</h3>
 
           <div class="product-meta">
-            <span class="product-category">${product.category}</span>
+            <span class="product-category">${p.category}</span>
           </div>
 
           <div class="product-footer">
-            <strong>Check Price</strong>
-            <a
-              class="buy-now"
-              href="${getStoreLink(product)}"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <strong>₹${Number(p.price).toLocaleString("en-IN")}</strong>
+            <a class="buy-now"
+               href="${storeLink(p)}"
+               target="_blank"
+               rel="noopener noreferrer">
               View Deal
             </a>
           </div>
@@ -231,63 +200,55 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   }
 
-  // =====================================
-  // FILTER / SEARCH / SORT
-  // =====================================
-
+  // RENDER PRODUCTS
   function renderProducts() {
-    if (!productGrid) return;
-
-    let filtered = products.filter(product => {
+    let filtered = products.filter(p => {
       const storeMatch =
-        activeStore === "all" ||
-        product.store.toLowerCase() === activeStore.toLowerCase();
+        activeStore === "all" || p.store === activeStore;
 
       const categoryMatch =
-        activeCategory === "all" ||
-        product.category === activeCategory;
+        activeCategory === "all" || p.category === activeCategory;
 
       const searchMatch =
-        product.name.toLowerCase().includes(searchText) ||
-        product.category.toLowerCase().includes(searchText);
+        p.name.toLowerCase().includes(searchText) ||
+        p.category.includes(searchText);
 
       return storeMatch && categoryMatch && searchMatch;
     });
 
-    if (sortProducts) {
-      if (sortProducts.value === "name") {
+    if (sortSelect) {
+      if (sortSelect.value === "low") {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sortSelect.value === "high") {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (sortSelect.value === "name") {
         filtered.sort((a, b) => a.name.localeCompare(b.name));
       }
     }
 
-    productGrid.innerHTML = filtered.length
-      ? filtered.map(createProductCard).join("")
-      : "";
+    grid.innerHTML = filtered.map(productCard).join("");
 
-    if (resultsCount) {
-      resultsCount.textContent = `Showing ${filtered.length} products`;
+    if (resultCount) {
+      resultCount.textContent = `Showing ${filtered.length} products`;
     }
 
     if (emptyState) {
-      emptyState.style.display = filtered.length ? "none" : "block";
+      emptyState.hidden = filtered.length > 0;
     }
 
-    productGrid.querySelectorAll("[data-wishlist]").forEach(button => {
+    grid.querySelectorAll("[data-wishlist]").forEach(button => {
       button.addEventListener("click", () => {
         toggleWishlist(button.dataset.wishlist);
       });
     });
   }
 
-  // =====================================
   // STORE FILTER
-  // =====================================
-
   document.querySelectorAll(".store-filter").forEach(button => {
     button.addEventListener("click", () => {
-      document.querySelectorAll(".store-filter").forEach(item => {
-        item.classList.remove("active");
-      });
+      document.querySelectorAll(".store-filter").forEach(b =>
+        b.classList.remove("active")
+      );
 
       button.classList.add("active");
       activeStore = button.dataset.store || "all";
@@ -295,15 +256,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // =====================================
   // CATEGORY FILTER
-  // =====================================
-
-  document.querySelectorAll("[data-category]").forEach(button => {
+  document.querySelectorAll(".category-card").forEach(button => {
     button.addEventListener("click", () => {
-      document.querySelectorAll("[data-category]").forEach(item => {
-        item.classList.remove("active");
-      });
+      document.querySelectorAll(".category-card").forEach(b =>
+        b.classList.remove("active")
+      );
 
       button.classList.add("active");
       activeCategory = button.dataset.category || "all";
@@ -311,10 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // =====================================
   // SEARCH
-  // =====================================
-
   if (searchInput) {
     searchInput.addEventListener("input", () => {
       searchText = searchInput.value.trim().toLowerCase();
@@ -322,37 +277,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const searchForm = get("searchForm");
+  $("searchForm")?.addEventListener("submit", event => {
+    event.preventDefault();
+    searchText = searchInput.value.trim().toLowerCase();
+    renderProducts();
+  });
 
-  if (searchForm) {
-    searchForm.addEventListener("submit", event => {
-      event.preventDefault();
-      searchText = searchInput?.value.trim().toLowerCase() || "";
-      renderProducts();
-    });
-  }
+  // SORT
+  sortSelect?.addEventListener("change", renderProducts);
 
-  if (sortProducts) {
-    sortProducts.addEventListener("change", renderProducts);
-  }
-
-  // =====================================
   // WISHLIST
-  // =====================================
-
   function updateWishlistCount() {
-    if (get("wishlistCount")) {
-      get("wishlistCount").textContent = wishlist.length;
+    if ($("wishlistCount")) {
+      $("wishlistCount").textContent = wishlist.length;
     }
 
-    if (get("wishlistHeadingCount")) {
-      get("wishlistHeadingCount").textContent = wishlist.length;
+    if ($("wishlistHeadingCount")) {
+      $("wishlistHeadingCount").textContent = `(${wishlist.length})`;
     }
   }
 
   function toggleWishlist(id) {
     wishlist = wishlist.includes(id)
-      ? wishlist.filter(item => item !== id)
+      ? wishlist.filter(x => x !== id)
       : [...wishlist, id];
 
     localStorage.setItem("amzadWishlist", JSON.stringify(wishlist));
@@ -363,88 +310,62 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderWishlist() {
-    const savedItems = get("savedItems");
+    const savedItems = $("savedItems");
     if (!savedItems) return;
 
-    const savedProducts = products.filter(p => wishlist.includes(p.id));
+    const saved = products.filter(p => wishlist.includes(p.id));
 
-    savedItems.innerHTML = savedProducts.length
-      ? savedProducts.map(p => `
+    savedItems.innerHTML = saved.length
+      ? saved.map(p => `
           <div class="saved-item">
-            <img src="${p.image}" alt="${p.name}" width="50">
+            <img src="${p.image}" alt="${p.name}" width="55">
             <span>${p.name}</span>
             <button class="remove-saved" data-remove="${p.id}">Remove</button>
           </div>
         `).join("")
-      : `<p class="wishlist-empty">Your wishlist is empty.</p>`;
+      : `<p class="wishlist-empty">Your wishlist is empty. Save products you like!</p>`;
 
     savedItems.querySelectorAll("[data-remove]").forEach(button => {
-      button.addEventListener("click", () => {
-        toggleWishlist(button.dataset.remove);
-      });
+      button.addEventListener("click", () =>
+        toggleWishlist(button.dataset.remove)
+      );
     });
   }
 
-  const clearWishlist = get("clearWishlist");
+  $("clearWishlist")?.addEventListener("click", () => {
+    wishlist = [];
+    localStorage.setItem("amzadWishlist", "[]");
+    renderProducts();
+    renderWishlist();
+    updateWishlistCount();
+  });
 
-  if (clearWishlist) {
-    clearWishlist.addEventListener("click", () => {
-      wishlist = [];
-      localStorage.setItem("amzadWishlist", "[]");
-      renderProducts();
-      renderWishlist();
-      updateWishlistCount();
-    });
-  }
-
-  // =====================================
   // MOBILE MENU
-  // =====================================
+  $("mobileMenu")?.addEventListener("click", () => {
+    $("mainNav")?.classList.toggle("active");
+  });
 
-  const mobileMenu = get("mobileMenu");
-  const mainNav = get("mainNav");
-
-  if (mobileMenu && mainNav) {
-    mobileMenu.addEventListener("click", () => {
-      mainNav.classList.toggle("active");
-      mobileMenu.classList.toggle("active");
-    });
-  }
-
-  // =====================================
   // RESET FILTERS
-  // =====================================
+  $("resetFilters")?.addEventListener("click", () => {
+    activeStore = "all";
+    activeCategory = "all";
+    searchText = "";
 
-  const resetFilters = get("resetFilters");
+    if (searchInput) searchInput.value = "";
 
-  if (resetFilters) {
-    resetFilters.addEventListener("click", () => {
-      activeStore = "all";
-      activeCategory = "all";
-      searchText = "";
-
-      if (searchInput) searchInput.value = "";
-
-      document.querySelectorAll(".store-filter").forEach(button => {
-        button.classList.toggle(
-          "active",
-          (button.dataset.store || "all") === "all"
-        );
-      });
-
-      document.querySelectorAll("[data-category]").forEach(button => {
-        button.classList.toggle(
-          "active",
-          (button.dataset.category || "all") === "all"
-        );
-      });
-
-      renderProducts();
+    document.querySelectorAll(".store-filter").forEach(b => {
+      b.classList.toggle("active", b.dataset.store === "all");
     });
-  }
 
-  if (get("year")) {
-    get("year").textContent = new Date().getFullYear();
+    document.querySelectorAll(".category-card").forEach(b => {
+      b.classList.toggle("active", b.dataset.category === "all");
+    });
+
+    renderProducts();
+  });
+
+  if ($("year")) {
+    $("year").textContent = new Date().getFullYear();
   }
 
   loadProducts();
