@@ -4,321 +4,167 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Discover electronics, fashion, beauty, home, kitchen, fitness and more on AMZADORA.">
-  <meta name="theme-color" content="#172554">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://amzad-ali77.github.io/amzadora/">
-
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="AMZADORA | Smart Shopping">
-  <meta property="og:description" content="Discover products across popular categories on AMZADORA.">
-  <meta property="og:url" content="https://amzad-ali77.github.io/amzadora/">
-  <meta property="og:image" content="https://amzad-ali77.github.io/amzadora/amzadora-social-preview.jpg">
-
-  <title>AMZADORA | Smart Shopping</title>
-  <link rel="icon" type="image/png" href="./favicon.png">
+  <meta name="description" content="AMZADORA - Discover electronics, fashion, beauty and everyday products from top shopping stores.">
+  <meta name="theme-color" content="#131921">
+  <title>AMZADORA | Shop Smarter. Live Better.</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link rel="stylesheet" href="./style.css">
-
-  <style>
-    .hero-slider{position:relative;overflow:hidden;border-radius:22px;min-height:390px;background:#172554;color:white;margin:25px auto;max-width:1250px}
-    .hero-slide{display:none;min-height:390px;padding:55px 8%;align-items:center;justify-content:space-between;gap:25px}
-    .hero-slide.active{display:flex;animation:slideFade .5s ease}
-    .hero-slide:nth-child(1){background:linear-gradient(120deg,#172554,#2563eb)}
-    .hero-slide:nth-child(2){background:linear-gradient(120deg,#312e81,#7c3aed)}
-    .hero-slide:nth-child(3){background:linear-gradient(120deg,#134e4a,#0f766e)}
-    .hero-slide h1{font:800 clamp(30px,5vw,54px) Outfit,sans-serif;line-height:1.12;margin:15px 0}
-    .hero-slide p{max-width:520px;line-height:1.7;color:#e0e7ff}
-    .hero-slide .eyebrow{color:#bfdbfe;font-weight:700;letter-spacing:2px}
-    .hero-slide .primary-btn{display:inline-flex;margin-top:20px;background:white;color:#172554;padding:13px 22px;border-radius:9px;text-decoration:none;font-weight:700;gap:10px}
-    .slide-art{font-size:clamp(90px,15vw,170px);opacity:.9;padding:20px}
-    .slider-controls{position:absolute;bottom:20px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:15px}
-    .slider-controls button{border:0;border-radius:50%;width:36px;height:36px;cursor:pointer;background:#ffffff30;color:white;font-size:16px}
-    .slider-dots{display:flex;gap:8px}
-    .slider-dot{width:9px;height:9px;border-radius:50%;background:#ffffff70;border:0;cursor:pointer;padding:0}
-    .slider-dot.active{background:white;width:24px;border-radius:10px}
-    @keyframes slideFade{from{opacity:.5;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
-    .section-heading{margin-bottom:22px}
-    .disclosure{font-size:13px;line-height:1.6}
-    .category-list{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}
-    .category{cursor:pointer}
-    .filter-row{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
-    .product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px}
-    .product-card{min-width:0}
-    .product-image{width:100%;height:190px;object-fit:contain}
-    .product-art{position:relative;min-height:190px;display:flex;align-items:center;justify-content:center;overflow:hidden}
-    .product-fallback-icon{font-size:65px;opacity:.55}
-    .product-tag{position:absolute;top:12px;left:12px;z-index:1}
-    .heart-btn{position:absolute;top:10px;right:10px;z-index:2;cursor:pointer}
-    .product-info{padding:15px}
-    .product-info h3{margin:8px 0}
-    .product-footer{display:flex;flex-direction:column;gap:12px;margin-top:15px}
-    .buy-now{display:inline-flex;justify-content:center;gap:8px}
-    .saved-grid{display:grid;gap:12px}
-    .saved-item{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-    @media(max-width:700px){
-      .hero-slider{margin:15px;border-radius:15px}
-      .hero-slide{min-height:390px;padding:35px 25px;flex-direction:column;justify-content:center;text-align:center}
-      .slide-art{font-size:75px;padding:5px}
-      .hero-slide p{margin:auto}
-      .slider-controls{bottom:12px}
-    }
-  </style>
+  <script src="script.js" defer></script>
 </head>
-
 <body>
 
-  <div class="top-strip">Discover great products and deals at AMZADORA!</div>
+  <div class="top-strip">
+    <p><i class="fa-solid fa-bolt"></i> Discover great products and deals at AMZADORA!</p>
+  </div>
 
   <header class="header">
-    <a class="logo" href="#home" aria-label="AMZADORA Home">
-      <i class="fa-solid fa-bag-shopping logo-icon"></i>
-      AMZAD<span class="logo-highlight">ORA</span>
-    </a>
+    <div class="header-main">
+      <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
 
-    <form class="search-box" id="searchForm" role="search">
-      <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-      <input type="search" id="searchInput" placeholder="Search products..." aria-label="Search products" autocomplete="off">
-      <button type="submit">Search</button>
-    </form>
+      <a href="#" class="logo">AMZAD<span>ORA</span><small>SMART SHOPPING</small></a>
 
-    <button class="mobile-menu" id="mobileMenu" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mainNav">
-      <i class="fa-solid fa-bars"></i>
-    </button>
+      <form class="search-box" id="searchForm">
+        <input type="search" id="searchInput" placeholder="Search products, brands and more..." autocomplete="off">
+        <button type="submit" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </form>
 
-    <nav class="nav" id="mainNav" aria-label="Main navigation">
-      <a href="#home">Home</a>
-      <a href="#products">Products</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-      <a href="#saved">Saved Items</a>
+      <a href="#wishlist" class="header-wishlist">
+        <i class="fa-regular fa-heart"></i>
+        <span>Wishlist</span>
+        <b id="wishlistCount">0</b>
+      </a>
+    </div>
+
+    <nav class="main-nav" id="mainNav">
+      <div class="nav-inner">
+        <a href="#" class="nav-link active">Home</a>
+        <a href="#products" class="nav-link">All Products</a>
+        <a href="#categories" class="nav-link">Categories</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#footer" class="nav-link">Contact</a>
+      </div>
     </nav>
-
-    <a class="wishlist-header" href="#saved" id="wishlistHeader">
-      <i class="fa-regular fa-heart"></i>
-      Wishlist (<span id="wishlistCount">0</span>)
-    </a>
   </header>
 
-  <main id="home">
-
-    <!-- AUTOMATIC HERO SLIDER -->
-    <section class="hero-slider" aria-label="Featured shopping highlights">
-
-      <article class="hero-slide active">
-        <div>
-          <span class="eyebrow">DISCOVER · COMPARE · SHOP</span>
-          <h1>Find What You Need.<br>Shop Smarter.</h1>
-          <p>Discover electronics, fashion, beauty and everyday essentials in one place.</p>
-          <a href="#products" class="primary-btn">Explore Products <i class="fa-solid fa-arrow-right"></i></a>
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <span class="hero-label"><i class="fa-solid fa-star"></i> YOUR SMART SHOPPING DESTINATION</span>
+        <h1>Shop Smarter.<br><span>Live Better.</span></h1>
+        <p>Explore amazing products, discover great deals and find your everyday essentials in one place.</p>
+        <a href="#products" class="primary-btn">Explore Products <i class="fa-solid fa-arrow-right"></i></a>
+        <div class="hero-points">
+          <span><i class="fa-solid fa-check-circle"></i> Multiple stores</span>
+          <span><i class="fa-solid fa-check-circle"></i> Easy discovery</span>
         </div>
-        <div class="slide-art"><i class="fa-solid fa-bag-shopping"></i></div>
-      </article>
-
-      <article class="hero-slide">
-        <div>
-          <span class="eyebrow">TECHNOLOGY & ELECTRONICS</span>
-          <h1>Upgrade Your<br>Everyday Life.</h1>
-          <p>Explore headphones, smart watches, laptops, speakers and more.</p>
-          <a href="#products" class="primary-btn">Explore Electronics <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-        <div class="slide-art"><i class="fa-solid fa-headphones"></i></div>
-      </article>
-
-      <article class="hero-slide">
-        <div>
-          <span class="eyebrow">STYLE · HOME · LIFESTYLE</span>
-          <h1>Everything You<br>Love, in One Place.</h1>
-          <p>Discover fashion, shoes, home essentials, fitness products and more.</p>
-          <a href="#products" class="primary-btn">Start Exploring <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-        <div class="slide-art"><i class="fa-solid fa-shirt"></i></div>
-      </article>
-
-      <div class="slider-controls">
-        <button type="button" id="prevSlide" aria-label="Previous slide"><i class="fa-solid fa-chevron-left"></i></button>
-        <div class="slider-dots">
-          <button class="slider-dot active" type="button" data-slide="0" aria-label="Slide 1"></button>
-          <button class="slider-dot" type="button" data-slide="1" aria-label="Slide 2"></button>
-          <button class="slider-dot" type="button" data-slide="2" aria-label="Slide 3"></button>
-        </div>
-        <button type="button" id="nextSlide" aria-label="Next slide"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-circle"></div>
+        <img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=900&q=85" alt="Online shopping deals">
+        <div class="hero-floating"><i class="fa-solid fa-bag-shopping"></i><span>Smart choices<br><b>Start here!</b></span></div>
       </div>
     </section>
 
-    <section class="trust-strip">
-      <div><i class="fa-solid fa-magnifying-glass"></i><span>Discover on AMZADORA</span></div>
-      <div><i class="fa-solid fa-arrow-up-right-from-square"></i><span>Continue to Amazon</span></div>
-      <div><i class="fa-solid fa-lock"></i><span>Checkout on Amazon</span></div>
+    <section class="benefits">
+      <div><i class="fa-solid fa-store"></i><span><b>Multiple Stores</b><small>Explore popular platforms</small></span></div>
+      <div><i class="fa-solid fa-magnifying-glass"></i><span><b>Easy Discovery</b><small>Find products quickly</small></span></div>
+      <div><i class="fa-solid fa-heart"></i><span><b>Save Favorites</b><small>Keep your wishlist</small></span></div>
+      <div><i class="fa-solid fa-mobile-screen"></i><span><b>Mobile Friendly</b><small>Shop from anywhere</small></span></div>
     </section>
 
-    <!-- PRODUCTS -->
-    <section class="products-section" id="products">
+    <section class="categories-section" id="categories">
       <div class="section-heading">
-        <div>
-          <span class="eyebrow">PRODUCT DISCOVERY</span>
-          <h2>Explore Products</h2>
-          <p>Find products across our popular shopping categories.</p>
+        <div><span class="eyebrow">EXPLORE OUR COLLECTION</span><h2>Shop by Category</h2></div>
+        <a href="#products">View all <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="category-grid">
+        <button class="category-card active" data-category="all"><i class="fa-solid fa-border-all"></i><span>All</span></button>
+        <button class="category-card" data-category="electronics"><i class="fa-solid fa-laptop"></i><span>Electronics</span></button>
+        <button class="category-card" data-category="mobiles"><i class="fa-solid fa-mobile-screen"></i><span>Mobiles</span></button>
+        <button class="category-card" data-category="fashion"><i class="fa-solid fa-shirt"></i><span>Fashion</span></button>
+        <button class="category-card" data-category="shoes"><i class="fa-solid fa-shoe-prints"></i><span>Shoes</span></button>
+        <button class="category-card" data-category="beauty"><i class="fa-solid fa-spa"></i><span>Beauty</span></button>
+        <button class="category-card" data-category="home"><i class="fa-solid fa-couch"></i><span>Home</span></button>
+        <button class="category-card" data-category="fitness"><i class="fa-solid fa-dumbbell"></i><span>Fitness</span></button>
+      </div>
+    </section>
+
+    <section class="products-section" id="products">
+      <div class="section-heading product-heading">
+        <div><span class="eyebrow">HANDPICKED FOR YOU</span><h2>Discover Products</h2></div>
+        <span class="results-count" id="resultsCount">Loading products...</span>
+      </div>
+
+      <div class="shop-toolbar">
+        <div class="store-filters" id="storeFilters">
+          <button class="store-filter active" data-store="all">All Stores</button>
+          <button class="store-filter" data-store="Amazon">Amazon</button>
+          <button class="store-filter" data-store="Flipkart">Flipkart</button>
+          <button class="store-filter" data-store="Myntra">Myntra</button>
         </div>
+        <select id="sortProducts" aria-label="Sort products">
+          <option value="default">Sort: Featured</option>
+          <option value="low">Price: Low to High</option>
+          <option value="high">Price: High to Low</option>
+          <option value="name">Name: A to Z</option>
+        </select>
       </div>
 
-      <p class="disclosure">
-        <strong>Affiliate Disclosure:</strong>
-        As an Amazon Associate, we earn from qualifying purchases.
-        Product listings are search suggestions, not live inventory.
-        Prices and availability are shown by Amazon and may change.
-      </p>
-
-      <div class="category-list" aria-label="Product categories">
-        <button class="category active" type="button" data-category="all">All Products</button>
-        <button class="category" type="button" data-category="electronics">Electronics</button>
-        <button class="category" type="button" data-category="mobiles">Mobiles</button>
-        <button class="category" type="button" data-category="fashion">Fashion</button>
-        <button class="category" type="button" data-category="shoes">Shoes</button>
-        <button class="category" type="button" data-category="beauty">Beauty</button>
-        <button class="category" type="button" data-category="home">Home</button>
-        <button class="category" type="button" data-category="kitchen">Kitchen</button>
-        <button class="category" type="button" data-category="fitness">Fitness</button>
-        <button class="category" type="button" data-category="gaming">Gaming</button>
-        <button class="category" type="button" data-category="books">Books</button>
-      </div>
-
-      <div class="filter-row">
-        <div class="catalogue-note"><i class="fa-brands fa-amazon"></i> Amazon Product Search</div>
-        <label class="sort-label" for="sortProducts">
-          Sort:
-          <select id="sortProducts">
-            <option value="default">Recommended</option>
-            <option value="name">Name: A to Z</option>
-          </select>
-        </label>
-      </div>
-
-      <p class="results-count" id="resultsCount" aria-live="polite">Loading products...</p>
       <div class="product-grid" id="productGrid"></div>
 
       <div class="empty-state" id="emptyState" hidden>
-        <i class="fa-solid fa-magnifying-glass fa-2x"></i>
-        <h3>No Products Found</h3>
-        <p>Try another product name or category.</p>
-        <button type="button" id="resetFilters">Reset Filters</button>
+        <i class="fa-solid fa-box-open"></i>
+        <h3>No products found</h3>
+        <p>Try another search or select a different category.</p>
+        <button class="primary-btn" id="resetFilters">Show All Products</button>
       </div>
     </section>
 
-    <!-- HOW IT WORKS -->
-    <section class="how-section">
-      <div class="section-heading centered">
-        <div><span class="eyebrow">SIMPLE SHOPPING JOURNEY</span><h2>How AMZADORA Works</h2></div>
-      </div>
-      <div class="how-grid">
-        <article><span>01</span><i class="fa-solid fa-magnifying-glass"></i><h3>Discover Products</h3><p>Explore product ideas using search and category filters.</p></article>
-        <article><span>02</span><i class="fa-brands fa-amazon"></i><h3>Compare on Amazon</h3><p>Open Amazon to view matching products and available options.</p></article>
-        <article><span>03</span><i class="fa-solid fa-cart-shopping"></i><h3>Shop on Amazon</h3><p>Check seller, price and delivery details before purchasing.</p></article>
-      </div>
-    </section>
-
-    <!-- SAVED ITEMS -->
-    <section class="saved-section products-section" id="saved">
-      <div class="section-heading">
-        <div><span class="eyebrow">YOUR SHORTLIST</span><h2>Saved Items</h2><p>Your saved products are stored in this browser.</p></div>
-      </div>
-      <div class="saved-grid" id="savedItems">
-        <p class="saved-empty">You have not saved any products yet.</p>
-      </div>
-      <button class="clear-filter" id="clearWishlist" type="button">Clear Saved Items</button>
-    </section>
-
-    <!-- ABOUT -->
-    <section class="about-section" id="about">
-      <div class="about-icon"><i class="fa-solid fa-store fa-2x"></i></div>
+    <section class="promo-banner">
       <div>
-        <span class="eyebrow">ABOUT AMZADORA</span>
-        <h2>Discover Products in One Place</h2>
-        <p>AMZADORA is an independent product discovery website. Visitors can browse product categories and open relevant Amazon search results. AMZADORA does not sell, stock, ship or fulfil products and does not process payments or orders.</p>
+        <span>MAKE EVERY PURCHASE COUNT</span>
+        <h2>Find something<br>you'll love.</h2>
+        <p>Explore products from stores you already know.</p>
+        <a href="#products" class="light-btn">Start Exploring <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <i class="fa-solid fa-gift promo-icon"></i>
+    </section>
+
+    <section class="wishlist-section" id="wishlist">
+      <div class="section-heading">
+        <div><span class="eyebrow">YOUR PERSONAL COLLECTION</span><h2>My Wishlist <span id="wishlistHeadingCount">(0)</span></h2></div>
+        <button class="clear-btn" id="clearWishlist">Clear Wishlist</button>
+      </div>
+      <div class="wishlist-grid" id="savedItems">
+        <p class="wishlist-empty">Your wishlist is empty. Save products you like!</p>
       </div>
     </section>
 
-    <!-- CONTACT -->
-    <section class="newsletter" id="contact">
-      <span class="eyebrow">GET IN TOUCH</span>
-      <h2>Have a Suggestion?</h2>
-      <p>Tell us which product category or feature you would like to see.</p>
-      <a href="mailto:amzadraza776@gmail.com" class="primary-btn">
-        <i class="fa-regular fa-envelope"></i> Contact AMZADORA
-      </a>
+    <section class="about-section" id="about">
+      <span class="eyebrow">ABOUT AMZADORA</span>
+      <h2>A smarter way to discover products.</h2>
+      <p>AMZADORA helps you explore products across popular online shopping platforms. Discover products in one place and visit the retailer to check the latest price and availability.</p>
     </section>
-
   </main>
 
-  <footer class="footer">
-    <a class="logo footer-logo" href="#home">
-      <i class="fa-solid fa-bag-shopping logo-icon"></i>
-      AMZAD<span class="logo-highlight">ORA</span>
-    </a>
-    <p>Discover products. Make smarter shopping choices.</p>
-    <div class="footer-links">
-      <a href="#home">Home</a><a href="#products">Products</a><a href="#about">About</a><a href="#contact">Contact</a>
+  <footer class="footer" id="footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a href="#" class="logo">AMZAD<span>ORA</span></a>
+        <p>Discover more. Choose smarter. Shop better.</p>
+      </div>
+      <div><h4>Explore</h4><a href="#products">Products</a><a href="#categories">Categories</a><a href="#wishlist">Wishlist</a></div>
+      <div><h4>Information</h4><a href="#about">About Us</a><a href="mailto:amzadraza776@gmail.com">Contact</a></div>
     </div>
-    <p class="footer-disclosure">As an Amazon Associate, AMZADORA earns from qualifying purchases. Amazon and the Amazon logo are trademarks of Amazon.com, Inc. or its affiliates.</p>
-    <p class="copyright">© <span id="year"></span> AMZADORA. All rights reserved.</p>
+    <div class="affiliate-note">Affiliate Disclosure: Some links on AMZADORA may be affiliate links. We may earn a commission from qualifying purchases at no additional cost to you. Prices and availability are determined by the retailer.</div>
+    <div class="footer-bottom"><span>© <span id="year"></span> AMZADORA. All rights reserved.</span><span>Made for smarter shopping.</span></div>
   </footer>
-
-  <script src="./script.js" defer></script>
-
-  <!-- SLIDER FUNCTION -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const slides = document.querySelectorAll(".hero-slide");
-      const dots = document.querySelectorAll(".slider-dot");
-      const previous = document.getElementById("prevSlide");
-      const next = document.getElementById("nextSlide");
-
-      if (!slides.length) return;
-
-      let current = 0;
-      let timer;
-
-      function showSlide(index) {
-        current = (index + slides.length) % slides.length;
-
-        slides.forEach((slide, i) => {
-          slide.classList.toggle("active", i === current);
-        });
-
-        dots.forEach((dot, i) => {
-          dot.classList.toggle("active", i === current);
-        });
-      }
-
-      function restartTimer() {
-        clearInterval(timer);
-        timer = setInterval(() => showSlide(current + 1), 5000);
-      }
-
-      previous?.addEventListener("click", () => {
-        showSlide(current - 1);
-        restartTimer();
-      });
-
-      next?.addEventListener("click", () => {
-        showSlide(current + 1);
-        restartTimer();
-      });
-
-      dots.forEach((dot, i) => {
-        dot.addEventListener("click", () => {
-          showSlide(i);
-          restartTimer();
-        });
-      });
-
-      showSlide(0);
-      restartTimer();
-    });
-  </script>
 
 </body>
 </html>
