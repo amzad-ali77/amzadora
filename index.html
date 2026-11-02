@@ -4,62 +4,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Discover products on AMZADORA. Explore electronics, fashion, beauty, home, kitchen, fitness and more.">
-  <meta name="theme-color" content="#172554">
 
+  <meta name="description" content="Discover electronics, fashion, beauty, home, kitchen, fitness and more on AMZADORA. Explore products and continue shopping on Amazon.">
+  <meta name="theme-color" content="#172554">
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical" href="https://amzad-ali77.github.io/amzadora/">
+
+  <meta property="og:type" content="website">
   <meta property="og:title" content="AMZADORA | Smart Shopping">
   <meta property="og:description" content="Discover products across popular categories on AMZADORA.">
   <meta property="og:url" content="https://amzad-ali77.github.io/amzadora/">
   <meta property="og:image" content="https://amzad-ali77.github.io/amzadora/amzadora-social-preview.jpg">
 
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AMZADORA | Smart Shopping">
+  <meta name="twitter:description" content="Discover products across popular categories on AMZADORA.">
+  <meta name="twitter:image" content="https://amzad-ali77.github.io/amzadora/amzadora-social-preview.jpg">
+
   <title>AMZADORA | Smart Shopping</title>
 
-  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="icon" type="image/png" href="./favicon.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
   <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 
+  <!-- TOP STRIP -->
   <div class="top-strip">
     Discover products at AMZADORA | Shop on Amazon
   </div>
 
+  <!-- HEADER -->
   <header class="header">
 
-    <a class="logo" href="#home">
+    <a class="logo" href="#home" aria-label="AMZADORA Home">
       <i class="fa-solid fa-bag-shopping logo-icon"></i>
       AMZAD<span class="logo-highlight">ORA</span>
     </a>
 
-    <form class="search-box" id="searchForm">
-      <i class="fa-solid fa-magnifying-glass"></i>
+    <form class="search-box" id="searchForm" role="search">
+
+      <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+
       <input
         type="search"
         id="searchInput"
         placeholder="Search products..."
         aria-label="Search products"
+        autocomplete="off"
       >
+
       <button type="submit">Search</button>
+
     </form>
 
-    <button class="mobile-menu" id="mobileMenu" type="button" aria-label="Toggle menu">
-      <i class="fa-solid fa-bars"></i>
+    <button
+      class="mobile-menu"
+      id="mobileMenu"
+      type="button"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+      aria-controls="mainNav"
+    >
+      <i class="fa-solid fa-bars" aria-hidden="true"></i>
     </button>
 
-    <nav class="nav" id="mainNav">
+    <nav class="nav" id="mainNav" aria-label="Main navigation">
+
       <a href="#home">Home</a>
       <a href="#products">Products</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
       <a href="#saved">Saved Items</a>
+
     </nav>
 
     <a class="wishlist-header" href="#saved" id="wishlistHeader">
-      <i class="fa-regular fa-heart"></i>
+      <i class="fa-regular fa-heart" aria-hidden="true"></i>
       Wishlist (<span id="wishlistCount">0</span>)
     </a>
 
@@ -67,12 +97,14 @@
 
   <main id="home">
 
-    <!-- HERO -->
-
+    <!-- HERO SECTION -->
     <section class="hero">
 
       <div class="hero-content">
-        <span class="eyebrow">DISCOVER · COMPARE · SHOP</span>
+
+        <span class="eyebrow">
+          DISCOVER · COMPARE · SHOP
+        </span>
 
         <h1>
           Find What You Need.
@@ -88,22 +120,34 @@
           Explore Products
           <i class="fa-solid fa-arrow-right"></i>
         </a>
+
       </div>
 
       <div class="hero-art">
+
         <div class="hero-circle">
           <i class="fa-solid fa-bag-shopping"></i>
         </div>
-        <span class="float-icon one"><i class="fa-solid fa-headphones"></i></span>
-        <span class="float-icon two"><i class="fa-solid fa-mobile-screen-button"></i></span>
-        <span class="float-icon three"><i class="fa-solid fa-shirt"></i></span>
+
+        <span class="float-icon one">
+          <i class="fa-solid fa-headphones"></i>
+        </span>
+
+        <span class="float-icon two">
+          <i class="fa-solid fa-mobile-screen-button"></i>
+        </span>
+
+        <span class="float-icon three">
+          <i class="fa-solid fa-shirt"></i>
+        </span>
+
       </div>
 
     </section>
 
-    <!-- HOW IT WORKS -->
-
+    <!-- TRUST STRIP -->
     <section class="trust-strip">
+
       <div>
         <i class="fa-solid fa-magnifying-glass"></i>
         <span>Discover on AMZADORA</span>
@@ -118,46 +162,85 @@
         <i class="fa-solid fa-lock"></i>
         <span>Checkout on Amazon</span>
       </div>
+
     </section>
 
-    <!-- PRODUCTS -->
-
+    <!-- PRODUCTS SECTION -->
     <section class="products-section" id="products">
 
       <div class="section-heading">
+
         <div>
           <span class="eyebrow">PRODUCT DISCOVERY</span>
+
           <h2>Explore Products</h2>
-          <p>Search and discover products across popular categories.</p>
+
+          <p>
+            Search and discover products across popular categories.
+          </p>
         </div>
+
       </div>
 
+      <!-- AFFILIATE DISCLOSURE -->
       <p class="disclosure">
         <strong>Affiliate Disclosure:</strong>
-        As an Amazon Associate, we may earn from qualifying purchases.
+        As an Amazon Associate, we earn from qualifying purchases.
         Product listings are search suggestions, not live inventory.
         Prices, availability and product details are displayed by Amazon
         and may change.
       </p>
 
       <!-- CATEGORY FILTERS -->
+      <div class="category-list" aria-label="Product categories">
 
-      <div class="category-list">
+        <button class="category active" type="button" data-category="all">
+          All Products
+        </button>
 
-        <button class="category active" data-category="all">All Products</button>
-        <button class="category" data-category="electronics">Electronics</button>
-        <button class="category" data-category="mobiles">Mobiles</button>
-        <button class="category" data-category="fashion">Fashion</button>
-        <button class="category" data-category="shoes">Shoes</button>
-        <button class="category" data-category="beauty">Beauty</button>
-        <button class="category" data-category="home">Home</button>
-        <button class="category" data-category="kitchen">Kitchen</button>
-        <button class="category" data-category="fitness">Fitness</button>
-        <button class="category" data-category="gaming">Gaming</button>
-        <button class="category" data-category="books">Books</button>
+        <button class="category" type="button" data-category="electronics">
+          Electronics
+        </button>
+
+        <button class="category" type="button" data-category="mobiles">
+          Mobiles
+        </button>
+
+        <button class="category" type="button" data-category="fashion">
+          Fashion
+        </button>
+
+        <button class="category" type="button" data-category="shoes">
+          Shoes
+        </button>
+
+        <button class="category" type="button" data-category="beauty">
+          Beauty
+        </button>
+
+        <button class="category" type="button" data-category="home">
+          Home
+        </button>
+
+        <button class="category" type="button" data-category="kitchen">
+          Kitchen
+        </button>
+
+        <button class="category" type="button" data-category="fitness">
+          Fitness
+        </button>
+
+        <button class="category" type="button" data-category="gaming">
+          Gaming
+        </button>
+
+        <button class="category" type="button" data-category="books">
+          Books
+        </button>
 
       </div>
 
+      <!-- FILTER AND SORT -->
       <div class="filter-row">
 
         <div class="catalogue-note">
@@ -165,40 +248,55 @@
           Amazon Product Search
         </div>
 
-        <label class="sort-label">
+        <label class="sort-label" for="sortProducts">
           Sort:
+
           <select id="sortProducts">
             <option value="default">Recommended</option>
             <option value="name">Name: A to Z</option>
           </select>
+
         </label>
 
       </div>
 
-      <p class="results-count" id="resultsCount">
+      <!-- RESULTS COUNT -->
+      <p class="results-count" id="resultsCount" aria-live="polite">
         Loading products...
       </p>
 
+      <!-- PRODUCT GRID -->
       <div class="product-grid" id="productGrid"></div>
 
+      <!-- EMPTY STATE -->
       <div class="empty-state" id="emptyState" hidden>
+
         <i class="fa-solid fa-magnifying-glass fa-2x"></i>
+
         <h3>No Products Found</h3>
-        <p>Try another product name or category.</p>
-        <button type="button" id="resetFilters">Reset Filters</button>
+
+        <p>
+          Try another product name or category.
+        </p>
+
+        <button type="button" id="resetFilters">
+          Reset Filters
+        </button>
+
       </div>
 
     </section>
 
     <!-- HOW IT WORKS -->
-
     <section class="how-section">
 
       <div class="section-heading centered">
+
         <div>
           <span class="eyebrow">SIMPLE SHOPPING JOURNEY</span>
           <h2>How AMZADORA Works</h2>
         </div>
+
       </div>
 
       <div class="how-grid">
@@ -207,21 +305,27 @@
           <span>01</span>
           <i class="fa-solid fa-magnifying-glass"></i>
           <h3>Search Here</h3>
-          <p>Discover product ideas using our search and category filters.</p>
+          <p>
+            Discover product ideas using our search and category filters.
+          </p>
         </article>
 
         <article>
           <span>02</span>
           <i class="fa-brands fa-amazon"></i>
           <h3>Open Amazon</h3>
-          <p>View matching products and compare available options on Amazon.</p>
+          <p>
+            View matching products and compare available options on Amazon.
+          </p>
         </article>
 
         <article>
           <span>03</span>
           <i class="fa-solid fa-cart-shopping"></i>
           <h3>Buy on Amazon</h3>
-          <p>Check seller, price and delivery details before placing an order.</p>
+          <p>
+            Check seller, price and delivery details before placing an order.
+          </p>
         </article>
 
       </div>
@@ -229,21 +333,27 @@
     </section>
 
     <!-- SAVED ITEMS -->
-
     <section class="saved-section products-section" id="saved">
 
       <div class="section-heading">
+
         <div>
           <span class="eyebrow">YOUR SHORTLIST</span>
           <h2>Saved Items</h2>
-          <p>Your saved products are stored in this browser.</p>
+
+          <p>
+            Your saved products are stored in this browser.
+          </p>
         </div>
+
       </div>
 
       <div class="saved-grid" id="savedItems">
+
         <p class="saved-empty">
           You have not saved any products yet.
         </p>
+
       </div>
 
       <button class="clear-filter" id="clearWishlist" type="button">
@@ -252,8 +362,7 @@
 
     </section>
 
-    <!-- ABOUT -->
-
+    <!-- ABOUT SECTION -->
     <section class="about-section" id="about">
 
       <div class="about-icon">
@@ -261,7 +370,9 @@
       </div>
 
       <div>
+
         <span class="eyebrow">ABOUT AMZADORA</span>
+
         <h2>Discover Products in One Place</h2>
 
         <p>
@@ -270,12 +381,12 @@
           search results. AMZADORA does not sell, stock, ship or fulfil
           products and does not process payments or orders.
         </p>
+
       </div>
 
     </section>
 
-    <!-- CONTACT -->
-
+    <!-- CONTACT SECTION -->
     <section class="newsletter" id="contact">
 
       <span class="eyebrow">GET IN TOUCH</span>
@@ -296,7 +407,6 @@
   </main>
 
   <!-- FOOTER -->
-
   <footer class="footer">
 
     <a class="logo footer-logo" href="#home">
@@ -304,7 +414,9 @@
       AMZAD<span class="logo-highlight">ORA</span>
     </a>
 
-    <p>Discover products. Make smarter shopping choices.</p>
+    <p>
+      Discover products. Make smarter shopping choices.
+    </p>
 
     <div class="footer-links">
       <a href="#home">Home</a>
@@ -324,6 +436,7 @@
 
   </footer>
 
+  <!-- JAVASCRIPT -->
   <script src="./script.js" defer></script>
 
 </body>
