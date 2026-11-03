@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="AMZADORA - Discover electronics, fashion, beauty and everyday products from popular shopping stores.">
-  <meta name="theme-color" content="#131921">
+  <meta name="theme-color" content="#111d2c">
   <title>AMZADORA | Shop Smarter. Live Better.</title>
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="stylesheet" href="style.css">
@@ -13,244 +12,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-  <style>
-    /* Header and navigation adjustment */
-    .header-main {
-      min-height: 70px;
-      gap: 24px;
-      padding-top: 10px;
-      padding-bottom: 10px;
-    }
-
-    .main-nav {
-      background: #232f3e;
-    }
-
-    .nav-inner {
-      min-height: 43px;
-      align-items: center;
-      gap: 32px;
-    }
-
-    .nav-link {
-      padding: 13px 0;
-      font-size: 12px;
-    }
-
-    /* Make home hero banner smaller */
-    .hero {
-      min-height: 300px !important;
-      padding: 30px 5% !important;
-      border-radius: 14px;
-    }
-
-    .hero h1 {
-      font-size: clamp(34px, 4vw, 48px) !important;
-      margin: 12px 0;
-    }
-
-    .hero-content > p {
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .hero-visual img {
-      height: 230px;
-      width: 72%;
-    }
-
-    .hero-circle {
-      width: 270px;
-      height: 270px;
-    }
-
-    .hero-floating {
-      bottom: 25px;
-      padding: 10px 14px;
-    }
-
-    /* Contact section */
-    .contact-section {
-      max-width: 1120px;
-      margin: 45px auto;
-      padding: 40px 35px;
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(19,25,33,.07);
-    }
-
-    .contact-wrap {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 38px;
-      align-items: center;
-    }
-
-    .contact-info h2 {
-      margin: 10px 0 14px;
-      color: #131921;
-      font-size: 30px;
-    }
-
-    .contact-info p {
-      color: #64748b;
-      line-height: 1.7;
-      font-size: 14px;
-    }
-
-    .contact-email {
-      display: inline-flex;
-      gap: 10px;
-      align-items: center;
-      margin-top: 15px;
-      color: #131921;
-      font-weight: 700;
-      text-decoration: none;
-      overflow-wrap: anywhere;
-    }
-
-    .contact-form {
-      display: grid;
-      gap: 13px;
-    }
-
-    .contact-form label {
-      display: grid;
-      gap: 7px;
-      color: #273244;
-      font-weight: 600;
-      font-size: 13px;
-    }
-
-    .contact-form input,
-    .contact-form textarea {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 12px 14px;
-      border: 1px solid #d7dee8;
-      border-radius: 8px;
-      background: #fff;
-      color: #131921;
-      font: inherit;
-      font-size: 13px;
-    }
-
-    .contact-form textarea {
-      min-height: 115px;
-      resize: vertical;
-    }
-
-    .contact-form input:focus,
-    .contact-form textarea:focus {
-      outline: 2px solid #ff9900;
-      border-color: #ff9900;
-    }
-
-    .contact-form button {
-      border: 0;
-      border-radius: 8px;
-      padding: 13px 20px;
-      background: #ff9900;
-      color: #131921;
-      font: inherit;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .contact-help {
-      margin: 0;
-      color: #64748b;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    /* Remove wishlist visuals */
-    .header-wishlist,
-    .heart-btn,
-    .wishlist-section {
-      display: none !important;
-    }
-
-    /* Mobile adjustments */
-    @media (max-width: 700px) {
-      .header-main {
-        gap: 12px;
-      }
-
-      .nav-inner {
-        gap: 0;
-      }
-
-      .hero {
-        min-height: 390px !important;
-        padding: 25px 20px !important;
-        align-items: flex-start;
-      }
-
-      .hero-content {
-        width: 100%;
-      }
-
-      .hero h1 {
-        font-size: 36px !important;
-      }
-
-      .hero-visual {
-        width: 100%;
-        height: 43%;
-        top: auto;
-        bottom: 0;
-      }
-
-      .hero-visual img {
-        width: 62%;
-        height: 85%;
-      }
-
-      .hero-circle {
-        width: 190px;
-        height: 190px;
-      }
-
-      .hero-floating {
-        bottom: 12px;
-        left: 3%;
-      }
-
-      .contact-section {
-        margin: 30px 0;
-        padding: 28px 18px;
-      }
-
-      .contact-wrap {
-        grid-template-columns: 1fr;
-        gap: 22px;
-      }
-    }
-  </style>
-
   <script src="script.js" defer></script>
 </head>
-
 <body>
-
   <header class="header">
     <div class="header-main">
       <button class="mobile-menu" id="mobileMenu" type="button" aria-label="Open menu">
         <i class="fa-solid fa-bars"></i>
       </button>
-
       <a href="#" class="logo">AMZAD<span>ORA</span><small>SMART SHOPPING</small></a>
-
       <form class="search-box" id="searchForm">
         <input type="search" id="searchInput" placeholder="Search products, brands and more..." autocomplete="off">
-        <button type="submit" aria-label="Search">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
+        <button type="submit" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
       </form>
     </div>
-
     <nav class="main-nav" id="mainNav">
       <div class="nav-inner">
         <a href="#" class="nav-link active">Home</a>
@@ -263,65 +38,38 @@
   </header>
 
   <main>
-
     <section class="hero">
       <div class="hero-content">
-        <span class="hero-label">
-          <i class="fa-solid fa-star"></i> YOUR SMART SHOPPING DESTINATION
-        </span>
-
+        <span class="hero-label"><i class="fa-solid fa-sparkles"></i> YOUR SMART SHOPPING DESTINATION</span>
         <h1>Shop Smarter.<br><span>Live Better.</span></h1>
-
         <p>Explore amazing products, discover great deals and find your everyday essentials in one place.</p>
-
-        <a href="#products" class="primary-btn">
-          Explore Products <i class="fa-solid fa-arrow-right"></i>
-        </a>
-
+        <a href="#products" class="primary-btn">Explore Products <i class="fa-solid fa-arrow-right"></i></a>
         <div class="hero-points">
           <span><i class="fa-solid fa-check-circle"></i> Multiple stores</span>
           <span><i class="fa-solid fa-check-circle"></i> Easy discovery</span>
         </div>
       </div>
-
       <div class="hero-visual">
-        <div class="hero-circle"></div>
+        <div class="hero-orbit orbit-one"></div>
+        <div class="hero-orbit orbit-two"></div>
         <img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=900&q=85" alt="Online shopping deals">
-        <div class="hero-floating">
-          <i class="fa-solid fa-bag-shopping"></i>
-          <span>Smart choices<br><b>Start here!</b></span>
-        </div>
+        <div class="hero-floating"><i class="fa-solid fa-bag-shopping"></i><span>Smart choices<br><b>Start here!</b></span></div>
       </div>
+      <div class="hero-index">AMZADORA <span>—</span> DISCOVER MORE</div>
     </section>
 
     <section class="benefits">
-      <div>
-        <i class="fa-solid fa-store"></i>
-        <span><b>Multiple Stores</b><small>Explore popular platforms</small></span>
-      </div>
-      <div>
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <span><b>Easy Discovery</b><small>Find products quickly</small></span>
-      </div>
-      <div>
-        <i class="fa-solid fa-heart"></i>
-        <span><b>Save Favorites</b><small>Keep your wishlist</small></span>
-      </div>
-      <div>
-        <i class="fa-solid fa-mobile-screen"></i>
-        <span><b>Mobile Friendly</b><small>Shop from anywhere</small></span>
-      </div>
+      <div><i class="fa-solid fa-store"></i><span><b>Multiple Stores</b><small>Explore popular platforms</small></span></div>
+      <div><i class="fa-solid fa-magnifying-glass"></i><span><b>Easy Discovery</b><small>Find products quickly</small></span></div>
+      <div><i class="fa-solid fa-tags"></i><span><b>Product Variety</b><small>Explore everyday essentials</small></span></div>
+      <div><i class="fa-solid fa-mobile-screen"></i><span><b>Mobile Friendly</b><small>Browse from anywhere</small></span></div>
     </section>
 
     <section class="categories-section" id="categories">
       <div class="section-heading">
-        <div>
-          <span class="eyebrow">EXPLORE OUR COLLECTION</span>
-          <h2>Shop by Category</h2>
-        </div>
+        <div><span class="eyebrow">EXPLORE OUR COLLECTION</span><h2>Shop by Category</h2></div>
         <a href="#products">View all <i class="fa-solid fa-arrow-right"></i></a>
       </div>
-
       <div class="category-grid">
         <button class="category-card active" data-category="all" type="button"><i class="fa-solid fa-border-all"></i><span>All</span></button>
         <button class="category-card" data-category="electronics" type="button"><i class="fa-solid fa-laptop"></i><span>Electronics</span></button>
@@ -339,13 +87,9 @@
 
     <section class="products-section" id="products">
       <div class="section-heading product-heading">
-        <div>
-          <span class="eyebrow">HANDPICKED FOR YOU</span>
-          <h2>Discover Products</h2>
-        </div>
+        <div><span class="eyebrow">HANDPICKED FOR YOU</span><h2>Discover Products</h2></div>
         <span class="results-count" id="resultsCount">Loading products...</span>
       </div>
-
       <div class="shop-toolbar">
         <div class="store-filters" id="storeFilters">
           <button class="store-filter active" data-store="all" type="button">All Stores</button>
@@ -353,7 +97,6 @@
           <button class="store-filter" data-store="Flipkart" type="button">Flipkart</button>
           <button class="store-filter" data-store="Myntra" type="button">Myntra</button>
         </div>
-
         <select id="sortProducts" aria-label="Sort products">
           <option value="default">Sort: Featured</option>
           <option value="low">Price: Low to High</option>
@@ -361,9 +104,7 @@
           <option value="name">Name: A to Z</option>
         </select>
       </div>
-
       <div class="product-grid" id="productGrid"></div>
-
       <div class="empty-state" id="emptyState" hidden>
         <i class="fa-solid fa-box-open"></i>
         <h3>No products found</h3>
@@ -380,97 +121,61 @@
 
     <section class="contact-section" id="contact">
       <div class="contact-wrap">
-
         <div class="contact-info">
           <span class="eyebrow">WE'RE HERE TO HELP</span>
-          <h2>Contact Us</h2>
-          <p>Have a question, suggestion, or need help? Send us a message using the form. Your email app will open with the message addressed to AMZADORA.</p>
-
+          <h2>Let's talk.</h2>
+          <p>Have a question, suggestion, or need help? Send us a message. Your message will open in Gmail, ready for you to review and send.</p>
           <a class="contact-email" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=amzadraza776@gmail.com" target="_blank" rel="noopener">
-            <i class="fa-regular fa-envelope"></i>
-            amzadraza776@gmail.com
+            <i class="fa-regular fa-envelope"></i> amzadraza776@gmail.com
           </a>
         </div>
-
         <form class="contact-form" id="contactForm">
-          <label for="contactName">
-            Your Name
+          <label for="contactName">Your Name
             <input id="contactName" name="name" type="text" placeholder="Enter your name" required>
           </label>
-
-          <label for="contactEmail">
-            Your Email
+          <label for="contactEmail">Your Email
             <input id="contactEmail" name="email" type="email" placeholder="Enter your email address" required>
           </label>
-
-          <label for="contactMessage">
-            Message
+          <label for="contactMessage">Message
             <textarea id="contactMessage" name="message" placeholder="Write your message here..." required></textarea>
           </label>
-
-          <button type="submit">
-            <i class="fa-solid fa-paper-plane"></i> Send Message
-          </button>
-
-          <p class="contact-help">Your email app will open with your message ready. Review and press Send in Gmail.</p>
+          <button type="submit"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
+          <p class="contact-help">Gmail will open with your message ready. Review it and press Send.</p>
         </form>
-
       </div>
     </section>
-
   </main>
 
   <footer class="footer" id="footer">
     <div class="footer-main">
-
       <div class="footer-brand">
         <a href="#" class="logo">AMZAD<span>ORA</span></a>
         <p>Discover more. Choose smarter. Shop better.</p>
         <p class="founder-name">Founded by <strong>Amzad Ali</strong></p>
       </div>
-
-      <div>
+      <div class="footer-explore">
         <h4>Explore</h4>
         <a href="#products">Products</a>
         <a href="#categories">Categories</a>
         <a href="#about">About Us</a>
       </div>
-
     </div>
-
-    <div class="affiliate-note">
-      Affiliate Disclosure: Some links on AMZADORA may be affiliate links. We may earn a commission from qualifying purchases at no additional cost to you. Prices and availability are determined by the retailer.
-    </div>
-
-    <div class="footer-bottom">
-      <span>© <span id="year"></span> AMZADORA. All rights reserved.</span>
-    </div>
+    <div class="affiliate-note">Affiliate Disclosure: Some links on AMZADORA may be affiliate links. We may earn a commission from qualifying purchases at no additional cost to you. Prices and availability are determined by the retailer.</div>
+    <div class="footer-bottom"><span>© <span id="year"></span> AMZADORA. All rights reserved.</span></div>
   </footer>
 
   <script>
     document.getElementById("contactForm").addEventListener("submit", function (event) {
       event.preventDefault();
-
       const name = document.getElementById("contactName").value.trim();
       const email = document.getElementById("contactEmail").value.trim();
       const message = document.getElementById("contactMessage").value.trim();
-
       const subject = "AMZADORA Contact Message";
-
-      const body =
-        "Name: " + name + "\n" +
-        "Customer Email: " + email + "\n\n" +
-        "Message:\n" + message;
-
-      const gmailUrl =
-        "https://mail.google.com/mail/?view=cm&fs=1" +
-        "&to=amzadraza776@gmail.com" +
-        "&su=" + encodeURIComponent(subject) +
-        "&body=" + encodeURIComponent(body);
-
+      const body = "Name: " + name + "\nCustomer Email: " + email + "\n\nMessage:\n" + message;
+      const gmailUrl = "https://mail.google.com/mail/?view=cm&fs=1&to=amzadraza776@gmail.com&su=" +
+        encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
       window.open(gmailUrl, "_blank", "noopener");
     });
   </script>
-
 </body>
 </html>
