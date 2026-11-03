@@ -19,85 +19,83 @@
   <script src="script.js" defer></script>
 
   <style>
-    /* Hide wishlist features */
+    /* Hide wishlist */
     .header-wishlist,
     .heart-btn,
     .wishlist-section {
       display: none !important;
     }
 
-    /* Slim automatic promotional slider */
-    .promo-banner {
+    /* TOP AUTOMATIC SLIDER */
+    .top-promo {
       max-width: 1200px;
-      min-height: 125px;
-      margin: 30px auto;
-      padding: 22px 35px;
-      border-radius: 14px;
+      margin: 15px auto;
+      padding: 14px 28px;
+      min-height: 90px;
+      box-sizing: border-box;
+      border-radius: 12px;
       background: linear-gradient(110deg, #ff9900, #ffc15a);
       color: #131921;
-      position: relative;
       overflow: hidden;
-      box-sizing: border-box;
     }
 
-    .promo-slides {
+    .top-promo-slides {
       position: relative;
-      min-height: 85px;
     }
 
-    .promo-slide {
+    .top-promo-slide {
       display: none;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 15px;
       animation: promoFade .5s ease;
     }
 
-    .promo-slide.active {
+    .top-promo-slide.active {
       display: flex;
     }
 
-    .promo-slide span {
-      font-size: 10px;
+    .top-promo-slide span {
+      font-size: 9px;
       font-weight: 800;
-      letter-spacing: 1.5px;
+      letter-spacing: 1.3px;
     }
 
-    .promo-slide h2 {
-      font-size: 25px;
-      line-height: 1.15;
-      margin: 5px 0;
+    .top-promo-slide h2 {
+      font-size: 22px;
+      margin: 4px 0;
+      line-height: 1.2;
     }
 
-    .promo-slide p {
-      font-size: 12px;
-      margin: 5px 0 10px;
+    .top-promo-slide p {
+      font-size: 11px;
+      margin: 4px 0 8px;
     }
 
-    .promo-slide .light-btn {
+    .top-promo-slide .explore-btn {
       display: inline-block;
-      padding: 8px 14px;
-      border-radius: 6px;
+      padding: 7px 13px;
       background: #131921;
       color: white;
       text-decoration: none;
-      font-size: 12px;
+      border-radius: 5px;
+      font-size: 11px;
       font-weight: 700;
     }
 
-    .promo-slide > i {
-      font-size: 55px;
+    .top-promo-slide > i {
+      font-size: 48px;
       opacity: .25;
-      margin-right: 45px;
+      margin-right: 35px;
     }
 
-    .promo-dots {
+    .top-promo-dots {
       display: flex;
-      gap: 6px;
-      margin-top: 5px;
+      gap: 5px;
+      margin-top: 6px;
     }
 
-    .promo-dot {
+    .top-promo-dot {
       width: 7px;
       height: 7px;
       padding: 0;
@@ -107,8 +105,8 @@
       cursor: pointer;
     }
 
-    .promo-dot.active {
-      width: 20px;
+    .top-promo-dot.active {
+      width: 18px;
       background: #131921;
     }
 
@@ -117,36 +115,128 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Footer design */
-    .footer-brand {
-      max-width: 430px;
+    /* CONTACT SECTION - COMPACT */
+    .contact-section {
+      max-width: 1100px;
+      margin: 35px auto;
+      padding: 25px;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 6px 24px rgba(19,25,33,.06);
+      box-sizing: border-box;
+    }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .contact-info h2 {
+      margin: 6px 0 9px;
+      color: #131921;
+      font-size: 22px;
+    }
+
+    .contact-info p {
+      color: #64748b;
+      line-height: 1.6;
+      font-size: 13px;
+    }
+
+    .contact-email {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 8px;
+      color: #131921;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 10px;
+    }
+
+    .contact-form label {
+      display: grid;
+      gap: 5px;
+      color: #273244;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      border: 1px solid #d7dee8;
+      border-radius: 7px;
+      background: #fff;
+      color: #131921;
+      font: inherit;
+      font-size: 12px;
+    }
+
+    .contact-form textarea {
+      min-height: 75px;
+      resize: vertical;
+    }
+
+    .contact-form button {
+      border: 0;
+      border-radius: 7px;
+      padding: 11px 16px;
+      background: #ff9900;
+      color: #131921;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .contact-help {
+      margin: 0;
+      color: #64748b;
+      font-size: 10px;
     }
 
     .footer-description {
+      max-width: 400px;
       color: #cbd5e1;
       font-size: 13px;
       line-height: 1.7;
-      margin-top: 12px;
-    }
-
-    .footer-bottom .founder-name {
-      display: none;
     }
 
     @media (max-width: 700px) {
-      .promo-banner {
-        margin: 22px 14px;
-        padding: 18px;
-        min-height: 115px;
+      .top-promo {
+        margin: 12px;
+        padding: 13px 16px;
+        min-height: 85px;
       }
 
-      .promo-slide h2 {
-        font-size: 21px;
+      .top-promo-slide h2 {
+        font-size: 18px;
       }
 
-      .promo-slide > i {
-        font-size: 38px;
-        margin-right: 8px;
+      .top-promo-slide > i {
+        font-size: 34px;
+        margin-right: 5px;
+      }
+
+      .contact-section {
+        margin: 25px 14px;
+        padding: 20px 16px;
+      }
+
+      .contact-wrap {
+        grid-template-columns: 1fr;
+        gap: 18px;
       }
     }
   </style>
@@ -182,13 +272,66 @@
         <a href="#products" class="nav-link">All Products</a>
         <a href="#categories" class="nav-link">Categories</a>
         <a href="#about" class="nav-link">About</a>
+        <a href="#contact" class="nav-link">Contact Us</a>
       </div>
     </nav>
   </header>
 
   <main>
 
+    <!-- TOP AUTOMATIC SLIDER -->
+    <section class="top-promo">
+
+      <div class="top-promo-slides">
+
+        <div class="top-promo-slide active">
+          <div>
+            <span>MAKE EVERY PURCHASE COUNT</span>
+            <h2>Find something you'll love.</h2>
+            <p>Explore products from stores you already know.</p>
+            <a href="#products" class="explore-btn">
+              Explore Now <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+          <i class="fa-solid fa-gift"></i>
+        </div>
+
+        <div class="top-promo-slide">
+          <div>
+            <span>SMART SHOPPING STARTS HERE</span>
+            <h2>Discover more. Choose smarter.</h2>
+            <p>Find electronics, fashion and everyday essentials.</p>
+            <a href="#categories" class="explore-btn">
+              Explore Categories <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+          <i class="fa-solid fa-bag-shopping"></i>
+        </div>
+
+        <div class="top-promo-slide">
+          <div>
+            <span>YOUR SHOPPING DESTINATION</span>
+            <h2>Everything worth discovering.</h2>
+            <p>Explore products from popular online stores.</p>
+            <a href="#products" class="explore-btn">
+              Start Exploring <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+          <i class="fa-solid fa-store"></i>
+        </div>
+
+      </div>
+
+      <div class="top-promo-dots">
+        <button class="top-promo-dot active" type="button" aria-label="Slide 1"></button>
+        <button class="top-promo-dot" type="button" aria-label="Slide 2"></button>
+        <button class="top-promo-dot" type="button" aria-label="Slide 3"></button>
+      </div>
+
+    </section>
+
     <section class="hero">
+
       <div class="hero-content">
 
         <span class="hero-label">
@@ -212,7 +355,6 @@
 
       <div class="hero-visual">
         <div class="hero-circle"></div>
-
         <img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=900&q=85" alt="Online shopping deals">
 
         <div class="hero-floating">
@@ -220,6 +362,7 @@
           <span>Smart choices<br><b>Start here!</b></span>
         </div>
       </div>
+
     </section>
 
     <section class="benefits">
@@ -253,7 +396,6 @@
           <span class="eyebrow">EXPLORE OUR COLLECTION</span>
           <h2>Shop by Category</h2>
         </div>
-
         <a href="#products">View all <i class="fa-solid fa-arrow-right"></i></a>
       </div>
 
@@ -313,7 +455,6 @@
           <span class="eyebrow">HANDPICKED FOR YOU</span>
           <h2>Discover Products</h2>
         </div>
-
         <span class="results-count" id="resultsCount">Loading products...</span>
       </div>
 
@@ -346,36 +487,48 @@
 
     </section>
 
-    <!-- SLIM AUTOMATIC PROMO SLIDER -->
-    <section class="promo-banner">
+    <!-- CONTACT SECTION - NOT IN FOOTER -->
+    <section class="contact-section" id="contact">
 
-      <div class="promo-slides">
+      <div class="contact-wrap">
 
-        <div class="promo-slide active">
-          <div>
-            <span>MAKE EVERY PURCHASE COUNT</span>
-            <h2>Find something you'll love.</h2>
-            <p>Explore products from stores you already know.</p>
-            <a href="#products" class="light-btn">Start Exploring <i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-          <i class="fa-solid fa-gift"></i>
+        <div class="contact-info">
+          <span class="eyebrow">WE'RE HERE TO HELP</span>
+          <h2>Contact Us</h2>
+          <p>Have a question, suggestion, or need help? Send us a message. Your Gmail will open with your message ready.</p>
+
+          <a class="contact-email"
+             href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=amzadraza776@gmail.com"
+             target="_blank" rel="noopener">
+            <i class="fa-regular fa-envelope"></i>
+            amzadraza776@gmail.com
+          </a>
         </div>
 
-        <div class="promo-slide">
-          <div>
-            <span>SMART SHOPPING STARTS HERE</span>
-            <h2>Discover more. Choose smarter.</h2>
-            <p>Find electronics, fashion and everyday essentials.</p>
-            <a href="#categories" class="light-btn">Explore Categories <i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-          <i class="fa-solid fa-bag-shopping"></i>
-        </div>
+        <form class="contact-form" id="contactForm">
 
-      </div>
+          <label for="contactName">Your Name
+            <input id="contactName" name="name" type="text" placeholder="Enter your name" required>
+          </label>
 
-      <div class="promo-dots">
-        <button class="promo-dot active" type="button" aria-label="Slide 1"></button>
-        <button class="promo-dot" type="button" aria-label="Slide 2"></button>
+          <label for="contactEmail">Your Email
+            <input id="contactEmail" name="email" type="email" placeholder="Enter your email address" required>
+          </label>
+
+          <label for="contactMessage">Message
+            <textarea id="contactMessage" name="message" placeholder="Write your message here..." required></textarea>
+          </label>
+
+          <button type="submit">
+            <i class="fa-solid fa-paper-plane"></i> Send Message
+          </button>
+
+          <p class="contact-help">
+            Gmail will open with your message ready. Review it and press Send in Gmail.
+          </p>
+
+        </form>
+
       </div>
 
     </section>
@@ -398,19 +551,16 @@
         </p>
 
         <p class="footer-description">
-          AMZADORA is a product discovery website that brings products from popular online shopping platforms together in one place. Compare your options and visit the retailer for the latest prices and availability.
+          AMZADORA is a product discovery website that brings products from popular online shopping platforms together in one place. Discover products and visit the retailer to check the latest prices and availability.
         </p>
 
       </div>
 
       <div class="footer-links">
-
         <h4>Explore</h4>
-
         <a href="#products">Products</a>
         <a href="#categories">Categories</a>
         <a href="#about">About Us</a>
-
       </div>
 
     </div>
@@ -426,16 +576,16 @@
 
   </footer>
 
-  <!-- PROMO SLIDER SCRIPT -->
   <script>
+    // Automatic top slider
     (function () {
-      const slides = document.querySelectorAll(".promo-slide");
-      const dots = document.querySelectorAll(".promo-dot");
+      const slides = document.querySelectorAll(".top-promo-slide");
+      const dots = document.querySelectorAll(".top-promo-dot");
 
       if (!slides.length || !dots.length) return;
 
       let currentSlide = 0;
-      let sliderTimer;
+      let timer;
 
       function showSlide(index) {
         slides.forEach((slide, i) => {
@@ -450,9 +600,8 @@
       }
 
       function startSlider() {
-        clearInterval(sliderTimer);
-
-        sliderTimer = setInterval(() => {
+        clearInterval(timer);
+        timer = setInterval(() => {
           showSlide((currentSlide + 1) % slides.length);
         }, 4000);
       }
@@ -466,6 +615,30 @@
 
       startSlider();
     })();
+
+    // Contact form opens Gmail with message
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("contactName").value.trim();
+      const email = document.getElementById("contactEmail").value.trim();
+      const message = document.getElementById("contactMessage").value.trim();
+
+      const subject = "AMZADORA Contact Message";
+
+      const body =
+        "Name: " + name + "\n" +
+        "Customer Email: " + email + "\n\n" +
+        "Message:\n" + message;
+
+      const gmailUrl =
+        "https://mail.google.com/mail/?view=cm&fs=1" +
+        "&to=amzadraza776@gmail.com" +
+        "&su=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body);
+
+      window.open(gmailUrl, "_blank", "noopener");
+    });
   </script>
 
 </body>
