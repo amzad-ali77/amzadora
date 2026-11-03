@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,114 +15,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-  <style>
-    .contact-section {
-      max-width: 1120px;
-      margin: 55px auto;
-      padding: 42px 24px;
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 8px 30px rgba(19, 25, 33, .07);
-    }
-
-    .contact-wrap {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 38px;
-      align-items: start;
-    }
-
-    .contact-info h2 {
-      margin: 8px 0 12px;
-      color: #131921;
-    }
-
-    .contact-info p {
-      color: #64748b;
-      line-height: 1.7;
-    }
-
-    .contact-email {
-      display: inline-flex;
-      gap: 10px;
-      align-items: center;
-      margin-top: 12px;
-      color: #131921;
-      font-weight: 700;
-      text-decoration: none;
-      overflow-wrap: anywhere;
-    }
-
-    .contact-form {
-      display: grid;
-      gap: 14px;
-    }
-
-    .contact-form label {
-      display: grid;
-      gap: 7px;
-      color: #273244;
-      font-weight: 600;
-    }
-
-    .contact-form input,
-    .contact-form textarea {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 13px 14px;
-      border: 1px solid #d7dee8;
-      border-radius: 9px;
-      background: #fff;
-      color: #131921;
-      font: inherit;
-    }
-
-    .contact-form textarea {
-      min-height: 135px;
-      resize: vertical;
-    }
-
-    .contact-form input:focus,
-    .contact-form textarea:focus {
-      outline: 2px solid #ff9900;
-      border-color: #ff9900;
-    }
-
-    .contact-form button {
-      border: 0;
-      border-radius: 9px;
-      padding: 14px 20px;
-      background: #ff9900;
-      color: #131921;
-      font: inherit;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .contact-form button:hover {
-      filter: brightness(.96);
-    }
-
-    .contact-help {
-      margin: 0;
-      color: #64748b;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    @media (max-width: 700px) {
-      .contact-wrap {
-        grid-template-columns: 1fr;
-        gap: 22px;
-      }
-
-      .contact-section {
-        margin: 32px 14px;
-        padding: 28px 18px;
-      }
-    }
-  </style>
 
   <script src="script.js" defer></script>
 </head>
@@ -173,6 +64,7 @@
 
     <section class="hero">
       <div class="hero-content">
+
         <span class="hero-label">
           <i class="fa-solid fa-star"></i> YOUR SMART SHOPPING DESTINATION
         </span>
@@ -189,11 +81,14 @@
           <span><i class="fa-solid fa-check-circle"></i> Multiple stores</span>
           <span><i class="fa-solid fa-check-circle"></i> Easy discovery</span>
         </div>
+
       </div>
 
       <div class="hero-visual">
         <div class="hero-circle"></div>
+
         <img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=900&q=85" alt="Online shopping deals">
+
         <div class="hero-floating">
           <i class="fa-solid fa-bag-shopping"></i>
           <span>Smart choices<br><b>Start here!</b></span>
@@ -202,80 +97,102 @@
     </section>
 
     <section class="benefits">
+
       <div>
         <i class="fa-solid fa-store"></i>
         <span><b>Multiple Stores</b><small>Explore popular platforms</small></span>
       </div>
+
       <div>
         <i class="fa-solid fa-magnifying-glass"></i>
         <span><b>Easy Discovery</b><small>Find products quickly</small></span>
       </div>
+
       <div>
         <i class="fa-solid fa-heart"></i>
         <span><b>Save Favorites</b><small>Keep your wishlist</small></span>
       </div>
+
       <div>
         <i class="fa-solid fa-mobile-screen"></i>
         <span><b>Mobile Friendly</b><small>Shop from anywhere</small></span>
       </div>
+
     </section>
 
     <section class="categories-section" id="categories">
+
       <div class="section-heading">
         <div>
           <span class="eyebrow">EXPLORE OUR COLLECTION</span>
           <h2>Shop by Category</h2>
         </div>
+
         <a href="#products">View all <i class="fa-solid fa-arrow-right"></i></a>
       </div>
 
       <div class="category-grid">
+
         <button class="category-card active" data-category="all" type="button">
           <i class="fa-solid fa-border-all"></i><span>All</span>
         </button>
+
         <button class="category-card" data-category="electronics" type="button">
           <i class="fa-solid fa-laptop"></i><span>Electronics</span>
         </button>
+
         <button class="category-card" data-category="mobiles" type="button">
           <i class="fa-solid fa-mobile-screen"></i><span>Mobiles</span>
         </button>
+
         <button class="category-card" data-category="fashion" type="button">
           <i class="fa-solid fa-shirt"></i><span>Fashion</span>
         </button>
+
         <button class="category-card" data-category="shoes" type="button">
           <i class="fa-solid fa-shoe-prints"></i><span>Shoes</span>
         </button>
+
         <button class="category-card" data-category="beauty" type="button">
           <i class="fa-solid fa-spa"></i><span>Beauty</span>
         </button>
+
         <button class="category-card" data-category="home" type="button">
           <i class="fa-solid fa-couch"></i><span>Home</span>
         </button>
+
         <button class="category-card" data-category="kitchen" type="button">
           <i class="fa-solid fa-kitchen-set"></i><span>Kitchen</span>
         </button>
+
         <button class="category-card" data-category="fitness" type="button">
           <i class="fa-solid fa-dumbbell"></i><span>Fitness</span>
         </button>
+
         <button class="category-card" data-category="gaming" type="button">
           <i class="fa-solid fa-gamepad"></i><span>Gaming</span>
         </button>
+
         <button class="category-card" data-category="books" type="button">
           <i class="fa-solid fa-book"></i><span>Books</span>
         </button>
+
       </div>
     </section>
 
     <section class="products-section" id="products">
+
       <div class="section-heading product-heading">
         <div>
           <span class="eyebrow">HANDPICKED FOR YOU</span>
           <h2>Discover Products</h2>
         </div>
+
         <span class="results-count" id="resultsCount">Loading products...</span>
       </div>
 
       <div class="shop-toolbar">
+
         <div class="store-filters" id="storeFilters">
           <button class="store-filter active" data-store="all" type="button">All Stores</button>
           <button class="store-filter" data-store="Amazon" type="button">Amazon</button>
@@ -289,6 +206,7 @@
           <option value="high">Price: High to Low</option>
           <option value="name">Name: A to Z</option>
         </select>
+
       </div>
 
       <div class="product-grid" id="productGrid"></div>
@@ -299,148 +217,116 @@
         <p>Try another search or select a different category.</p>
         <button class="primary-btn" id="resetFilters" type="button">Show All Products</button>
       </div>
+
     </section>
 
     <section class="promo-banner">
+
       <div>
         <span>MAKE EVERY PURCHASE COUNT</span>
         <h2>Find something<br>you'll love.</h2>
         <p>Explore products from stores you already know.</p>
-        <a href="#products" class="light-btn">Start Exploring <i class="fa-solid fa-arrow-right"></i></a>
+
+        <a href="#products" class="light-btn">
+          Start Exploring <i class="fa-solid fa-arrow-right"></i>
+        </a>
       </div>
+
       <i class="fa-solid fa-gift promo-icon"></i>
+
     </section>
 
     <section class="wishlist-section" id="wishlist">
+
       <div class="section-heading">
         <div>
           <span class="eyebrow">YOUR PERSONAL COLLECTION</span>
           <h2>My Wishlist <span id="wishlistHeadingCount">(0)</span></h2>
         </div>
+
         <button class="clear-btn" id="clearWishlist" type="button">Clear Wishlist</button>
       </div>
 
       <div class="wishlist-grid" id="savedItems">
         <p class="wishlist-empty">Your wishlist is empty. Save products you like!</p>
       </div>
-    </section>
 
-    <section class="about-section" id="about">
-      <span class="eyebrow">ABOUT AMZADORA</span>
-      <h2>A smarter way to discover products.</h2>
-      <p>AMZADORA helps you explore products across popular online shopping platforms. Discover products in one place and visit the retailer to check the latest price and availability.</p>
-    </section>
-
-    <!-- CUSTOMER CONTACT US SECTION -->
-    <section class="contact-section" id="contact">
-      <div class="contact-wrap">
-
-        <div class="contact-info">
-          <span class="eyebrow">WE'RE HERE TO HELP</span>
-          <h2>Contact Us</h2>
-          <p>Have a question, suggestion, or need help? Send us a message using the form. Your Gmail will open with your message ready.</p>
-
-          <a class="contact-email"
-             href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=amzadraza776@gmail.com"
-             target="_blank" rel="noopener">
-            <i class="fa-regular fa-envelope"></i>
-            amzadraza776@gmail.com
-          </a>
-        </div>
-
-        <form class="contact-form" id="contactForm">
-
-          <label for="contactName">Your Name
-            <input id="contactName" name="name" type="text" placeholder="Enter your name" required>
-          </label>
-
-          <label for="contactEmail">Your Email
-            <input id="contactEmail" name="email" type="email" placeholder="Enter your email address" required>
-          </label>
-
-          <label for="contactMessage">Message
-            <textarea id="contactMessage" name="message" placeholder="Write your message here..." required></textarea>
-          </label>
-
-          <button type="submit">
-            <i class="fa-solid fa-paper-plane"></i> Send Message
-          </button>
-
-          <p class="contact-help">
-            Gmail will open with your message ready. Please review it and press Send in Gmail.
-          </p>
-
-        </form>
-      </div>
     </section>
 
   </main>
 
+  <!-- FOOTER -->
   <footer class="footer" id="footer">
 
     <div class="footer-main">
 
-      <div class="footer-brand">
+      <!-- WEBSITE DETAILS -->
+      <div class="footer-brand" id="about">
+
         <a href="#" class="logo">AMZAD<span>ORA</span></a>
+
         <p>Discover more. Choose smarter. Shop better.</p>
-        <p class="founder-name">Founded by <strong>Amzad Ali</strong></p>
+
+        <p class="founder-name">
+          Founded by <strong>Amzad Ali</strong>
+        </p>
+
+        <p class="footer-description">
+          AMZADORA is a product discovery website that brings products from popular online shopping platforms together in one place. Compare your options and visit the retailer for the latest prices and availability.
+        </p>
+
       </div>
 
-      <div>
+      <!-- EXPLORE LINKS -->
+      <div class="footer-links">
+
         <h4>Explore</h4>
+
         <a href="#products">Products</a>
         <a href="#categories">Categories</a>
         <a href="#wishlist">Wishlist</a>
+
       </div>
 
-      <div>
-        <h4>Contact</h4>
-        <a href="#contact">Contact Us</a>
-        <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=amzadraza776@gmail.com"
-           target="_blank" rel="noopener">
-          <i class="fa-regular fa-envelope"></i> Email Us
+      <!-- SMALL CONTACT SECTION -->
+      <div class="footer-contact" id="contact">
+
+        <h4>Contact Us</h4>
+
+        <p>Have a question or suggestion? Get in touch.</p>
+
+        <a class="footer-email"
+           href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=amzadraza776@gmail.com"
+           target="_blank"
+           rel="noopener">
+
+          <i class="fa-regular fa-envelope"></i>
+          amzadraza776@gmail.com
+
         </a>
-        <a href="#about">About Us</a>
+
       </div>
 
     </div>
 
+    <!-- AFFILIATE DETAILS -->
     <div class="affiliate-note">
-      Affiliate Disclosure: Some links on AMZADORA may be affiliate links. We may earn a commission from qualifying purchases at no additional cost to you. Prices and availability are determined by the retailer.
+
+      <strong>Affiliate Disclosure:</strong>
+      Some links on AMZADORA may be affiliate links. We may earn a commission from qualifying purchases at no additional cost to you. Prices and availability are determined by the retailer.
+
     </div>
 
+    <!-- COPYRIGHT -->
     <div class="footer-bottom">
+
       <span>© <span id="year"></span> AMZADORA. All rights reserved.</span>
+
       <span>Founded by Amzad Ali</span>
+
     </div>
 
   </footer>
-
-  <script>
-    // Contact form: opens Gmail with the customer's message pre-filled.
-    document.getElementById("contactForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      const name = document.getElementById("contactName").value.trim();
-      const email = document.getElementById("contactEmail").value.trim();
-      const message = document.getElementById("contactMessage").value.trim();
-
-      const subject = "AMZADORA Contact Message";
-
-      const body =
-        "Name: " + name + "\n" +
-        "Customer Email: " + email + "\n\n" +
-        "Message:\n" + message;
-
-      const gmailUrl =
-        "https://mail.google.com/mail/?view=cm&fs=1" +
-        "&to=amzadraza776@gmail.com" +
-        "&su=" + encodeURIComponent(subject) +
-        "&body=" + encodeURIComponent(body);
-
-      window.open(gmailUrl, "_blank", "noopener");
-    });
-  </script>
 
 </body>
 </html>
