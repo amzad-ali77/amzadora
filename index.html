@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,78 +27,80 @@
       display: none !important;
     }
 
-    /* TOP AUTOMATIC SLIDER */
-    .top-promo {
+    /* AUTOMATIC EXPLORE SLIDER - BELOW PRODUCTS */
+    .promo-banner {
       max-width: 1200px;
-      margin: 15px auto;
-      padding: 14px 28px;
-      min-height: 90px;
+      min-height: 205px;
+      margin: 45px auto;
+      padding: 35px 45px;
       box-sizing: border-box;
-      border-radius: 12px;
+      border-radius: 18px;
       background: linear-gradient(110deg, #ff9900, #ffc15a);
       color: #131921;
       overflow: hidden;
-    }
-
-    .top-promo-slides {
       position: relative;
     }
 
-    .top-promo-slide {
+    .promo-slides {
+      position: relative;
+      min-height: 125px;
+    }
+
+    .promo-slide {
       display: none;
       align-items: center;
       justify-content: space-between;
-      gap: 15px;
-      animation: promoFade .5s ease;
+      gap: 25px;
+      animation: promoFade .6s ease;
     }
 
-    .top-promo-slide.active {
+    .promo-slide.active {
       display: flex;
     }
 
-    .top-promo-slide span {
-      font-size: 9px;
+    .promo-slide span {
+      font-size: 11px;
       font-weight: 800;
-      letter-spacing: 1.3px;
+      letter-spacing: 1.5px;
     }
 
-    .top-promo-slide h2 {
-      font-size: 22px;
-      margin: 4px 0;
+    .promo-slide h2 {
+      font-size: 30px;
       line-height: 1.2;
+      margin: 9px 0;
     }
 
-    .top-promo-slide p {
-      font-size: 11px;
-      margin: 4px 0 8px;
+    .promo-slide p {
+      font-size: 14px;
+      margin: 7px 0 15px;
     }
 
-    .top-promo-slide .explore-btn {
+    .promo-slide .light-btn {
       display: inline-block;
-      padding: 7px 13px;
+      padding: 11px 18px;
+      border-radius: 7px;
       background: #131921;
-      color: white;
+      color: #fff;
       text-decoration: none;
-      border-radius: 5px;
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 700;
     }
 
-    .top-promo-slide > i {
-      font-size: 48px;
-      opacity: .25;
-      margin-right: 35px;
+    .promo-slide > i {
+      font-size: 85px;
+      opacity: .22;
+      margin-right: 45px;
     }
 
-    .top-promo-dots {
+    .promo-dots {
       display: flex;
-      gap: 5px;
-      margin-top: 6px;
+      gap: 7px;
+      margin-top: 12px;
     }
 
-    .top-promo-dot {
-      width: 7px;
-      height: 7px;
+    .promo-dot {
+      width: 8px;
+      height: 8px;
       padding: 0;
       border: 0;
       border-radius: 10px;
@@ -105,68 +108,72 @@
       cursor: pointer;
     }
 
-    .top-promo-dot.active {
-      width: 18px;
+    .promo-dot.active {
+      width: 23px;
       background: #131921;
     }
 
     @keyframes promoFade {
-      from { opacity: 0; transform: translateY(5px); }
+      from { opacity: 0; transform: translateY(7px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* CONTACT SECTION - COMPACT */
+    /* PROPER CONTACT SECTION */
     .contact-section {
-      max-width: 1100px;
-      margin: 35px auto;
-      padding: 25px;
+      max-width: 1200px;
+      margin: 55px auto;
+      padding: 42px 40px;
       background: #fff;
-      border-radius: 14px;
-      box-shadow: 0 6px 24px rgba(19,25,33,.06);
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(19,25,33,.07);
       box-sizing: border-box;
     }
 
     .contact-wrap {
       display: grid;
-      grid-template-columns: .8fr 1.2fr;
-      gap: 28px;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 55px;
       align-items: center;
     }
 
     .contact-info h2 {
-      margin: 6px 0 9px;
+      margin: 10px 0 15px;
       color: #131921;
-      font-size: 22px;
+      font-size: 30px;
     }
 
     .contact-info p {
       color: #64748b;
-      line-height: 1.6;
-      font-size: 13px;
+      line-height: 1.8;
+      font-size: 15px;
     }
 
     .contact-email {
       display: inline-flex;
-      gap: 8px;
+      gap: 10px;
       align-items: center;
-      margin-top: 8px;
+      margin-top: 15px;
       color: #131921;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 700;
       text-decoration: none;
       overflow-wrap: anywhere;
     }
 
+    .contact-email i {
+      color: #ff9900;
+    }
+
     .contact-form {
       display: grid;
-      gap: 10px;
+      gap: 15px;
     }
 
     .contact-form label {
       display: grid;
-      gap: 5px;
+      gap: 8px;
       color: #273244;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 600;
     }
 
@@ -174,69 +181,92 @@
     .contact-form textarea {
       width: 100%;
       box-sizing: border-box;
-      padding: 10px 12px;
+      padding: 14px 15px;
       border: 1px solid #d7dee8;
-      border-radius: 7px;
+      border-radius: 9px;
       background: #fff;
       color: #131921;
       font: inherit;
-      font-size: 12px;
+      font-size: 14px;
     }
 
     .contact-form textarea {
-      min-height: 75px;
+      min-height: 125px;
       resize: vertical;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: 2px solid #ff9900;
+      border-color: #ff9900;
     }
 
     .contact-form button {
       border: 0;
-      border-radius: 7px;
-      padding: 11px 16px;
+      border-radius: 9px;
+      padding: 14px 20px;
       background: #ff9900;
       color: #131921;
       font: inherit;
-      font-size: 12px;
       font-weight: 800;
+      font-size: 14px;
       cursor: pointer;
+    }
+
+    .contact-form button:hover {
+      filter: brightness(.96);
     }
 
     .contact-help {
       margin: 0;
       color: #64748b;
-      font-size: 10px;
+      font-size: 12px;
+      line-height: 1.6;
     }
 
     .footer-description {
-      max-width: 400px;
+      max-width: 430px;
       color: #cbd5e1;
       font-size: 13px;
       line-height: 1.7;
     }
 
     @media (max-width: 700px) {
-      .top-promo {
-        margin: 12px;
-        padding: 13px 16px;
-        min-height: 85px;
+      .promo-banner {
+        margin: 30px 14px;
+        padding: 25px 20px;
+        min-height: 180px;
       }
 
-      .top-promo-slide h2 {
-        font-size: 18px;
+      .promo-slides {
+        min-height: 120px;
       }
 
-      .top-promo-slide > i {
-        font-size: 34px;
+      .promo-slide h2 {
+        font-size: 23px;
+      }
+
+      .promo-slide p {
+        font-size: 12px;
+      }
+
+      .promo-slide > i {
+        font-size: 48px;
         margin-right: 5px;
       }
 
       .contact-section {
-        margin: 25px 14px;
-        padding: 20px 16px;
+        margin: 35px 14px;
+        padding: 28px 20px;
       }
 
       .contact-wrap {
         grid-template-columns: 1fr;
-        gap: 18px;
+        gap: 25px;
+      }
+
+      .contact-info h2 {
+        font-size: 25px;
       }
     }
   </style>
@@ -279,59 +309,7 @@
 
   <main>
 
-    <!-- TOP AUTOMATIC SLIDER -->
-    <section class="top-promo">
-
-      <div class="top-promo-slides">
-
-        <div class="top-promo-slide active">
-          <div>
-            <span>MAKE EVERY PURCHASE COUNT</span>
-            <h2>Find something you'll love.</h2>
-            <p>Explore products from stores you already know.</p>
-            <a href="#products" class="explore-btn">
-              Explore Now <i class="fa-solid fa-arrow-right"></i>
-            </a>
-          </div>
-          <i class="fa-solid fa-gift"></i>
-        </div>
-
-        <div class="top-promo-slide">
-          <div>
-            <span>SMART SHOPPING STARTS HERE</span>
-            <h2>Discover more. Choose smarter.</h2>
-            <p>Find electronics, fashion and everyday essentials.</p>
-            <a href="#categories" class="explore-btn">
-              Explore Categories <i class="fa-solid fa-arrow-right"></i>
-            </a>
-          </div>
-          <i class="fa-solid fa-bag-shopping"></i>
-        </div>
-
-        <div class="top-promo-slide">
-          <div>
-            <span>YOUR SHOPPING DESTINATION</span>
-            <h2>Everything worth discovering.</h2>
-            <p>Explore products from popular online stores.</p>
-            <a href="#products" class="explore-btn">
-              Start Exploring <i class="fa-solid fa-arrow-right"></i>
-            </a>
-          </div>
-          <i class="fa-solid fa-store"></i>
-        </div>
-
-      </div>
-
-      <div class="top-promo-dots">
-        <button class="top-promo-dot active" type="button" aria-label="Slide 1"></button>
-        <button class="top-promo-dot" type="button" aria-label="Slide 2"></button>
-        <button class="top-promo-dot" type="button" aria-label="Slide 3"></button>
-      </div>
-
-    </section>
-
     <section class="hero">
-
       <div class="hero-content">
 
         <span class="hero-label">
@@ -362,7 +340,6 @@
           <span>Smart choices<br><b>Start here!</b></span>
         </div>
       </div>
-
     </section>
 
     <section class="benefits">
@@ -487,7 +464,58 @@
 
     </section>
 
-    <!-- CONTACT SECTION - NOT IN FOOTER -->
+    <!-- AUTOMATIC EXPLORE SLIDER BELOW PRODUCTS -->
+    <section class="promo-banner">
+
+      <div class="promo-slides">
+
+        <div class="promo-slide active">
+          <div>
+            <span>MAKE EVERY PURCHASE COUNT</span>
+            <h2>Find something you'll love.</h2>
+            <p>Explore products from stores you already know.</p>
+            <a href="#products" class="light-btn">
+              Explore Products <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+          <i class="fa-solid fa-gift"></i>
+        </div>
+
+        <div class="promo-slide">
+          <div>
+            <span>SMART SHOPPING STARTS HERE</span>
+            <h2>Discover more. Choose smarter.</h2>
+            <p>Find electronics, fashion and everyday essentials.</p>
+            <a href="#categories" class="light-btn">
+              Explore Categories <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+          <i class="fa-solid fa-bag-shopping"></i>
+        </div>
+
+        <div class="promo-slide">
+          <div>
+            <span>YOUR SHOPPING DESTINATION</span>
+            <h2>Everything worth discovering.</h2>
+            <p>Explore products from popular online stores.</p>
+            <a href="#products" class="light-btn">
+              Start Exploring <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+          <i class="fa-solid fa-store"></i>
+        </div>
+
+      </div>
+
+      <div class="promo-dots">
+        <button class="promo-dot active" type="button" aria-label="Slide 1"></button>
+        <button class="promo-dot" type="button" aria-label="Slide 2"></button>
+        <button class="promo-dot" type="button" aria-label="Slide 3"></button>
+      </div>
+
+    </section>
+
+    <!-- CONTACT SECTION -->
     <section class="contact-section" id="contact">
 
       <div class="contact-wrap">
@@ -495,7 +523,7 @@
         <div class="contact-info">
           <span class="eyebrow">WE'RE HERE TO HELP</span>
           <h2>Contact Us</h2>
-          <p>Have a question, suggestion, or need help? Send us a message. Your Gmail will open with your message ready.</p>
+          <p>Have a question, suggestion, or need help? Send us a message using the form. Your Gmail will open with your message ready.</p>
 
           <a class="contact-email"
              href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=amzadraza776@gmail.com"
@@ -577,10 +605,10 @@
   </footer>
 
   <script>
-    // Automatic top slider
+    // Automatic Explore Products slider
     (function () {
-      const slides = document.querySelectorAll(".top-promo-slide");
-      const dots = document.querySelectorAll(".top-promo-dot");
+      const slides = document.querySelectorAll(".promo-slide");
+      const dots = document.querySelectorAll(".promo-dot");
 
       if (!slides.length || !dots.length) return;
 
