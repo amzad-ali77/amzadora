@@ -17,6 +17,139 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
   <script src="script.js" defer></script>
+
+  <style>
+    /* Hide wishlist features */
+    .header-wishlist,
+    .heart-btn,
+    .wishlist-section {
+      display: none !important;
+    }
+
+    /* Slim automatic promotional slider */
+    .promo-banner {
+      max-width: 1200px;
+      min-height: 125px;
+      margin: 30px auto;
+      padding: 22px 35px;
+      border-radius: 14px;
+      background: linear-gradient(110deg, #ff9900, #ffc15a);
+      color: #131921;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .promo-slides {
+      position: relative;
+      min-height: 85px;
+    }
+
+    .promo-slide {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      animation: promoFade .5s ease;
+    }
+
+    .promo-slide.active {
+      display: flex;
+    }
+
+    .promo-slide span {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+    }
+
+    .promo-slide h2 {
+      font-size: 25px;
+      line-height: 1.15;
+      margin: 5px 0;
+    }
+
+    .promo-slide p {
+      font-size: 12px;
+      margin: 5px 0 10px;
+    }
+
+    .promo-slide .light-btn {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 6px;
+      background: #131921;
+      color: white;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .promo-slide > i {
+      font-size: 55px;
+      opacity: .25;
+      margin-right: 45px;
+    }
+
+    .promo-dots {
+      display: flex;
+      gap: 6px;
+      margin-top: 5px;
+    }
+
+    .promo-dot {
+      width: 7px;
+      height: 7px;
+      padding: 0;
+      border: 0;
+      border-radius: 10px;
+      background: rgba(19,25,33,.35);
+      cursor: pointer;
+    }
+
+    .promo-dot.active {
+      width: 20px;
+      background: #131921;
+    }
+
+    @keyframes promoFade {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Footer design */
+    .footer-brand {
+      max-width: 430px;
+    }
+
+    .footer-description {
+      color: #cbd5e1;
+      font-size: 13px;
+      line-height: 1.7;
+      margin-top: 12px;
+    }
+
+    .footer-bottom .founder-name {
+      display: none;
+    }
+
+    @media (max-width: 700px) {
+      .promo-banner {
+        margin: 22px 14px;
+        padding: 18px;
+        min-height: 115px;
+      }
+
+      .promo-slide h2 {
+        font-size: 21px;
+      }
+
+      .promo-slide > i {
+        font-size: 38px;
+        margin-right: 8px;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -41,12 +174,6 @@
         </button>
       </form>
 
-      <a href="#wishlist" class="header-wishlist">
-        <i class="fa-regular fa-heart"></i>
-        <span>Wishlist</span>
-        <b id="wishlistCount">0</b>
-      </a>
-
     </div>
 
     <nav class="main-nav" id="mainNav">
@@ -55,7 +182,6 @@
         <a href="#products" class="nav-link">All Products</a>
         <a href="#categories" class="nav-link">Categories</a>
         <a href="#about" class="nav-link">About</a>
-        <a href="#contact" class="nav-link">Contact Us</a>
       </div>
     </nav>
   </header>
@@ -110,7 +236,7 @@
 
       <div>
         <i class="fa-solid fa-heart"></i>
-        <span><b>Save Favorites</b><small>Keep your wishlist</small></span>
+        <span><b>Smart Shopping</b><small>Discover your favorites</small></span>
       </div>
 
       <div>
@@ -220,35 +346,36 @@
 
     </section>
 
+    <!-- SLIM AUTOMATIC PROMO SLIDER -->
     <section class="promo-banner">
 
-      <div>
-        <span>MAKE EVERY PURCHASE COUNT</span>
-        <h2>Find something<br>you'll love.</h2>
-        <p>Explore products from stores you already know.</p>
+      <div class="promo-slides">
 
-        <a href="#products" class="light-btn">
-          Start Exploring <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
-
-      <i class="fa-solid fa-gift promo-icon"></i>
-
-    </section>
-
-    <section class="wishlist-section" id="wishlist">
-
-      <div class="section-heading">
-        <div>
-          <span class="eyebrow">YOUR PERSONAL COLLECTION</span>
-          <h2>My Wishlist <span id="wishlistHeadingCount">(0)</span></h2>
+        <div class="promo-slide active">
+          <div>
+            <span>MAKE EVERY PURCHASE COUNT</span>
+            <h2>Find something you'll love.</h2>
+            <p>Explore products from stores you already know.</p>
+            <a href="#products" class="light-btn">Start Exploring <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+          <i class="fa-solid fa-gift"></i>
         </div>
 
-        <button class="clear-btn" id="clearWishlist" type="button">Clear Wishlist</button>
+        <div class="promo-slide">
+          <div>
+            <span>SMART SHOPPING STARTS HERE</span>
+            <h2>Discover more. Choose smarter.</h2>
+            <p>Find electronics, fashion and everyday essentials.</p>
+            <a href="#categories" class="light-btn">Explore Categories <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+          <i class="fa-solid fa-bag-shopping"></i>
+        </div>
+
       </div>
 
-      <div class="wishlist-grid" id="savedItems">
-        <p class="wishlist-empty">Your wishlist is empty. Save products you like!</p>
+      <div class="promo-dots">
+        <button class="promo-dot active" type="button" aria-label="Slide 1"></button>
+        <button class="promo-dot" type="button" aria-label="Slide 2"></button>
       </div>
 
     </section>
@@ -260,7 +387,6 @@
 
     <div class="footer-main">
 
-      <!-- WEBSITE DETAILS -->
       <div class="footer-brand" id="about">
 
         <a href="#" class="logo">AMZAD<span>ORA</span></a>
@@ -277,56 +403,70 @@
 
       </div>
 
-      <!-- EXPLORE LINKS -->
       <div class="footer-links">
 
         <h4>Explore</h4>
 
         <a href="#products">Products</a>
         <a href="#categories">Categories</a>
-        <a href="#wishlist">Wishlist</a>
-
-      </div>
-
-      <!-- SMALL CONTACT SECTION -->
-      <div class="footer-contact" id="contact">
-
-        <h4>Contact Us</h4>
-
-        <p>Have a question or suggestion? Get in touch.</p>
-
-        <a class="footer-email"
-           href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=amzadraza776@gmail.com"
-           target="_blank"
-           rel="noopener">
-
-          <i class="fa-regular fa-envelope"></i>
-          amzadraza776@gmail.com
-
-        </a>
+        <a href="#about">About Us</a>
 
       </div>
 
     </div>
 
-    <!-- AFFILIATE DETAILS -->
     <div class="affiliate-note">
-
       <strong>Affiliate Disclosure:</strong>
       Some links on AMZADORA may be affiliate links. We may earn a commission from qualifying purchases at no additional cost to you. Prices and availability are determined by the retailer.
-
     </div>
 
-    <!-- COPYRIGHT -->
     <div class="footer-bottom">
-
       <span>© <span id="year"></span> AMZADORA. All rights reserved.</span>
-
-      <span>Founded by Amzad Ali</span>
-
     </div>
 
   </footer>
+
+  <!-- PROMO SLIDER SCRIPT -->
+  <script>
+    (function () {
+      const slides = document.querySelectorAll(".promo-slide");
+      const dots = document.querySelectorAll(".promo-dot");
+
+      if (!slides.length || !dots.length) return;
+
+      let currentSlide = 0;
+      let sliderTimer;
+
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle("active", i === index);
+        });
+
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("active", i === index);
+        });
+
+        currentSlide = index;
+      }
+
+      function startSlider() {
+        clearInterval(sliderTimer);
+
+        sliderTimer = setInterval(() => {
+          showSlide((currentSlide + 1) % slides.length);
+        }, 4000);
+      }
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          showSlide(index);
+          startSlider();
+        });
+      });
+
+      startSlider();
+    })();
+  </script>
 
 </body>
 </html>
