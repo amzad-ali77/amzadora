@@ -16,6 +16,115 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    .contact-section {
+      max-width: 1120px;
+      margin: 55px auto;
+      padding: 42px 24px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(19, 25, 33, .07);
+    }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 38px;
+      align-items: start;
+    }
+
+    .contact-info h2 {
+      margin: 8px 0 12px;
+      color: #131921;
+    }
+
+    .contact-info p {
+      color: #64748b;
+      line-height: 1.7;
+    }
+
+    .contact-email {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 12px;
+      color: #131921;
+      font-weight: 700;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-form label {
+      display: grid;
+      gap: 7px;
+      color: #273244;
+      font-weight: 600;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px 14px;
+      border: 1px solid #d7dee8;
+      border-radius: 9px;
+      background: #fff;
+      color: #131921;
+      font: inherit;
+    }
+
+    .contact-form textarea {
+      min-height: 135px;
+      resize: vertical;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: 2px solid #ff9900;
+      border-color: #ff9900;
+    }
+
+    .contact-form button {
+      border: 0;
+      border-radius: 9px;
+      padding: 14px 20px;
+      background: #ff9900;
+      color: #131921;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .contact-form button:hover {
+      filter: brightness(.96);
+    }
+
+    .contact-help {
+      margin: 0;
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 700px) {
+      .contact-wrap {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .contact-section {
+        margin: 32px 14px;
+        padding: 28px 18px;
+      }
+    }
+  </style>
+
   <script src="script.js" defer></script>
 </head>
 
@@ -55,7 +164,7 @@
         <a href="#products" class="nav-link">All Products</a>
         <a href="#categories" class="nav-link">Categories</a>
         <a href="#about" class="nav-link">About</a>
-        <a href="#footer" class="nav-link">Contact</a>
+        <a href="#contact" class="nav-link">Contact Us</a>
       </div>
     </nav>
   </header>
@@ -222,47 +331,116 @@
       <p>AMZADORA helps you explore products across popular online shopping platforms. Discover products in one place and visit the retailer to check the latest price and availability.</p>
     </section>
 
+    <!-- CUSTOMER CONTACT US SECTION -->
+    <section class="contact-section" id="contact">
+      <div class="contact-wrap">
+
+        <div class="contact-info">
+          <span class="eyebrow">WE'RE HERE TO HELP</span>
+          <h2>Contact Us</h2>
+          <p>Have a question, suggestion, or need help? Send us a message using the form. Your Gmail will open with your message ready.</p>
+
+          <a class="contact-email"
+             href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=amzadraza776@gmail.com"
+             target="_blank" rel="noopener">
+            <i class="fa-regular fa-envelope"></i>
+            amzadraza776@gmail.com
+          </a>
+        </div>
+
+        <form class="contact-form" id="contactForm">
+
+          <label for="contactName">Your Name
+            <input id="contactName" name="name" type="text" placeholder="Enter your name" required>
+          </label>
+
+          <label for="contactEmail">Your Email
+            <input id="contactEmail" name="email" type="email" placeholder="Enter your email address" required>
+          </label>
+
+          <label for="contactMessage">Message
+            <textarea id="contactMessage" name="message" placeholder="Write your message here..." required></textarea>
+          </label>
+
+          <button type="submit">
+            <i class="fa-solid fa-paper-plane"></i> Send Message
+          </button>
+
+          <p class="contact-help">
+            Gmail will open with your message ready. Please review it and press Send in Gmail.
+          </p>
+
+        </form>
+      </div>
+    </section>
+
   </main>
 
+  <footer class="footer" id="footer">
 
-<footer class="footer" id="footer">
-  <div class="footer-main">
+    <div class="footer-main">
 
-    <div class="footer-brand">
-      <a href="#" class="logo">AMZAD<span>ORA</span></a>
-      <p>Discover more. Choose smarter. Shop better.</p>
-      <p class="founder-name">Founded by <strong>Amzad Ali</strong></p>
+      <div class="footer-brand">
+        <a href="#" class="logo">AMZAD<span>ORA</span></a>
+        <p>Discover more. Choose smarter. Shop better.</p>
+        <p class="founder-name">Founded by <strong>Amzad Ali</strong></p>
+      </div>
+
+      <div>
+        <h4>Explore</h4>
+        <a href="#products">Products</a>
+        <a href="#categories">Categories</a>
+        <a href="#wishlist">Wishlist</a>
+      </div>
+
+      <div>
+        <h4>Contact</h4>
+        <a href="#contact">Contact Us</a>
+        <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=amzadraza776@gmail.com"
+           target="_blank" rel="noopener">
+          <i class="fa-regular fa-envelope"></i> Email Us
+        </a>
+        <a href="#about">About Us</a>
+      </div>
+
     </div>
 
-    <div>
-      <h4>Explore</h4>
-      <a href="#products">Products</a>
-      <a href="#categories">Categories</a>
-      <a href="#wishlist">Wishlist</a>
+    <div class="affiliate-note">
+      Affiliate Disclosure: Some links on AMZADORA may be affiliate links. We may earn a commission from qualifying purchases at no additional cost to you. Prices and availability are determined by the retailer.
     </div>
 
-    <div>
-      <h4>Contact</h4>
-      <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=amzadraza776@gmail.com" target="_blank" rel="noopener">
-  <i class="fa-regular fa-envelope"></i> Email Us
-</a>
-        <i class="fa-regular fa-envelope"></i> Email Us
-      </a>
-      <a href="#about">About Us</a>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> AMZADORA. All rights reserved.</span>
+      <span>Founded by Amzad Ali</span>
     </div>
 
-  </div>
+  </footer>
 
-  <div class="affiliate-note">
-    Affiliate Disclosure: Some links on AMZADORA may be affiliate links. We may earn a commission from qualifying purchases at no additional cost to you. Prices and availability are determined by the retailer.
-  </div>
+  <script>
+    // Contact form: opens Gmail with the customer's message pre-filled.
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+      event.preventDefault();
 
-  <div class="footer-bottom">
-    <span>© <span id="year"></span> AMZADORA. All rights reserved.</span>
-    <span>Founded by Amzad Ali</span>
-  </div>
-</footer>
+      const name = document.getElementById("contactName").value.trim();
+      const email = document.getElementById("contactEmail").value.trim();
+      const message = document.getElementById("contactMessage").value.trim();
 
+      const subject = "AMZADORA Contact Message";
+
+      const body =
+        "Name: " + name + "\n" +
+        "Customer Email: " + email + "\n\n" +
+        "Message:\n" + message;
+
+      const gmailUrl =
+        "https://mail.google.com/mail/?view=cm&fs=1" +
+        "&to=amzadraza776@gmail.com" +
+        "&su=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body);
+
+      window.open(gmailUrl, "_blank", "noopener");
+    });
+  </script>
 
 </body>
 </html>
