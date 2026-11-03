@@ -207,3 +207,171 @@ main:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   .footer-main{grid-template-columns:1fr}
   .footer-brand{grid-column:auto}
 }
+/* =========================================
+   AMZADORA — MIDNIGHT AURORA BACKGROUND FIX
+   ========================================= */
+
+html,
+body {
+  background-color: #080f1e !important;
+}
+
+body {
+  color: #edf3ff !important;
+  background:
+    radial-gradient(ellipse at 12% 12%, rgba(28, 105, 151, .42), transparent 32%),
+    radial-gradient(ellipse at 88% 25%, rgba(100, 48, 145, .35), transparent 33%),
+    radial-gradient(ellipse at 50% 75%, rgba(10, 125, 120, .20), transparent 35%),
+    linear-gradient(135deg, #080f1e 0%, #101b32 48%, #17132d 100%) !important;
+  background-attachment: fixed !important;
+}
+
+main {
+  background: transparent !important;
+}
+
+main:before {
+  opacity: .16 !important;
+  background-image: radial-gradient(rgba(133, 190, 220, .8) .7px, transparent .7px) !important;
+}
+
+/* Glass benefits panel */
+.benefits,
+.category-card,
+.product-card,
+.about-section,
+.contact-section {
+  background: rgba(21, 34, 57, .88) !important;
+  border: 1px solid rgba(135, 173, 215, .22) !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, .22) !important;
+  color: #edf3ff !important;
+  backdrop-filter: blur(16px);
+}
+
+.benefits b,
+.category-card span,
+.product-info h3,
+.section-heading h2,
+.about-section h2,
+.contact-info h2 {
+  color: #f1f5ff !important;
+}
+
+.benefits small,
+.product-meta,
+.about-section p,
+.contact-info p,
+.contact-help {
+  color: #aab9d0 !important;
+}
+
+.benefits i,
+.category-card i {
+  color: #66d8d0 !important;
+}
+
+.category-card:hover,
+.category-card.active {
+  background: linear-gradient(135deg, #193b53, #26304e) !important;
+  border-color: #54c9c2 !important;
+}
+
+.section-heading>a,
+.contact-email {
+  color: #ffc66b !important;
+}
+
+.eyebrow {
+  color: #65d8d0 !important;
+}
+
+/* Product image area remains clean for visibility */
+.product-art {
+  background: linear-gradient(145deg, #f8faff, #e7edf7) !important;
+}
+
+.product-info {
+  background: transparent !important;
+}
+
+.product-footer {
+  border-color: rgba(160, 184, 215, .2) !important;
+}
+
+.product-footer strong {
+  color: #ffd080 !important;
+}
+
+.product-tag {
+  background: #173d4a !important;
+  color: #83eee2 !important;
+}
+
+.store-filters .store-filter {
+  background: #17253c !important;
+  color: #dbe7f6 !important;
+  border-color: #344966 !important;
+}
+
+.store-filters .store-filter.active,
+.store-filters .store-filter:hover {
+  background: #245c69 !important;
+  color: #fff !important;
+  border-color: #56c9c1 !important;
+}
+
+#sortProducts {
+  background: #17253c !important;
+  color: #fff !important;
+  border-color: #344966 !important;
+}
+
+.contact-section {
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(47, 116, 143, .20), transparent 40%),
+    rgba(19, 32, 54, .96) !important;
+}
+
+.contact-form label {
+  color: #e8efff !important;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background: #0d192b !important;
+  border-color: #354966 !important;
+  color: #fff !important;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #8798b1 !important;
+}
+
+.empty-state {
+  background: #17253c !important;
+  color: #fff !important;
+  border-color: #354966 !important;
+}
+
+.empty-state h3 {
+  color: #fff !important;
+}
+
+.empty-state p {
+  color: #aab9d0 !important;
+}
+
+/* Footer */
+.footer {
+  background:
+    radial-gradient(ellipse at 90% 0%, rgba(60, 105, 160, .25), transparent 38%),
+    linear-gradient(120deg, #060c18, #111d32) !important;
+}
+
+/* Mobile background */
+@media (max-width: 700px) {
+  body {
+    background-attachment: scroll !important;
+  }
+}
