@@ -115,6 +115,21 @@ document.addEventListener("DOMContentLoaded", function () {
   ];
 
   // =====================================
+  // PRODUCT IMAGE SYSTEM
+  // =====================================
+
+  function getProductImage(item) {
+    const id = item[0];
+    const name = item[1];
+
+    // Product name based image search.
+    // Each product gets a different image request.
+    return "https://loremflickr.com/600/600/" +
+      encodeURIComponent(name.replace(/&/g, " ")) +
+      "?lock=" + id;
+  }
+
+  // =====================================
   // CREATE STORE PRODUCTS
   // =====================================
 
@@ -125,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
       name: item[1],
       category: item[2],
       price: item[3],
-      image: "./images/A" + item[0] + ".JPG",
+      image: getProductImage(item),
       store: store
     };
   }
@@ -230,7 +245,8 @@ document.addEventListener("DOMContentLoaded", function () {
         <img
           src="${item.image}"
           alt="${item.name}"
-          onerror="this.style.display='none'"
+          loading="lazy"
+          onerror="this.onerror=null;this.src='https://placehold.co/400x400?text=Product';"
         >
 
         <span>${item.name}</span>
@@ -266,7 +282,7 @@ document.addEventListener("DOMContentLoaded", function () {
             src="${p.image}"
             alt="${p.name}"
             loading="lazy"
-            onerror="this.onerror=null;this.src='https://placehold.co/400x400?text=Add+Photo';"
+            onerror="this.onerror=null;this.src='https://placehold.co/600x600?text=Product+Photo';"
           >
 
           <span class="product-tag">${p.store}</span>
